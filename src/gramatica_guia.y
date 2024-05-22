@@ -125,7 +125,7 @@ expresion:
         //Suma de numerico + numerico
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) { //comprobacion del tipo
             printf("> [OPERACION] - SUMA {numerico / numerico}\n");
-            $$.n = crearNodoNoTerminal($1.n, $3.n, 2); 
+            $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
             $$.tipo = tipos[0]; $$.numerico = $1.numerico + $3.numerico;
         }
 
@@ -134,7 +134,7 @@ expresion:
             printf("> [OPERACION] - SUMA {numericoDecimal / numericoDecimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
             $$.tipo = tipos[1]; $$.numericoDecimal = $1.numericoDecimal + $3.numericoDecimal;
-        }  
+        }
     }
     //RESTA
     | expresion RESTA tipos {
