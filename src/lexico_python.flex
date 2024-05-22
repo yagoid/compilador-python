@@ -11,41 +11,42 @@ id              {letter}({letter}|{digit})*
 
 %%
 
-False 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-None 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-True 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-and 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-as 			{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-assert 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-async 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-await 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-break 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-class 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-continue 	{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-def 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-del 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-elif 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-else 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-except 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-finally 	{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-for 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-from 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-global 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-if 			{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-import 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-in 			{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-is 			{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-lambda 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-nonlocal 	{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-not 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-or 			{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-pass 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-raise 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-return 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-try 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-while 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-with 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
-yield 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PALABRA RESERVADA", yytext, n_linea);}
+False 		{fprintf(yyout,"%-50s %-90s %-15d \n", "FALSE", yytext, n_linea);}
+None 		{fprintf(yyout,"%-50s %-90s %-15d \n", "NONE", yytext, n_linea);}
+True 		{fprintf(yyout,"%-50s %-90s %-15d \n", "TRUE", yytext, n_linea);}
+and 		{fprintf(yyout,"%-50s %-90s %-15d \n", "AND", yytext, n_linea);}
+as 			{fprintf(yyout,"%-50s %-90s %-15d \n", "AS", yytext, n_linea);}
+assert 		{fprintf(yyout,"%-50s %-90s %-15d \n", "ASSERT", yytext, n_linea);}
+async 		{fprintf(yyout,"%-50s %-90s %-15d \n", "ASYNC", yytext, n_linea);}
+await 		{fprintf(yyout,"%-50s %-90s %-15d \n", "AWAIT", yytext, n_linea);}
+break 		{fprintf(yyout,"%-50s %-90s %-15d \n", "BREAK", yytext, n_linea);}
+class 		{fprintf(yyout,"%-50s %-90s %-15d \n", "CLASS", yytext, n_linea);}
+continue 	{fprintf(yyout,"%-50s %-90s %-15d \n", "CONTINUE", yytext, n_linea);}
+def 		{fprintf(yyout,"%-50s %-90s %-15d \n", "DEF", yytext, n_linea);}
+del 		{fprintf(yyout,"%-50s %-90s %-15d \n", "DEL", yytext, n_linea);}
+elif 		{fprintf(yyout,"%-50s %-90s %-15d \n", "ELIF", yytext, n_linea);}
+else 		{fprintf(yyout,"%-50s %-90s %-15d \n", "ELSE", yytext, n_linea);}
+except 		{fprintf(yyout,"%-50s %-90s %-15d \n", "EXCEPT", yytext, n_linea);}
+finally 	{fprintf(yyout,"%-50s %-90s %-15d \n", "FINALLY", yytext, n_linea);}
+for 		{fprintf(yyout,"%-50s %-90s %-15d \n", "FOR", yytext, n_linea);}
+from 		{fprintf(yyout,"%-50s %-90s %-15d \n", "FROM", yytext, n_linea);}
+global 		{fprintf(yyout,"%-50s %-90s %-15d \n", "GLOBAL", yytext, n_linea);}
+if 			{fprintf(yyout,"%-50s %-90s %-15d \n", "IF", yytext, n_linea);}
+import 		{fprintf(yyout,"%-50s %-90s %-15d \n", "IMPORT", yytext, n_linea);}
+in 			{fprintf(yyout,"%-50s %-90s %-15d \n", "IN", yytext, n_linea);}
+is 			{fprintf(yyout,"%-50s %-90s %-15d \n", "IS", yytext, n_linea);}
+lambda 		{fprintf(yyout,"%-50s %-90s %-15d \n", "LAMBDA", yytext, n_linea);}
+nonlocal 	{fprintf(yyout,"%-50s %-90s %-15d \n", "NONLOCAL", yytext, n_linea);}
+not 		{fprintf(yyout,"%-50s %-90s %-15d \n", "NOT", yytext, n_linea);}
+or 			{fprintf(yyout,"%-50s %-90s %-15d \n", "OR", yytext, n_linea);}
+pass 		{fprintf(yyout,"%-50s %-90s %-15d \n", "PASS", yytext, n_linea);}
+raise 		{fprintf(yyout,"%-50s %-90s %-15d \n", "RAISE", yytext, n_linea);}
+return 		{fprintf(yyout,"%-50s %-90s %-15d \n", "RETURN", yytext, n_linea);}
+try 		{fprintf(yyout,"%-50s %-90s %-15d \n", "TRY", yytext, n_linea);}
+while 		{fprintf(yyout,"%-50s %-90s %-15d \n", "WHILE", yytext, n_linea);}
+with 		{fprintf(yyout,"%-50s %-90s %-15d \n", "WITH", yytext, n_linea);}
+yield 		{fprintf(yyout,"%-50s %-90s %-15d \n", "YIELD", yytext, n_linea);}
+end 		{fprintf(yyout,"%-50s %-90s %-15d \n", "END", yytext, n_linea);}
 
 str 		{fprintf(yyout,"%-50s %-90s %-15d \n", "CADENA", yytext, n_linea);}
 bytes 		{fprintf(yyout,"%-50s %-90s %-15d \n", "VECTOR", yytext, n_linea);}
@@ -72,7 +73,7 @@ bool 		{fprintf(yyout,"%-50s %-90s %-15d \n", "BOOLEANO", yytext, n_linea);}
 "("         {fprintf(yyout,"%-50s %-90s %-15d \n", "PARENTESIS IZQ", yytext, n_linea);}
 ")"         {fprintf(yyout,"%-50s %-90s %-15d \n", "PARENTESIS DER", yytext, n_linea);}
 
-\"(?:{id}(?:\ {id})*)?\"  		{fprintf(yyout,"%-50s %-90s %-15d \n", "IDENTIFICADOR STRING", yytext, n_linea);}
+\"(?:{id}(?:\ {id})*)?\"  		{fprintf(yyout,"%-50s %-90s %-15d \n", "IDENTIFICADOR", yytext, n_linea);}
 {id}(_{id})*   					{fprintf(yyout,"%-50s %-90s %-15d \n", "VARIABLE", yytext, n_linea);}
 {digit}+       	 				{fprintf(yyout,"%-50s %-90s %-15d \n", "NUMERO", yytext, n_linea);}
 {digit}+"."{digit}*    			{fprintf(yyout,"%-50s %-90s %-15d \n", "DECIMAL", yytext, n_linea);}
