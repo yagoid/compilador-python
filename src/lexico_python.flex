@@ -70,8 +70,8 @@ bool 		{fprintf(yyout,"%-50s %-90s %-15d \n", "BOOLEANO", yytext, n_linea);}
 "=="        {fprintf(yyout,"%-50s %-90s %-15d \n", "IGUAL QUE", yytext, n_linea);}
 "!="        {fprintf(yyout,"%-50s %-90s %-15d \n", "DISTINTO QUE", yytext, n_linea);}
 "="         {fprintf(yyout,"%-50s %-90s %-15d \n", "ASIGNACION", yytext, n_linea);}
-"("         {fprintf(yyout,"%-50s %-90s %-15d \n", "PARENTESIS IZQ", yytext, n_linea);}
-")"         {fprintf(yyout,"%-50s %-90s %-15d \n", "PARENTESIS DER", yytext, n_linea);}
+"("         {fprintf(yyout,"%-50s %-90s %-15d \n", "PARENTESISIZQ", yytext, n_linea);}
+")"         {fprintf(yyout,"%-50s %-90s %-15d \n", "PARENTESISDER", yytext, n_linea);}
 
 \"(?:{id}(?:\ {id})*)?\"  		{fprintf(yyout,"%-50s %-90s %-15d \n", "IDENTIFICADOR", yytext, n_linea);}
 {id}(_{id})*   					{fprintf(yyout,"%-50s %-90s %-15d \n", "VARIABLE", yytext, n_linea);}
