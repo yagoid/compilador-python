@@ -37,7 +37,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 }
 
 /*Declaración de los TOKENS*/
-%token SUMA RESTA ASIGNACION PARENTESISIZQ PARENTESISDER IMPRIMIR 
+%token SUMA RESTA MULTIPLICACION DIVISION ASIGNACION PARENTESISIZQ PARENTESISDER IMPRIMIR 
 
 /*Declaración de los TOKENS que provienen de FLEX con su respectivo tipo*/
 %token <enteroVal> NUMERO 
@@ -48,7 +48,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 %type <tr> sentencias sentencia tipos expresion asignacion imprimir  
 
 /*Declaración de la precedencia siendo menor la del primero y mayor la del último*/
-%left SUMA RESTA
+%left SUMA RESTA MULTIPLICACION
 
 %start codigo
 %%
@@ -148,7 +148,38 @@ expresion:
             $$.n = crearNodoNoTerminal($1.n, $3.n, 3);
             $$.tipo = tipos[1]; $$.decimal = $1.decimal + $3.decimal;
         }
-
+    }
+    //MULTIPLICACION
+    | expresion MULTIPLICACION tipos {
+        
+        //Multiplicacion de numero * numero
+        if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
+            printf("> [OPERACION] - MULTIPLICACION {numero / numero}\n");
+            $$.n = crearNodoNoTerminal($1.n, $3.n, 4);
+            $$.tipo = tipos[0]; $$.numero = $1.numero + $3.numero;
+        }
+        //Multiplicacion de decimal * decimal
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [OPERACION] - MULTIPLICACION {decimal / decimal}\n");
+            $$.n = crearNodoNoTerminal($1.n, $3.n, 4);
+            $$.tipo = tipos[1]; $$.decimal = $1.decimal + $3.decimal;
+        }
+    }
+    //DIVISION
+    | expresion DIVISION tipos {
+        
+        //Division de numero / numero
+        if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
+            printf("> [OPERACION] - DIVISION {numero / numero}\n");
+            $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
+            $$.tipo = tipos[0]; $$.numero = $1.numero + $3.numero;
+        }
+        //Division de decimal / decimal
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [OPERACION] - DIVISION {decimal / decimal}\n");
+            $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
+            $$.tipo = tipos[1]; $$.decimal = $1.decimal + $3.decimal;
+        }
     }
     | tipos {$$ = $1;} //la produccion operacion puede ser tipos, un subnivel para realizar la jerarquia de operaciones
 ;
