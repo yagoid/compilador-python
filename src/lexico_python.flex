@@ -49,15 +49,13 @@ while 		{return WHILE; }
 with 		{return WITH; }
 yield 		{return YIELD; }
 end 		{return END; }
-def 		{return DEF; }
 print 		{return IMPRIMIR; }
 
 str 		{return CADENA; }
 bytes 		{return VECTOR; }
-list 		{return SECUENCIA; }
-tuple 		{return SECUENCIA; }
-set 		{return CONJUNTO; }
-frozenset	{return CONJUNTO; }
+list 		{return LISTA; }
+tuple 		{return TUPLA; }
+set 		{return SET; }
 dict 		{return DICT; }
 int 		{return INT; }
 float 		{return FLOAT; }
@@ -69,22 +67,22 @@ bool 		{return BOOLEAN; }
 "*"         {return MULTIPLICACION; }
 "/"         {return DIVISION; }
 "%"			{return MODULO; }
-"<"         {return MENOR QUE; }
-">"         {return MAYOR QUE; }
-"+="        {return AUMENTAR VALOR; }
-"=="        {return IGUAL QUE; }
-"!="        {return DISTINTO QUE; }
+"<"         {return MENOR_QUE; }
+">"         {return MAYOR_QUE; }
+"+="        {return AUMENTAR_VALOR; }
+"=="        {return IGUAL_QUE; }
+"!="        {return DISTINTO_QUE; }
 "="         {return ASIGNACION; }
-"("         {return PARENTESISIZQ; }
-")"         {return PARENTESISDER; }
+"("         {return PARENTESIS_IZQ; }
+")"         {return PARENTESIS_DER; }
 
 {digit}+                   { yylval.intVal = atoi(yytext); return NUMERO; }  
 {digit}+"."{digit}*        { yylval.realVal = atof(yytext); return DECIMAL; } 
 {id}(_{id})*               { yylval.strVal = strdup(yytext); return VARIABLE; }
 \"([^\\"]|\\.)*\"          { yylval.strVal = strdup(yytext); return STRING; } 
 
-\[[[:alnum:]]*\]     							{ return ARRAY_SIMPLE; }
-\[[[:alnum:]]*\]\[[[:alnum:]]*\]      			{ return ARRAY_2D; }
+\[[[:alnum:]]*\]     							{ /* return ARRAY_SIMPLE; */ }
+\[[[:alnum:]]*\]\[[[:alnum:]]*\]      			{ /* return ARRAY_2D; */}
 #.*[^\n]+										{ /* ignorar comentario una linea */ }
 "/*"([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+"/" 	{ /* ignorar comentario varias lineas */ }
 [ \t]											{ /* ignorar tabulaciones */ }
