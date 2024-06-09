@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-#include "parser.tab.h"
+#include "gramatica_python.tab.h"
 
 int n_linea = 1; // Variable para contar el número de línea
 %}
