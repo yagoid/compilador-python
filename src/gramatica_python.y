@@ -232,7 +232,7 @@ tipos:
 //Representa la estructura del print en lenguaje latino
 //I --> imprimir ( E ) 
 imprimir: 
-    IMPRIMIR PARENTESISIZQ expresion PARENTESISDER { 
+    IMPRIMIR PARENTESIS_IZQ expresion PARENTESIS_DER { 
         printf("> [SENTENCIA] - Imprimir\n");
         $$.n = crearNodoNoTerminal($3.n, crearNodoVacio(), 4);        
     }

@@ -1,0 +1,419 @@
+Terminals unused in grammar
+
+   FALSE
+   NONE
+   TRUE
+   AND
+   AS
+   ASSERT
+   ASYNC
+   AWAIT
+   BREAK
+   CONTINUE
+   CLASS
+   DEF
+   DEL
+   ELIF
+   ELSE
+   EXCEPT
+   FINALLY
+   FOR
+   FROM
+   GLOBAL
+   IF
+   IMPORT
+   IN
+   IS
+   LAMBDA
+   NONLOCAL
+   NOT
+   OR
+   PASS
+   RAISE
+   RETURN
+   TRY
+   WHILE
+   WITH
+   YIELD
+   END
+   CADENA
+   VECTOR
+   LISTA
+   TUPLA
+   SET
+   DICT
+   INT
+   FLOAT
+   COMPLEX
+   BOOLEAN
+   MODULO
+   MENOR_QUE
+   MAYOR_QUE
+   AUMENTAR_VALOR
+   IGUAL_QUE
+   DISTINTO_QUE
+   STRING
+
+
+Grammar
+
+    0 $accept: codigo $end
+
+    1 codigo: sentencias
+
+    2 sentencias: sentencia
+    3           | sentencias sentencia
+
+    4 sentencia: asignacion
+    5          | imprimir
+
+    6 asignacion: VARIABLE ASIGNACION expresion
+
+    7 expresion: expresion SUMA tipos
+    8          | expresion RESTA tipos
+    9          | expresion MULTIPLICACION tipos
+   10          | expresion DIVISION tipos
+   11          | tipos
+
+   12 tipos: VARIABLE
+   13      | NUMERO
+   14      | DECIMAL
+
+   15 imprimir: IMPRIMIR PARENTESIS_IZQ expresion PARENTESIS_DER
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+FALSE (258)
+NONE (259)
+TRUE (260)
+AND (261)
+AS (262)
+ASSERT (263)
+ASYNC (264)
+AWAIT (265)
+BREAK (266)
+CONTINUE (267)
+CLASS (268)
+DEF (269)
+DEL (270)
+ELIF (271)
+ELSE (272)
+EXCEPT (273)
+FINALLY (274)
+FOR (275)
+FROM (276)
+GLOBAL (277)
+IF (278)
+IMPORT (279)
+IN (280)
+IS (281)
+LAMBDA (282)
+NONLOCAL (283)
+NOT (284)
+OR (285)
+PASS (286)
+RAISE (287)
+RETURN (288)
+TRY (289)
+WHILE (290)
+WITH (291)
+YIELD (292)
+END (293)
+IMPRIMIR (294) 15
+CADENA (295)
+VECTOR (296)
+LISTA (297)
+TUPLA (298)
+SET (299)
+DICT (300)
+INT (301)
+FLOAT (302)
+COMPLEX (303)
+BOOLEAN (304)
+SUMA (305) 7
+RESTA (306) 8
+MULTIPLICACION (307) 9
+DIVISION (308) 10
+MODULO (309)
+MENOR_QUE (310)
+MAYOR_QUE (311)
+AUMENTAR_VALOR (312)
+IGUAL_QUE (313)
+DISTINTO_QUE (314)
+ASIGNACION (315) 6
+PARENTESIS_IZQ (316) 15
+PARENTESIS_DER (317) 15
+NUMERO (318) 13
+DECIMAL (319) 14
+VARIABLE (320) 6 12
+STRING (321)
+
+
+Nonterminals, with rules where they appear
+
+$accept (67)
+    on left: 0
+codigo (68)
+    on left: 1, on right: 0
+sentencias (69)
+    on left: 2 3, on right: 1 3
+sentencia (70)
+    on left: 4 5, on right: 2 3
+asignacion (71)
+    on left: 6, on right: 4
+expresion (72)
+    on left: 7 8 9 10 11, on right: 6 7 8 9 10 15
+tipos (73)
+    on left: 12 13 14, on right: 7 8 9 10 11
+imprimir (74)
+    on left: 15, on right: 5
+
+
+state 0
+
+    0 $accept: . codigo $end
+
+    IMPRIMIR  shift, and go to state 1
+    VARIABLE  shift, and go to state 2
+
+    codigo      go to state 3
+    sentencias  go to state 4
+    sentencia   go to state 5
+    asignacion  go to state 6
+    imprimir    go to state 7
+
+
+state 1
+
+   15 imprimir: IMPRIMIR . PARENTESIS_IZQ expresion PARENTESIS_DER
+
+    PARENTESIS_IZQ  shift, and go to state 8
+
+
+state 2
+
+    6 asignacion: VARIABLE . ASIGNACION expresion
+
+    ASIGNACION  shift, and go to state 9
+
+
+state 3
+
+    0 $accept: codigo . $end
+
+    $end  shift, and go to state 10
+
+
+state 4
+
+    1 codigo: sentencias .
+    3 sentencias: sentencias . sentencia
+
+    IMPRIMIR  shift, and go to state 1
+    VARIABLE  shift, and go to state 2
+
+    $default  reduce using rule 1 (codigo)
+
+    sentencia   go to state 11
+    asignacion  go to state 6
+    imprimir    go to state 7
+
+
+state 5
+
+    2 sentencias: sentencia .
+
+    $default  reduce using rule 2 (sentencias)
+
+
+state 6
+
+    4 sentencia: asignacion .
+
+    $default  reduce using rule 4 (sentencia)
+
+
+state 7
+
+    5 sentencia: imprimir .
+
+    $default  reduce using rule 5 (sentencia)
+
+
+state 8
+
+   15 imprimir: IMPRIMIR PARENTESIS_IZQ . expresion PARENTESIS_DER
+
+    NUMERO    shift, and go to state 12
+    DECIMAL   shift, and go to state 13
+    VARIABLE  shift, and go to state 14
+
+    expresion  go to state 15
+    tipos      go to state 16
+
+
+state 9
+
+    6 asignacion: VARIABLE ASIGNACION . expresion
+
+    NUMERO    shift, and go to state 12
+    DECIMAL   shift, and go to state 13
+    VARIABLE  shift, and go to state 14
+
+    expresion  go to state 17
+    tipos      go to state 16
+
+
+state 10
+
+    0 $accept: codigo $end .
+
+    $default  accept
+
+
+state 11
+
+    3 sentencias: sentencias sentencia .
+
+    $default  reduce using rule 3 (sentencias)
+
+
+state 12
+
+   13 tipos: NUMERO .
+
+    $default  reduce using rule 13 (tipos)
+
+
+state 13
+
+   14 tipos: DECIMAL .
+
+    $default  reduce using rule 14 (tipos)
+
+
+state 14
+
+   12 tipos: VARIABLE .
+
+    $default  reduce using rule 12 (tipos)
+
+
+state 15
+
+    7 expresion: expresion . SUMA tipos
+    8          | expresion . RESTA tipos
+    9          | expresion . MULTIPLICACION tipos
+   10          | expresion . DIVISION tipos
+   15 imprimir: IMPRIMIR PARENTESIS_IZQ expresion . PARENTESIS_DER
+
+    SUMA            shift, and go to state 18
+    RESTA           shift, and go to state 19
+    MULTIPLICACION  shift, and go to state 20
+    DIVISION        shift, and go to state 21
+    PARENTESIS_DER  shift, and go to state 22
+
+
+state 16
+
+   11 expresion: tipos .
+
+    $default  reduce using rule 11 (expresion)
+
+
+state 17
+
+    6 asignacion: VARIABLE ASIGNACION expresion .
+    7 expresion: expresion . SUMA tipos
+    8          | expresion . RESTA tipos
+    9          | expresion . MULTIPLICACION tipos
+   10          | expresion . DIVISION tipos
+
+    SUMA            shift, and go to state 18
+    RESTA           shift, and go to state 19
+    MULTIPLICACION  shift, and go to state 20
+    DIVISION        shift, and go to state 21
+
+    $default  reduce using rule 6 (asignacion)
+
+
+state 18
+
+    7 expresion: expresion SUMA . tipos
+
+    NUMERO    shift, and go to state 12
+    DECIMAL   shift, and go to state 13
+    VARIABLE  shift, and go to state 14
+
+    tipos  go to state 23
+
+
+state 19
+
+    8 expresion: expresion RESTA . tipos
+
+    NUMERO    shift, and go to state 12
+    DECIMAL   shift, and go to state 13
+    VARIABLE  shift, and go to state 14
+
+    tipos  go to state 24
+
+
+state 20
+
+    9 expresion: expresion MULTIPLICACION . tipos
+
+    NUMERO    shift, and go to state 12
+    DECIMAL   shift, and go to state 13
+    VARIABLE  shift, and go to state 14
+
+    tipos  go to state 25
+
+
+state 21
+
+   10 expresion: expresion DIVISION . tipos
+
+    NUMERO    shift, and go to state 12
+    DECIMAL   shift, and go to state 13
+    VARIABLE  shift, and go to state 14
+
+    tipos  go to state 26
+
+
+state 22
+
+   15 imprimir: IMPRIMIR PARENTESIS_IZQ expresion PARENTESIS_DER .
+
+    $default  reduce using rule 15 (imprimir)
+
+
+state 23
+
+    7 expresion: expresion SUMA tipos .
+
+    $default  reduce using rule 7 (expresion)
+
+
+state 24
+
+    8 expresion: expresion RESTA tipos .
+
+    $default  reduce using rule 8 (expresion)
+
+
+state 25
+
+    9 expresion: expresion MULTIPLICACION tipos .
+
+    $default  reduce using rule 9 (expresion)
+
+
+state 26
+
+   10 expresion: expresion DIVISION tipos .
+
+    $default  reduce using rule 10 (expresion)
