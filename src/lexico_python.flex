@@ -90,7 +90,3 @@ bool 		{return BOOLEAN; }
 \n              { n_linea++; }
 
 %%
-
-int yywrap() {
-    return 1;
-}
