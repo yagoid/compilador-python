@@ -1389,7 +1389,7 @@ yyreduce:
 /* Line 1464 of yacc.c  */
 #line 80 "gramatica_python.y"
     { //para hacerlo recursivo
-        (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (2)].tr).n, (yyvsp[(2) - (2)].tr).n, 7, );
+        (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (2)].tr).n, (yyvsp[(2) - (2)].tr).n, 7);
     ;}
     break;
 

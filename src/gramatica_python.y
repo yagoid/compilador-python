@@ -24,9 +24,9 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 
 /*Definicion de tipos y estructuras empleadas*/
 %union {
-  int enteroVal;
-  float decimalVal;
-  char* stringVal;
+  int intVal;
+  float realVal;
+  char* strVal;
   struct atributos{
     int numero;
     float decimal;
@@ -40,9 +40,9 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 %token SUMA RESTA MULTIPLICACION DIVISION ASIGNACION PARENTESISIZQ PARENTESISDER IMPRIMIR 
 
 /*Declaración de los TOKENS que provienen de FLEX con su respectivo tipo*/
-%token <enteroVal> NUMERO 
-%token <decimalVal> DECIMAL 
-%token <stringVal> VARIABLE
+%token <intVal> NUMERO 
+%token <realVal> DECIMAL 
+%token <strVal> VARIABLE
 
 /*Declaración de los TOKENS NO TERMINALES con su estructura*/
 %type <tr> sentencias sentencia tipos expresion asignacion imprimir  
