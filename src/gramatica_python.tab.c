@@ -1389,7 +1389,7 @@ yyreduce:
 /* Line 1464 of yacc.c  */
 #line 80 "gramatica_python.y"
     { //para hacerlo recursivo
-        (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (2)].tr).n, (yyvsp[(2) - (2)].tr).n, 7);
+        (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (2)].tr).n, (yyvsp[(2) - (2)].tr).n, 7, );
     ;}
     break;
 
@@ -1537,7 +1537,7 @@ yyreduce:
 #line 214 "gramatica_python.y"
     {
         (yyval.tr).numero = (yyvsp[(1) - (1)].enteroVal);
-        printf("\n> [TIPO] - Numero Positivo: %ld\n", (yyval.tr).numerico);
+        printf("\n> [TIPO] - Numero Positivo: %ld\n", (yyval.tr).numero);
         (yyval.tr).n = crearNodoTerminal((yyvsp[(1) - (1)].enteroVal)); 
         (yyval.tr).tipo = tipos[0]; 
     ;}

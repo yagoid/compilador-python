@@ -245,64 +245,33 @@ struct ast *crearNodoVacio() {
     return n;
 }
 
-struct ast *crearNodoTerminal(double valor, const char *tipo) {
+struct ast *crearNodoTerminal(double valor) {
     struct ast *n = malloc(sizeof(struct ast)); // Asigna memoria dinámicamente para el nuevo nodo
     n->izq = NULL; n->dcha = NULL; n->tipoNodo = 1;
-    n->tipo = strdup(tipo); // Asigna el tipo de dato
-
-    if (strcmp(tipo, "float") == 0) {
-        n->valorNumerico = valor;
-    } else if (strcmp(tipo, "int") == 0) {
-        n->valorNumerico = (int)valor;
-    } else {
-        // Manejo de error si el tipo no es soportado
-        fprintf(stderr, "Tipo no soportado en crearNodoTerminal: %s\n", tipo);
-        free(n);
-        return NULL;
-    }
 
     n->resultado = encontrarReg(); // Hacemos llamada al método para buscar un nuevo registro
     n->nombreVar = crearNombreVariable(); // Genera un nombre único para la variable
     printf("# [AST] - Registro $f%d ocupado para var_%d = %.3f\n", n->resultado, n->nombreVar, n->valorNumerico);
 
     // Actualizar el registro de variables
-    if (strcmp(tipo, "float") == 0) {
-        variables[n->resultado].dato = n->valorNumerico;
-    } else if (strcmp(tipo, "int") == 0) {
-        variables[n->resultado].valorEntero = (int)n->valorNumerico;
-    }
     variables[n->resultado].nombre = n->nombreVar;
     variables[n->resultado].disponible = true;
-    variables[n->resultado].tipo = strdup(tipo);
 
     return n;
 }
 
 // METODO "crearNodoNoTerminal", crea un nuevo nodo, asignamos sus hijos y tipo, y buscamos nuevo registro
-struct ast *crearNodoNoTerminal(struct ast *izq, struct ast *dcha, int tipoNodo, const char *tipo) {
+struct ast *crearNodoNoTerminal(struct ast *izq, struct ast *dcha, int tipoNodo) {
     struct ast *n = malloc(sizeof(struct ast)); // Crea un nuevo nodo
     n->izq = izq; n->dcha = dcha; n->tipoNodo = tipoNodo; // Asignamos al nodo genérico sus hijos y tipo
-    n->tipo = strdup(tipo); // Asigna el tipo de dato
     n->resultado = encontrarReg(); // Hacemos llamada al método para buscar un nuevo registro
     return n;
 }
 
 // METODO "crearVariableTerminal", crear el nodo hoja para una variable ya creada
-struct ast *crearVariableTerminal(double valor, int registro, const char *tipo) {
+struct ast *crearVariableTerminal(double valor, int registro) {
     struct ast *n = malloc(sizeof(struct ast)); // Asigna memoria dinámicamente para el nuevo nodo
     n->izq = NULL; n->dcha = NULL; n->tipoNodo = 6;
-    n->tipo = strdup(tipo); // Asigna el tipo de dato
-
-    if (strcmp(tipo, "float") == 0) {
-        n->valorNumerico = valor;
-    } else if (strcmp(tipo, "int") == 0) {
-        n->valorNumerico = (int)valor;
-    } else {
-        // Manejo de error si el tipo no es soportado
-        fprintf(stderr, "Tipo no soportado en crearVariableTerminal: %s\n", tipo);
-        free(n);
-        return NULL;
-    }
 
     n->resultado = registro;
     return n;
