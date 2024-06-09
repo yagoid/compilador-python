@@ -650,7 +650,7 @@ char *yytext;
 #line 1 "lexico_python.flex"
 #line 2 "lexico_python.flex"
 #include <stdio.h>
-#include "parser.tab.h"
+#include "gramatica_python.tab.h"
 
 int n_linea = 1; // Variable para contar el número de línea
 #line 657 "python.lex.c"

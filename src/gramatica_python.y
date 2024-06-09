@@ -1,4 +1,4 @@
-%{
+numerico%{
 
 // ----------------------------- GLOSARIO DE IMPORTS -------------------------------------------
 #include <stdio.h>
@@ -213,7 +213,7 @@ tipos:
     //Numero entero normal
     | NUMERO {
         $$.numero = $1;
-        printf("\n> [TIPO] - Numero Positivo: %ld\n", $$.numerico);
+        printf("\n> [TIPO] - Numero Positivo: %ld\n", $$.numero);
         $$.n = crearNodoTerminal($1); 
         $$.tipo = tipos[0]; 
     }
