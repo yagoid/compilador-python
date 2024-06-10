@@ -282,6 +282,7 @@ struct ast *crearNodoTerminal(double valor)
     n->izq = NULL;
     n->dcha = NULL;
     n->tipoNodo = 1;
+    n->tipo = "float";
     n->valorNumerico = valor;
 
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
@@ -302,6 +303,7 @@ struct ast *crearNodoTerminalString(char *valor)
     n->izq = NULL;
     n->dcha = NULL;
     n->tipoNodo = 1;
+    n->tipo = "string";
     n->valorCadena = valor;
 
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
@@ -309,7 +311,7 @@ struct ast *crearNodoTerminalString(char *valor)
     printf("# [AST] - Registro $f%d ocupado para var_%d = %.3f\n", n->resultado, n->nombreVar, n->valorCadena);
 
     // Actualizar el registro de variables
-    variables[n->resultado].dato = n->valorCadena;
+    variables[n->resultado].valorCadena = n->valorCadena;
     variables[n->resultado].nombre = n->nombreVar;
     variables[n->resultado].disponible = true;
 

@@ -141,7 +141,8 @@ expresion:
         else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - SUMA {texto / texto}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
-            $$.tipo = tipos[1]; $$.texto = $1.texto + $3.texto;
+            $$.tipo = tipos[2];
+            $$.texto = (char*)malloc($1.texto + $3.texto + 1);
         }
     }
     //RESTA
