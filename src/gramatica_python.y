@@ -196,7 +196,7 @@ expresion:
 /*PRODUCCION "tipos", en esta gramática se represetan los tipos de datos:
 - identificadores (variables) - numeros enteros o decimales positivos o negativos
 - cadenas de texto - estructura parentesis
-T --> id | num | numdecimal */
+T --> id | num | decimal | texto*/
 tipos:
 
     //Identificador
@@ -215,6 +215,11 @@ tipos:
                 $$.tipo = tabla[pos].tipo; $$.decimal=tabla[pos].decimal;
                 $$.n = crearVariableTerminal(tabla[pos].decimal, tabla[pos].registro); //Creamos un nodo terminal con los numeros        
             }
+            //Para si es de tipo texto
+            else if(tabla[pos].tipo==tipos[2]){
+                $$.tipo = tabla[pos].tipo; $$.texto=tabla[pos].texto;
+                $$.n = crearVariableTerminal(tabla[pos].texto, tabla[pos].registro); //Creamos un nodo terminal con el texto        
+            }
         }
     }
 
@@ -232,6 +237,14 @@ tipos:
         printf("\n> [TIPO] - Decimal: %.3f\n", $$.decimal); 
         $$.n = crearNodoTerminal($1); 
         $$.tipo = tipos[1];  
+    }
+
+    //Numero entero normal
+    | STRING {
+        $$.numero = $1;
+        printf("\n> [TIPO] - Texto: %ld\n", $$.texto);
+        $$.n = crearNodoTerminalString($1); 
+        $$.tipo = tipos[0]; 
     }
 ;
 
