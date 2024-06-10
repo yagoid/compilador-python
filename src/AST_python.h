@@ -282,12 +282,34 @@ struct ast *crearNodoTerminal(double valor)
     n->izq = NULL;
     n->dcha = NULL;
     n->tipoNodo = 1;
+    n->valorNumerico = valor;
 
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
     n->nombreVar = crearNombreVariable(); // Genera un nombre único para la variable
-    printf("# [AST] - Registro $f%d ocupado para var_%d = %.3f\n", n->resultado, n->nombreVar, n->valor);
+    printf("# [AST] - Registro $f%d ocupado para var_%d = %.3f\n", n->resultado, n->nombreVar, n->valorNumerico);
 
     // Actualizar el registro de variables
+    variables[n->resultado].dato = n->valorNumerico;
+    variables[n->resultado].nombre = n->nombreVar;
+    variables[n->resultado].disponible = true;
+
+    return n;
+}
+
+struct ast *crearNodoTerminalString(char *valor)
+{
+    struct ast *n = malloc(sizeof(struct ast)); // Asigna memoria dinámicamente para el nuevo nodo
+    n->izq = NULL;
+    n->dcha = NULL;
+    n->tipoNodo = 1;
+    n->valorCadena = valor;
+
+    n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
+    n->nombreVar = crearNombreVariable(); // Genera un nombre único para la variable
+    printf("# [AST] - Registro $f%d ocupado para var_%d = %.3f\n", n->resultado, n->nombreVar, n->valorCadena);
+
+    // Actualizar el registro de variables
+    variables[n->resultado].dato = n->valorCadena;
     variables[n->resultado].nombre = n->nombreVar;
     variables[n->resultado].disponible = true;
 
