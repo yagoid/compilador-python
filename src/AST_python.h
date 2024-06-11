@@ -341,6 +341,19 @@ struct ast *crearVariableTerminal(double valor, int registro)
     return n;
 }
 
+// METODO "crearVariableTerminalString", crear el nodo hoja para una variable ya creada con valor texto
+struct ast *crearVariableTerminalString(const char *valor, int registro)
+{
+    struct ast *n = malloc(sizeof(struct ast)); // Asigna memoria dinámicamente para el nuevo nodo
+    n->izq = NULL;
+    n->dcha = NULL;
+    n->tipoNodo = 6;
+
+    n->valorCadena = strdup(valor); // Asigna memoria y copia el texto
+    n->resultado = registro;
+    return n;
+}
+
 // Función para gestionar errores
 gestionarError(const char *mensaje)
 {

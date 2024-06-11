@@ -515,8 +515,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    74,    74,    83,    84,    92,    93,   100,   124,   149,
-     165,   181,   196,   207,   231,   239,   247,   259
+       0,    74,    74,    83,    84,    92,    93,   100,   124,   157,
+     173,   189,   204,   215,   239,   247,   255,   267
 };
 #endif
 
@@ -1512,7 +1512,15 @@ yyreduce:
             printf("> [OPERACION] - SUMA {texto / texto}\n");
             (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 2);
             (yyval.tr).tipo = tipos[2];
-            (yyval.tr).texto = (char*)malloc((yyvsp[(1) - (3)].tr).texto + (yyvsp[(3) - (3)].tr).texto + 1);
+            (yyval.tr).texto = (char*)malloc(strlen((yyvsp[(1) - (3)].tr).texto) + strlen((yyvsp[(3) - (3)].tr).texto) + 1);
+            if ((yyval.tr).texto != NULL) {
+                // Concatenar las cadenas
+                strcpy((yyval.tr).texto, (yyvsp[(1) - (3)].tr).texto);
+                strcat((yyval.tr).texto, (yyvsp[(3) - (3)].tr).texto);
+            }
+            else {
+                printf("Error al asignar memoria para la concatenacion de cadenas.\n");
+            }
         }
     ;}
     break;
@@ -1520,7 +1528,7 @@ yyreduce:
   case 9:
 
 /* Line 1464 of yacc.c  */
-#line 149 "gramatica_python.y"
+#line 157 "gramatica_python.y"
     {
         
         //Resta de numero - numero
@@ -1541,7 +1549,7 @@ yyreduce:
   case 10:
 
 /* Line 1464 of yacc.c  */
-#line 165 "gramatica_python.y"
+#line 173 "gramatica_python.y"
     {
         
         //Multiplicacion de numero * numero
@@ -1562,7 +1570,7 @@ yyreduce:
   case 11:
 
 /* Line 1464 of yacc.c  */
-#line 181 "gramatica_python.y"
+#line 189 "gramatica_python.y"
     {
         
         //Division de numero / numero
@@ -1583,14 +1591,14 @@ yyreduce:
   case 12:
 
 /* Line 1464 of yacc.c  */
-#line 196 "gramatica_python.y"
+#line 204 "gramatica_python.y"
     {(yyval.tr) = (yyvsp[(1) - (1)].tr);;}
     break;
 
   case 13:
 
 /* Line 1464 of yacc.c  */
-#line 207 "gramatica_python.y"
+#line 215 "gramatica_python.y"
     {
         printf(" VARIABLE %s\n",(yyvsp[(1) - (1)].strVal));
         //Buscamos en la tabla el VARIABLE
@@ -1609,7 +1617,7 @@ yyreduce:
             //Para si es de tipo texto
             else if(tabla[pos].tipo==tipos[2]){
                 (yyval.tr).tipo = tabla[pos].tipo; (yyval.tr).texto=tabla[pos].texto;
-                (yyval.tr).n = crearVariableTerminal(tabla[pos].texto, tabla[pos].registro); //Creamos un nodo terminal con el texto        
+                (yyval.tr).n = crearVariableTerminalString(tabla[pos].texto, tabla[pos].registro); //Creamos un nodo terminal con el texto        
             }
         }
     ;}
@@ -1618,7 +1626,7 @@ yyreduce:
   case 14:
 
 /* Line 1464 of yacc.c  */
-#line 231 "gramatica_python.y"
+#line 239 "gramatica_python.y"
     {
         (yyval.tr).numero = (yyvsp[(1) - (1)].intVal);
         printf("\n> [TIPO] - Numero Positivo: %ld\n", (yyval.tr).numero);
@@ -1630,7 +1638,7 @@ yyreduce:
   case 15:
 
 /* Line 1464 of yacc.c  */
-#line 239 "gramatica_python.y"
+#line 247 "gramatica_python.y"
     {
         (yyval.tr).decimal = (yyvsp[(1) - (1)].realVal);
         printf("\n> [TIPO] - Decimal: %.3f\n", (yyval.tr).decimal); 
@@ -1642,19 +1650,19 @@ yyreduce:
   case 16:
 
 /* Line 1464 of yacc.c  */
-#line 247 "gramatica_python.y"
+#line 255 "gramatica_python.y"
     {
-        (yyval.tr).numero = (yyvsp[(1) - (1)].strVal);
-        printf("\n> [TIPO] - Texto: %ld\n", (yyval.tr).texto);
+        (yyval.tr).texto = (yyvsp[(1) - (1)].strVal);
+        printf("\n> [TIPO] - Texto: %c\n", (yyval.tr).texto);
         (yyval.tr).n = crearNodoTerminalString((yyvsp[(1) - (1)].strVal)); 
-        (yyval.tr).tipo = tipos[0]; 
+        (yyval.tr).tipo = tipos[2]; 
     ;}
     break;
 
   case 17:
 
 /* Line 1464 of yacc.c  */
-#line 259 "gramatica_python.y"
+#line 267 "gramatica_python.y"
     { 
         printf("> [SENTENCIA] - Imprimir\n");
         (yyval.tr).n = crearNodoNoTerminal((yyvsp[(3) - (4)].tr).n, crearNodoVacio(), 4);        
@@ -1664,7 +1672,7 @@ yyreduce:
 
 
 /* Line 1464 of yacc.c  */
-#line 1668 "gramatica_python.tab.c"
+#line 1676 "gramatica_python.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1876,7 +1884,7 @@ yyreturn:
 
 
 /* Line 1684 of yacc.c  */
-#line 265 "gramatica_python.y"
+#line 273 "gramatica_python.y"
  
 
 //--------------------------------------------------- METODO MAIN -----------------------------------------------
