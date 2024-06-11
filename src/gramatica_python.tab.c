@@ -515,8 +515,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    74,    74,    83,    84,    92,    93,   100,   124,   157,
-     173,   189,   204,   215,   239,   247,   255,   267
+       0,    74,    74,    83,    84,    92,    93,   100,   130,   163,
+     179,   195,   210,   221,   245,   253,   261,   273
 };
 #endif
 
@@ -1483,6 +1483,12 @@ yyreduce:
         tabla[indice].nombre = (yyvsp[(1) - (3)].strVal); tabla[indice].tipo = tipos[1]; tabla[indice].decimal = (yyvsp[(3) - (3)].tr).decimal; tabla[indice].registro = (yyvsp[(3) - (3)].tr).n->resultado;
         indice++; //incrementamos el valor del inidice para pasar a la siguiente posicion y dejar la anterior guardada
         }
+        //Para crear un nuevo simbolo de tipo string
+        else if(strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){ //comprobacion si es string
+        printf("Asignado el valor %c a la variable\n",(yyvsp[(3) - (3)].tr).texto);
+        tabla[indice].nombre = (yyvsp[(1) - (3)].strVal); tabla[indice].tipo = tipos[2]; tabla[indice].texto = (yyvsp[(3) - (3)].tr).texto; tabla[indice].registro = (yyvsp[(3) - (3)].tr).n->resultado;
+        indice++; //incrementamos el valor del inidice para pasar a la siguiente posicion y dejar la anterior guardada
+        }
         (yyval.tr).n=crearNodoNoTerminal((yyvsp[(3) - (3)].tr).n, crearNodoVacio(), 5);
     ;}
     break;
@@ -1490,7 +1496,7 @@ yyreduce:
   case 8:
 
 /* Line 1464 of yacc.c  */
-#line 124 "gramatica_python.y"
+#line 130 "gramatica_python.y"
     {
 
         //Suma de numero + numero
@@ -1528,7 +1534,7 @@ yyreduce:
   case 9:
 
 /* Line 1464 of yacc.c  */
-#line 157 "gramatica_python.y"
+#line 163 "gramatica_python.y"
     {
         
         //Resta de numero - numero
@@ -1549,7 +1555,7 @@ yyreduce:
   case 10:
 
 /* Line 1464 of yacc.c  */
-#line 173 "gramatica_python.y"
+#line 179 "gramatica_python.y"
     {
         
         //Multiplicacion de numero * numero
@@ -1570,7 +1576,7 @@ yyreduce:
   case 11:
 
 /* Line 1464 of yacc.c  */
-#line 189 "gramatica_python.y"
+#line 195 "gramatica_python.y"
     {
         
         //Division de numero / numero
@@ -1591,14 +1597,14 @@ yyreduce:
   case 12:
 
 /* Line 1464 of yacc.c  */
-#line 204 "gramatica_python.y"
+#line 210 "gramatica_python.y"
     {(yyval.tr) = (yyvsp[(1) - (1)].tr);;}
     break;
 
   case 13:
 
 /* Line 1464 of yacc.c  */
-#line 215 "gramatica_python.y"
+#line 221 "gramatica_python.y"
     {
         printf(" VARIABLE %s\n",(yyvsp[(1) - (1)].strVal));
         //Buscamos en la tabla el VARIABLE
@@ -1626,7 +1632,7 @@ yyreduce:
   case 14:
 
 /* Line 1464 of yacc.c  */
-#line 239 "gramatica_python.y"
+#line 245 "gramatica_python.y"
     {
         (yyval.tr).numero = (yyvsp[(1) - (1)].intVal);
         printf("\n> [TIPO] - Numero Positivo: %ld\n", (yyval.tr).numero);
@@ -1638,7 +1644,7 @@ yyreduce:
   case 15:
 
 /* Line 1464 of yacc.c  */
-#line 247 "gramatica_python.y"
+#line 253 "gramatica_python.y"
     {
         (yyval.tr).decimal = (yyvsp[(1) - (1)].realVal);
         printf("\n> [TIPO] - Decimal: %.3f\n", (yyval.tr).decimal); 
@@ -1650,7 +1656,7 @@ yyreduce:
   case 16:
 
 /* Line 1464 of yacc.c  */
-#line 255 "gramatica_python.y"
+#line 261 "gramatica_python.y"
     {
         (yyval.tr).texto = (yyvsp[(1) - (1)].strVal);
         printf("\n> [TIPO] - Texto: %c\n", (yyval.tr).texto);
@@ -1662,7 +1668,7 @@ yyreduce:
   case 17:
 
 /* Line 1464 of yacc.c  */
-#line 267 "gramatica_python.y"
+#line 273 "gramatica_python.y"
     { 
         printf("> [SENTENCIA] - Imprimir\n");
         (yyval.tr).n = crearNodoNoTerminal((yyvsp[(3) - (4)].tr).n, crearNodoVacio(), 4);        
@@ -1672,7 +1678,7 @@ yyreduce:
 
 
 /* Line 1464 of yacc.c  */
-#line 1676 "gramatica_python.tab.c"
+#line 1682 "gramatica_python.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1884,7 +1890,7 @@ yyreturn:
 
 
 /* Line 1684 of yacc.c  */
-#line 273 "gramatica_python.y"
+#line 279 "gramatica_python.y"
  
 
 //--------------------------------------------------- METODO MAIN -----------------------------------------------
