@@ -308,7 +308,7 @@ struct ast *crearNodoTerminalString(char *valor)
 
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
     n->nombreVar = crearNombreVariable(); // Genera un nombre único para la variable
-    printf("# [AST] - Registro $f%d ocupado para var_%d = %.3f\n", n->resultado, n->nombreVar, n->valorCadena);
+    printf("# [AST] - Registro $f%d ocupado para var_%d = %c\n", n->resultado, n->nombreVar, n->valorCadena);
 
     // Actualizar el registro de variables
     variables[n->resultado].valorCadena = n->valorCadena;
@@ -359,29 +359,6 @@ gestionarError(const char *mensaje)
 {
     fprintf(stderr, "%s\n", mensaje);
     // Aquí puedes agregar manejo adicional de errores, como terminar el programa o registrar el error en un archivo
-}
-
-// METODO "concatenarCadenas", crea un nodo para la operación de concatenación
-struct ast *concatenarCadenas(struct ast *izq, struct ast *dcha)
-{
-    struct ast *n = malloc(sizeof(struct ast));
-    n->izq = izq;
-    n->dcha = dcha;
-    n->tipoNodo = 8; // Supongamos que el tipo 8 representa la concatenación de cadenas
-    n->tipo = strdup("string");
-
-    // Generar el código ASM para concatenación de cadenas
-    n->resultado = encontrarReg();
-    fprintf(yyout, "concatenate $t%d, $t%d, $t%d\n", n->resultado, izq->resultado, dcha->resultado);
-
-    // Opcional: actualizar variables si es necesario
-    variables[n->resultado].valorCadena = malloc(strlen(variables[izq->resultado].valorCadena) + strlen(variables[dcha->resultado].valorCadena) + 1);
-    strcpy(variables[n->resultado].valorCadena, variables[izq->resultado].valorCadena);
-    strcat(variables[n->resultado].valorCadena, variables[dcha->resultado].valorCadena);
-    variables[n->resultado].disponible = true;
-    variables[n->resultado].tipo = strdup("string");
-
-    return n;
 }
 
 void comprobarTipos(struct ast *nodo)

@@ -112,6 +112,12 @@ asignacion:
         tabla[indice].nombre = $1; tabla[indice].tipo = tipos[1]; tabla[indice].decimal = $3.decimal; tabla[indice].registro = $3.n->resultado;
         indice++; //incrementamos el valor del inidice para pasar a la siguiente posicion y dejar la anterior guardada
         }
+        //Para crear un nuevo simbolo de tipo string
+        else if(strcmp($3.tipo, tipos[2]) == 0){ //comprobacion si es string
+        printf("Asignado el valor %c a la variable\n",$3.texto);
+        tabla[indice].nombre = $1; tabla[indice].tipo = tipos[2]; tabla[indice].texto = $3.texto; tabla[indice].registro = $3.n->resultado;
+        indice++; //incrementamos el valor del inidice para pasar a la siguiente posicion y dejar la anterior guardada
+        }
         $$.n=crearNodoNoTerminal($3.n, crearNodoVacio(), 5);
     }
 
