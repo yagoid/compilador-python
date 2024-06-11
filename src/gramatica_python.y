@@ -142,7 +142,15 @@ expresion:
             printf("> [OPERACION] - SUMA {texto / texto}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
             $$.tipo = tipos[2];
-            $$.texto = (char*)malloc($1.texto + $3.texto + 1);
+            $$.texto = (char*)malloc(strlen($1.texto) + strlen($3.texto) + 1);
+            if ($$.texto != NULL) {
+                // Concatenar las cadenas
+                strcpy($$.texto, $1.texto);
+                strcat($$.texto, $3.texto);
+            }
+            else {
+                printf("Error al asignar memoria para la concatenacion de cadenas.\n");
+            }
         }
     }
     //RESTA
@@ -222,7 +230,7 @@ tipos:
             //Para si es de tipo texto
             else if(tabla[pos].tipo==tipos[2]){
                 $$.tipo = tabla[pos].tipo; $$.texto=tabla[pos].texto;
-                $$.n = crearVariableTerminal(tabla[pos].texto, tabla[pos].registro); //Creamos un nodo terminal con el texto        
+                $$.n = crearVariableTerminalString(tabla[pos].texto, tabla[pos].registro); //Creamos un nodo terminal con el texto        
             }
         }
     }
@@ -243,12 +251,12 @@ tipos:
         $$.tipo = tipos[1];  
     }
 
-    //Numero entero normal
+    //Cadena de caracteres
     | STRING {
         $$.numero = $1;
         printf("\n> [TIPO] - Texto: %ld\n", $$.texto);
         $$.n = crearNodoTerminalString($1); 
-        $$.tipo = tipos[0]; 
+        $$.tipo = tipos[2]; 
     }
 ;
 
