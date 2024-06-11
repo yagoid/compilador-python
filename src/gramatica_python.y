@@ -253,8 +253,8 @@ tipos:
 
     //Cadena de caracteres
     | STRING {
-        $$.numero = $1;
-        printf("\n> [TIPO] - Texto: %ld\n", $$.texto);
+        $$.texto = $1;
+        printf("\n> [TIPO] - Texto: %c\n", $$.texto);
         $$.n = crearNodoTerminalString($1); 
         $$.tipo = tipos[2]; 
     }

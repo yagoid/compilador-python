@@ -1652,8 +1652,8 @@ yyreduce:
 /* Line 1464 of yacc.c  */
 #line 255 "gramatica_python.y"
     {
-        (yyval.tr).numero = (yyvsp[(1) - (1)].strVal);
-        printf("\n> [TIPO] - Texto: %ld\n", (yyval.tr).texto);
+        (yyval.tr).texto = (yyvsp[(1) - (1)].strVal);
+        printf("\n> [TIPO] - Texto: %c\n", (yyval.tr).texto);
         (yyval.tr).n = crearNodoTerminalString((yyvsp[(1) - (1)].strVal)); 
         (yyval.tr).tipo = tipos[2]; 
     ;}
