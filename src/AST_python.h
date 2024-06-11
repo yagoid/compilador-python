@@ -11,7 +11,12 @@ int numMaxRegistros = 32; // Variable que indica el numero maximo de registros d
 int nombreVariable = 0;   // Almacena el entero que se asociará al nombre de la variable
 
 // Por defecto, tenemos 32 registros de tipo f para controlar los registros libres (true) o ocupados (false)
-bool registros[32] = {[0 ... 29] = true, [30 ... 31] = true}; // Los registros 30 y 31 están reservados por defecto para imprimir por pantalla
+bool registros[32] = {
+    true, true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true, true};
+// Los registros 30 y 31 están reservados por defecto para imprimir por pantalla
 
 // Estructura variable, se hará uso de la misma para almacenar e imprimir las variables del codigo python
 struct variable
