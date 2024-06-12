@@ -75,6 +75,7 @@ bool 		{return BOOLEAN; }
 "="         {return ASIGNACION; }
 "("         {return PARENTESIS_IZQ; }
 ")"         {return PARENTESIS_DER; }
+":"         {return DOS_PUNTOS; }
 
 {digit}+                   { yylval.intVal = atoi(yytext); return NUMERO; }  
 {digit}+"."{digit}*        { yylval.realVal = atof(yytext); return DECIMAL; } 

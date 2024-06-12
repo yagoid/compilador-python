@@ -31,6 +31,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
     int numero;
     float decimal;
     char* texto;
+    bool boolean
     char* tipo;             //Define el tipo que se esta usando
     struct ast *n;          //Para almacenar los nodos del AST
   }tr;
@@ -40,7 +41,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 %token FALSE NONE TRUE AND AS ASSERT ASYNC AWAIT BREAK CONTINUE CLASS DEF DEL ELIF ELSE EXCEPT FINALLY 
 %token FOR FROM GLOBAL IF IMPORT IN IS LAMBDA NONLOCAL NOT OR PASS RAISE RETURN TRY WHILE WITH YIELD END IMPRIMIR 
 %token CADENA VECTOR LISTA TUPLA SET DICT INT FLOAT COMPLEX BOOLEAN 
-%token SUMA RESTA MULTIPLICACION DIVISION MODULO MENOR_QUE MAYOR_QUE AUMENTAR_VALOR IGUAL_QUE DISTINTO_QUE ASIGNACION PARENTESIS_IZQ PARENTESIS_DER  
+%token SUMA RESTA MULTIPLICACION DIVISION MODULO MENOR_QUE MAYOR_QUE AUMENTAR_VALOR IGUAL_QUE DISTINTO_QUE ASIGNACION PARENTESIS_IZQ PARENTESIS_DER DOS_PUNTOS
 
 /*Declaración de los TOKENS que provienen de FLEX con su respectivo tipo*/
 %token <intVal> NUMERO 
@@ -49,7 +50,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 %token <strVal> STRING
 
 /*Declaración de los TOKENS NO TERMINALES con su estructura*/
-%type <tr> sentencias sentencia tipos expresion asignacion imprimir  
+%type <tr> sentencias sentencia tipos expresion asignacion imprimir  if
 
 /*Declaración de la precedencia siendo menor la del primero y mayor la del último*/
 %left SUMA RESTA MULTIPLICACION DIVISION
@@ -60,10 +61,11 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 //GRAMATICA
 //X --> S
 //S --> D | S D
-//D --> A | I 
+//D --> A | I | F
 //A --> id = E 
+//F --> if E: S end
 //E --> E op T | T
-//T --> id | num | decimal
+//T --> id | num | decimal | texto | bool
 //I --> imprimir ( E )
 
 //-----------------------------------------------  PRODUCCIONES  -------------------------------------------------------
@@ -87,10 +89,11 @@ sentencias:
 ;
 
 //PRODUCCION "sentencia", puede estar formado por asignaciones, condicionales, bucles whiles, imprimir
-//D --> A | I 
+//D --> A | I | F
 sentencia:   //Por defecto bison, asigna $1 a $$ por lo que no es obligatoria realizar la asignacion
     asignacion              
-    | imprimir       
+    | imprimir  
+    | if     
 ;
 
 //-------------------------------------------------------- ASIGNACION --------------------------------------------------------
@@ -121,6 +124,11 @@ asignacion:
         $$.n=crearNodoNoTerminal($3.n, crearNodoVacio(), 13);
     }
 
+//-------------------------------------------------- IF ---------------------------------------------------
+//F --> if E: S end
+if:
+    IF expresion DOS_PUNTOS sentencias END 
+    
 //-----------------------------------------------  EXPRESION ---------------------------------------------
 //PRODUCCION "expresion", en esta gramática se representa la suma, resta y otros terminos
 //E --> E op T | T
@@ -214,7 +222,7 @@ expresion:
 /*PRODUCCION "tipos", en esta gramática se represetan los tipos de datos:
 - identificadores (variables) - numeros enteros o decimales positivos o negativos
 - cadenas de texto - estructura parentesis
-T --> id | num | decimal | texto*/
+T --> id | num | decimal | texto | bool*/
 tipos:
 
     //Identificador
@@ -263,6 +271,14 @@ tipos:
         printf("\n> [TIPO] - Texto: %c\n", $$.texto);
         $$.n = crearNodoTerminalString($1); 
         $$.tipo = tipos[2]; 
+    }
+
+    //Boleanos
+    | BOOLEAN {
+        $$.boolean = $1;
+        printf("\n> [TIPO] - Booleano: %c\n", $$.boolean);
+        $$.n = crearNodoTerminalBoolean($1); 
+        $$.tipo = tipos[3]; 
     }
 ;
 
