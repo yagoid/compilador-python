@@ -177,8 +177,8 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 14: // Nuevo imprimir
     {
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
-        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        funcionImprimir(n->izq);
     }
     break;
 

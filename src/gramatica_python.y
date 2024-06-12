@@ -52,7 +52,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 %type <tr> sentencias sentencia tipos expresion asignacion imprimir  
 
 /*Declaración de la precedencia siendo menor la del primero y mayor la del último*/
-%left SUMA RESTA MULTIPLICACION
+%left SUMA RESTA MULTIPLICACION DIVISION
 
 %start codigo
 %%
@@ -118,7 +118,7 @@ asignacion:
         tabla[indice].nombre = $1; tabla[indice].tipo = tipos[2]; tabla[indice].texto = $3.texto; tabla[indice].registro = $3.n->resultado;
         indice++; //incrementamos el valor del inidice para pasar a la siguiente posicion y dejar la anterior guardada
         }
-        $$.n=crearNodoNoTerminal($3.n, crearNodoVacio(), 5);
+        $$.n=crearNodoNoTerminal($3.n, crearNodoVacio(), 13);
     }
 
 //-----------------------------------------------  EXPRESION ---------------------------------------------
@@ -272,7 +272,7 @@ tipos:
 imprimir: 
     IMPRIMIR PARENTESIS_IZQ expresion PARENTESIS_DER { 
         printf("> [SENTENCIA] - Imprimir\n");
-        $$.n = crearNodoNoTerminal($3.n, crearNodoVacio(), 4);        
+        $$.n = crearNodoNoTerminal($3.n, crearNodoVacio(), 14);        
     }
 ;
 
@@ -280,8 +280,8 @@ imprimir:
 
 //--------------------------------------------------- METODO MAIN -----------------------------------------------
 int main(int argc, char** argv) {
-    yyin = fopen(argv[1], "rt");            //Apertura del archivo codigo.latino
-    yyout = fopen( "./python.asm", "wt" );  //Para el archivo .ASM con nombre "latino.asm"
+    yyin = fopen(argv[1], "rt");            //Apertura del archivo test.py
+    yyout = fopen( "./python.asm", "wt" );  //Para el archivo .ASM con nombre "python.asm"
 	yyparse();
     fclose(yyin);
     return 0;

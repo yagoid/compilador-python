@@ -1,8 +1,8 @@
 // ----------------------------- DECLARACION DE VARIABLES Y ESTRUCTURAS --------------------------------------------
 
 typedef struct {  //typedef para definir al final de la estructura el nombre tSimbolos
-    int numero;           //valor int
-    float decimal;  //valor float
+    int numero;             //valor int
+    float decimal;          //valor float
     char* texto;            //valor char
     char *nombre;
     char *tipo;
