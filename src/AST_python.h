@@ -169,7 +169,20 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     }
     break;
 
-    case 13: // Comentario (no hace nada)
+    case 13: // Nueva asignación
+    {
+        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+    }
+    break;
+
+    case 14: // Nuevo imprimir
+    {
+        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+    }
+    break;
+
+    case 15: // Comentario (no hace nada)
         break;
 
     default: // Nodo no reconocido, manejo de errores
@@ -341,6 +354,7 @@ struct ast *crearVariableTerminal(double valor, int registro)
     n->izq = NULL;
     n->dcha = NULL;
     n->tipoNodo = 6;
+    n->valorNumerico = valor;
 
     n->resultado = registro;
     return n;
@@ -353,6 +367,7 @@ struct ast *crearVariableTerminalString(const char *valor, int registro)
     n->izq = NULL;
     n->dcha = NULL;
     n->tipoNodo = 6;
+    n->valorCadena = valor;
 
     n->valorCadena = strdup(valor); // Asigna memoria y copia el texto
     n->resultado = registro;
