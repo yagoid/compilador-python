@@ -280,8 +280,8 @@ imprimir:
 
 //--------------------------------------------------- METODO MAIN -----------------------------------------------
 int main(int argc, char** argv) {
-    yyin = fopen(argv[1], "rt");            //Apertura del archivo codigo.latino
-    yyout = fopen( "./python.asm", "wt" );  //Para el archivo .ASM con nombre "latino.asm"
+    yyin = fopen(argv[1], "rt");            //Apertura del archivo test.py
+    yyout = fopen( "./python.asm", "wt" );  //Para el archivo .ASM con nombre "python.asm"
 	yyparse();
     fclose(yyin);
     return 0;
