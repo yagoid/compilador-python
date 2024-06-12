@@ -202,7 +202,10 @@ int crearNombreVariable()
 // METODO "comprobarAST", imprime el codigo .asm y generas sus respectivos pasos
 comprobarAST(struct ast *n)
 {
-    imprimirVariables(); // Metodo que realiza la impresion de la parte de variables para Mips
+    printf("Imprimiendo variables\n");
+    imprimirVariables();
+    printf("Generando código .text\n");
+    // imprimirVariables(); // Metodo que realiza la impresion de la parte de variables para Mips
     fprintf(yyout, "\n#--------------------- Ejecuciones ---------------------");
     fprintf(yyout, "\n.text\n");
     fprintf(yyout, "lwc1 $f31, zero\n");
@@ -226,24 +229,29 @@ void imprimirVariables()
     fprintf(yyout, ".data\n");
     fprintf(yyout, "saltoLinea: .asciiz \"\\n\"\n"); // Variable salto de linea
     fprintf(yyout, "zero: .float 0.0\n");            // Se inserta una variable auxiliar var_0 con valor 0.000
-
     // Bucle que recorre el array de variables y las imprime en el archivo .asm
     for (int i = 0; i < 64; i++)
     {
-        if (variables[i].disponible == true)
+        printf("Variable %d: tipo=%s, nombre=%s\n", i, variables[i].tipo, variables[i].nombre);
+
+        if (strcmp(variables[i].tipo, "float") == 0)
         {
-            if (strcmp(variables[i].tipo, "float") == 0)
-            {
-                fprintf(yyout, "var_%s: .float %.3f\n", variables[i].nombre, variables[i].dato);
-            }
-            else if (strcmp(variables[i].tipo, "int") == 0)
-            {
-                fprintf(yyout, "var_%s: .word %d\n", variables[i].nombre, variables[i].valorEntero);
-            }
-            else if (strcmp(variables[i].tipo, "string") == 0)
-            {
-                fprintf(yyout, "var_%s: .asciiz \"%s\"\n", variables[i].nombre, variables[i].valorCadena);
-            }
+            printf("if float\n");
+            fprintf(yyout, "var_%s: .float %.3f\n", variables[i].nombre, variables[i].dato);
+        }
+        else if (strcmp(variables[i].tipo, "int") == 0)
+        {
+            printf("if int\n");
+            fprintf(yyout, "var_%s: .word %d\n", variables[i].nombre, variables[i].valorEntero);
+        }
+        else if (strcmp(variables[i].tipo, "string") == 0)
+        {
+            printf("if string\n");
+            fprintf(yyout, "var_%s: .asciiz \"%s\"\n", variables[i].nombre, variables[i].valorCadena);
+        }
+        else
+        {
+            printf("Tipo desconocido: %s\n", variables[i].tipo);
         }
     }
 }
