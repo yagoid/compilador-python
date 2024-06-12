@@ -202,7 +202,10 @@ int crearNombreVariable()
 // METODO "comprobarAST", imprime el codigo .asm y generas sus respectivos pasos
 comprobarAST(struct ast *n)
 {
-    imprimirVariables(); // Metodo que realiza la impresion de la parte de variables para Mips
+    printf("Imprimiendo variables\n");
+    imprimirVariables();
+    printf("Generando codigo .text\n");
+    // imprimirVariables(); // Metodo que realiza la impresion de la parte de variables para Mips
     fprintf(yyout, "\n#--------------------- Ejecuciones ---------------------");
     fprintf(yyout, "\n.text\n");
     fprintf(yyout, "lwc1 $f31, zero\n");
@@ -226,26 +229,31 @@ void imprimirVariables()
     fprintf(yyout, ".data\n");
     fprintf(yyout, "saltoLinea: .asciiz \"\\n\"\n"); // Variable salto de linea
     fprintf(yyout, "zero: .float 0.0\n");            // Se inserta una variable auxiliar var_0 con valor 0.000
-
     // Bucle que recorre el array de variables y las imprime en el archivo .asm
-    for (int i = 0; i < 64; i++)
-    {
-        if (variables[i].disponible == true)
-        {
-            if (strcmp(variables[i].tipo, "float") == 0)
-            {
-                fprintf(yyout, "var_%s: .float %.3f\n", variables[i].nombre, variables[i].dato);
-            }
-            else if (strcmp(variables[i].tipo, "int") == 0)
-            {
-                fprintf(yyout, "var_%s: .word %d\n", variables[i].nombre, variables[i].valorEntero);
-            }
-            else if (strcmp(variables[i].tipo, "string") == 0)
-            {
-                fprintf(yyout, "var_%s: .asciiz \"%s\"\n", variables[i].nombre, variables[i].valorCadena);
-            }
-        }
-    }
+    // for (int i = 0; i < 64; i++)
+    // {
+    //     // printf("Variable %d: tipo=%s, nombre=%s\n", i, variables[i].tipo, variables[i].nombre);
+    //     printf("Hola");
+    //     if (strcmp(variables[i].tipo, "float") == 0)
+    //     {
+    //         printf("if float\n");
+    //         fprintf(yyout, "var_%s: .float %.3f\n", variables[i].nombre, variables[i].dato);
+    //     }
+    //     else if (strcmp(variables[i].tipo, "int") == 0)
+    //     {
+    //         printf("if int\n");
+    //         fprintf(yyout, "var_%s: .word %d\n", variables[i].nombre, variables[i].valorEntero);
+    //     }
+    //     else if (strcmp(variables[i].tipo, "string") == 0)
+    //     {
+    //         printf("if string\n");
+    //         fprintf(yyout, "var_%s: .asciiz \"%s\"\n", variables[i].nombre, variables[i].valorCadena);
+    //     }
+    //     else
+    //     {
+    //         printf("Tipo desconocido: %s\n", variables[i].tipo);
+    //     }
+    // }
 }
 
 // METODO "saltoLinea", incorpora un salto de linea en la salida de nuestro codigo
@@ -308,6 +316,7 @@ struct ast *crearNodoTerminal(double valor)
     printf("# [AST] - Registro $f%d ocupado para var_%d = %.3f\n", n->resultado, n->nombreVar, n->valorNumerico);
 
     // Actualizar el registro de variables
+    variables[n->resultado].tipo = n->tipo;
     variables[n->resultado].dato = n->valorNumerico;
     variables[n->resultado].nombre = n->nombreVar;
     variables[n->resultado].disponible = true;
@@ -323,15 +332,16 @@ struct ast *crearNodoTerminalString(char *valor)
     n->tipoNodo = 1;
     n->tipo = "string";
     n->valorCadena = valor;
-
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
     n->nombreVar = crearNombreVariable(); // Genera un nombre único para la variable
     printf("# [AST] - Registro $f%d ocupado para var_%d = %c\n", n->resultado, n->nombreVar, n->valorCadena);
 
     // Actualizar el registro de variables
+    variables[n->resultado].tipo = n->tipo;
     variables[n->resultado].valorCadena = n->valorCadena;
     variables[n->resultado].nombre = n->nombreVar;
     variables[n->resultado].disponible = true;
+    // printf("Variable %d: tipo=%s, nombre=%d, valorCadena=%s\n", n->resultado, variables[n->resultado].tipo, variables[n->resultado].nombre, variables[n->resultado].valorCadena);
 
     return n;
 }
