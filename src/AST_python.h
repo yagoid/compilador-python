@@ -231,7 +231,7 @@ void imprimirVariables()
     for (int i = 0; i < 64; i++)
     {
         // printf("Variable %d: tipo=%s, nombre=%s\n", i, variables[i].tipo, variables[i].nombre);
-        printf("sdf") if (variables[i].disponible == true)
+        if (variables[i].disponible == true)
         {
             // printf("\ni=%d --> nombre de variable=%c\n", i, variables[i].nombre);
 
@@ -339,6 +339,10 @@ struct ast *crearNodoTerminalString(char *valor)
     // printf("Variable %d: tipo=%s, nombre=%d, valorCadena=%s\n", n->resultado, variables[n->resultado].tipo, variables[n->resultado].nombre, variables[n->resultado].valorCadena);
 
     return n;
+}
+
+struct ast *crearNodoTerminalString(bool *valor)
+{
 }
 
 // METODO "crearNodoNoTerminal", crea un nuevo nodo, asignamos sus hijos y tipo, y buscamos nuevo registro

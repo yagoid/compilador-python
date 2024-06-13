@@ -18,6 +18,8 @@ extern int num_linea; //Almacena el numero de linea durante la ejecucion
 extern tSimbolos tabla[256];
 extern int indice; //Se almacena el índice de la tabla de tSimbolos
 char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo que se detecta en flex al tipo del nodo
+#define true 1
+#define false 0
 
 
 %}
@@ -31,7 +33,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
     int numero;
     float decimal;
     char* texto;
-    bool boolean
+    int boolean;
     char* tipo;             //Define el tipo que se esta usando
     struct ast *n;          //Para almacenar los nodos del AST
   }tr;
@@ -48,7 +50,6 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 %token <realVal> DECIMAL 
 %token <strVal> VARIABLE
 %token <strVal> STRING
-%token <boolVal> BOOLEAN
 
 /*Declaración de los TOKENS NO TERMINALES con su estructura*/
 %type <tr> sentencias sentencia tipos expresion asignacion imprimir  if
