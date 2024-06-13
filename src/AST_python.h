@@ -228,10 +228,10 @@ void imprimirVariables()
     fprintf(yyout, "saltoLinea: .asciiz \"\\n\"\n"); // Variable salto de linea
     fprintf(yyout, "zero: .float 0.0\n");            // Se inserta una variable auxiliar var_0 con valor 0.000
     // Bucle que recorre el array de variables y las imprime en el archivo .asm
-    for (int i = 1; i < 64; i++)
+    for (int i = 0; i < 64; i++)
     {
         // printf("Variable %d: tipo=%s, nombre=%s\n", i, variables[i].tipo, variables[i].nombre);
-        if (variables[i].disponible == true)
+        printf("sdf") if (variables[i].disponible == true)
         {
             // printf("\ni=%d --> nombre de variable=%c\n", i, variables[i].nombre);
 

@@ -81,6 +81,7 @@ bool 		{return BOOLEAN; }
 {digit}+"."{digit}*        { yylval.realVal = atof(yytext); return DECIMAL; } 
 {id}(_{id})*               { yylval.strVal = strdup(yytext); return VARIABLE; }
 \"([^\\"]|\\.)*\"          { yylval.strVal = strdup(yytext); return STRING; } 
+true|false                 { yylval.boolVal = (strcmp(yytext, "true") == 0) ? 1 : 0; return BOOLEAN; }
 
 \[[[:alnum:]]*\]     							{ /* return ARRAY_SIMPLE; */ }
 \[[[:alnum:]]*\]\[[[:alnum:]]*\]      			{ /* return ARRAY_2D; */}

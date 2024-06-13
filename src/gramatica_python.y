@@ -40,7 +40,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 /*Declaración de los TOKENS*/
 %token FALSE NONE TRUE AND AS ASSERT ASYNC AWAIT BREAK CONTINUE CLASS DEF DEL ELIF ELSE EXCEPT FINALLY 
 %token FOR FROM GLOBAL IF IMPORT IN IS LAMBDA NONLOCAL NOT OR PASS RAISE RETURN TRY WHILE WITH YIELD END IMPRIMIR 
-%token CADENA VECTOR LISTA TUPLA SET DICT INT FLOAT COMPLEX BOOLEAN 
+%token CADENA VECTOR LISTA TUPLA SET DICT INT FLOAT COMPLEX 
 %token SUMA RESTA MULTIPLICACION DIVISION MODULO MENOR_QUE MAYOR_QUE AUMENTAR_VALOR IGUAL_QUE DISTINTO_QUE ASIGNACION PARENTESIS_IZQ PARENTESIS_DER DOS_PUNTOS
 
 /*Declaración de los TOKENS que provienen de FLEX con su respectivo tipo*/
@@ -48,6 +48,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 %token <realVal> DECIMAL 
 %token <strVal> VARIABLE
 %token <strVal> STRING
+%token <boolVal> BOOLEAN
 
 /*Declaración de los TOKENS NO TERMINALES con su estructura*/
 %type <tr> sentencias sentencia tipos expresion asignacion imprimir  if
@@ -231,6 +232,7 @@ expresion:
             $$.n = crearNodoNoTerminal($1.n, $3.n, 6);
             $$.tipo = tipos[1]; $$.decimal = $1.decimal < $3.decimal;
         }
+    }
     //MAYOR_QUE
     | expresion MAYOR_QUE tipos {
         
