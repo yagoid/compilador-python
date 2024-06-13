@@ -21,13 +21,13 @@ bool registros[32] = {
 // Estructura variable, se hará uso de la misma para almacenar e imprimir las variables del codigo python
 struct variable
 {
-    char *nombre;      // Nombre de la variable, utilizando un puntero a char para nombres dinámicos
+    // char *nombre;      // Nombre de la variable, utilizando un puntero a char para nombres dinámicos
     float dato;        // Valor de la variable (en caso de ser flotante)
     int valorEntero;   // Valor de la variable (en caso de ser entero)
     char *valorCadena; // Valor de la variable (en caso de ser cadena)
-    // int nombre;       //limite de caracteres de la variable
-    bool disponible; // Indica si la variable está disponible
-    char *tipo;      // Tipo de la variable: "int", "float", "string", etc.
+    int nombre;        // limite de caracteres de la variable
+    bool disponible;   // Indica si la variable está disponible
+    char *tipo;        // Tipo de la variable: "int", "float", "string", etc.
 };
 
 struct variable variables[64]; // Declaramos el array de variables usando la estructura definida
@@ -202,9 +202,7 @@ int crearNombreVariable()
 // METODO "comprobarAST", imprime el codigo .asm y generas sus respectivos pasos
 comprobarAST(struct ast *n)
 {
-    printf("Imprimiendo variables\n");
     imprimirVariables();
-    printf("Generando codigo .text\n");
     // imprimirVariables(); // Metodo que realiza la impresion de la parte de variables para Mips
     fprintf(yyout, "\n#--------------------- Ejecuciones ---------------------");
     fprintf(yyout, "\n.text\n");
@@ -230,30 +228,27 @@ void imprimirVariables()
     fprintf(yyout, "saltoLinea: .asciiz \"\\n\"\n"); // Variable salto de linea
     fprintf(yyout, "zero: .float 0.0\n");            // Se inserta una variable auxiliar var_0 con valor 0.000
     // Bucle que recorre el array de variables y las imprime en el archivo .asm
-    // for (int i = 0; i < 64; i++)
-    // {
-    //     // printf("Variable %d: tipo=%s, nombre=%s\n", i, variables[i].tipo, variables[i].nombre);
-    //     printf("Hola");
-    //     if (strcmp(variables[i].tipo, "float") == 0)
-    //     {
-    //         printf("if float\n");
-    //         fprintf(yyout, "var_%s: .float %.3f\n", variables[i].nombre, variables[i].dato);
-    //     }
-    //     else if (strcmp(variables[i].tipo, "int") == 0)
-    //     {
-    //         printf("if int\n");
-    //         fprintf(yyout, "var_%s: .word %d\n", variables[i].nombre, variables[i].valorEntero);
-    //     }
-    //     else if (strcmp(variables[i].tipo, "string") == 0)
-    //     {
-    //         printf("if string\n");
-    //         fprintf(yyout, "var_%s: .asciiz \"%s\"\n", variables[i].nombre, variables[i].valorCadena);
-    //     }
-    //     else
-    //     {
-    //         printf("Tipo desconocido: %s\n", variables[i].tipo);
-    //     }
-    // }
+    for (int i = 1; i < 64; i++)
+    {
+        // printf("Variable %d: tipo=%s, nombre=%s\n", i, variables[i].tipo, variables[i].nombre);
+        if (variables[i].disponible == true)
+        {
+            // printf("\ni=%d --> nombre de variable=%c\n", i, variables[i].nombre);
+
+            if (strcmp(variables[i].tipo, "float") == 0)
+            {
+                fprintf(yyout, "var_%d: .float %.3f\n", variables[i].nombre, variables[i].dato);
+            }
+            else if (strcmp(variables[i].tipo, "int") == 0)
+            {
+                fprintf(yyout, "var_%d: .word %d\n", variables[i].nombre, variables[i].valorEntero);
+            }
+            else if (strcmp(variables[i].tipo, "string") == 0)
+            {
+                fprintf(yyout, "var_%d: .asciiz \"%c\"\n", variables[i].nombre, variables[i].valorCadena);
+            }
+        }
+    }
 }
 
 // METODO "saltoLinea", incorpora un salto de linea en la salida de nuestro codigo
