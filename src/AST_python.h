@@ -21,13 +21,13 @@ bool registros[32] = {
 // Estructura variable, se hará uso de la misma para almacenar e imprimir las variables del codigo python
 struct variable
 {
-    char *nombre;      // Nombre de la variable, utilizando un puntero a char para nombres dinámicos
+    // char *nombre;      // Nombre de la variable, utilizando un puntero a char para nombres dinámicos
     float dato;        // Valor de la variable (en caso de ser flotante)
     int valorEntero;   // Valor de la variable (en caso de ser entero)
     char *valorCadena; // Valor de la variable (en caso de ser cadena)
-    // int nombre;       //limite de caracteres de la variable
-    bool disponible; // Indica si la variable está disponible
-    char *tipo;      // Tipo de la variable: "int", "float", "string", etc.
+    int nombre;        // limite de caracteres de la variable
+    bool disponible;   // Indica si la variable está disponible
+    char *tipo;        // Tipo de la variable: "int", "float", "string", etc.
 };
 
 struct variable variables[64]; // Declaramos el array de variables usando la estructura definida
@@ -202,7 +202,8 @@ int crearNombreVariable()
 // METODO "comprobarAST", imprime el codigo .asm y generas sus respectivos pasos
 comprobarAST(struct ast *n)
 {
-    imprimirVariables(); // Metodo que realiza la impresion de la parte de variables para Mips
+    imprimirVariables();
+    // imprimirVariables(); // Metodo que realiza la impresion de la parte de variables para Mips
     fprintf(yyout, "\n#--------------------- Ejecuciones ---------------------");
     fprintf(yyout, "\n.text\n");
     fprintf(yyout, "lwc1 $f31, zero\n");
@@ -226,23 +227,25 @@ void imprimirVariables()
     fprintf(yyout, ".data\n");
     fprintf(yyout, "saltoLinea: .asciiz \"\\n\"\n"); // Variable salto de linea
     fprintf(yyout, "zero: .float 0.0\n");            // Se inserta una variable auxiliar var_0 con valor 0.000
-
     // Bucle que recorre el array de variables y las imprime en el archivo .asm
-    for (int i = 0; i < 64; i++)
+    for (int i = 1; i < 64; i++)
     {
+        // printf("Variable %d: tipo=%s, nombre=%s\n", i, variables[i].tipo, variables[i].nombre);
         if (variables[i].disponible == true)
         {
+            // printf("\ni=%d --> nombre de variable=%c\n", i, variables[i].nombre);
+
             if (strcmp(variables[i].tipo, "float") == 0)
             {
-                fprintf(yyout, "var_%s: .float %.3f\n", variables[i].nombre, variables[i].dato);
+                fprintf(yyout, "var_%d: .float %.3f\n", variables[i].nombre, variables[i].dato);
             }
             else if (strcmp(variables[i].tipo, "int") == 0)
             {
-                fprintf(yyout, "var_%s: .word %d\n", variables[i].nombre, variables[i].valorEntero);
+                fprintf(yyout, "var_%d: .word %d\n", variables[i].nombre, variables[i].valorEntero);
             }
             else if (strcmp(variables[i].tipo, "string") == 0)
             {
-                fprintf(yyout, "var_%s: .asciiz \"%s\"\n", variables[i].nombre, variables[i].valorCadena);
+                fprintf(yyout, "var_%d: .asciiz \"%c\"\n", variables[i].nombre, variables[i].valorCadena);
             }
         }
     }
@@ -308,6 +311,7 @@ struct ast *crearNodoTerminal(double valor)
     printf("# [AST] - Registro $f%d ocupado para var_%d = %.3f\n", n->resultado, n->nombreVar, n->valorNumerico);
 
     // Actualizar el registro de variables
+    variables[n->resultado].tipo = n->tipo;
     variables[n->resultado].dato = n->valorNumerico;
     variables[n->resultado].nombre = n->nombreVar;
     variables[n->resultado].disponible = true;
@@ -323,15 +327,16 @@ struct ast *crearNodoTerminalString(char *valor)
     n->tipoNodo = 1;
     n->tipo = "string";
     n->valorCadena = valor;
-
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
     n->nombreVar = crearNombreVariable(); // Genera un nombre único para la variable
     printf("# [AST] - Registro $f%d ocupado para var_%d = %c\n", n->resultado, n->nombreVar, n->valorCadena);
 
     // Actualizar el registro de variables
+    variables[n->resultado].tipo = n->tipo;
     variables[n->resultado].valorCadena = n->valorCadena;
     variables[n->resultado].nombre = n->nombreVar;
     variables[n->resultado].disponible = true;
+    // printf("Variable %d: tipo=%s, nombre=%d, valorCadena=%s\n", n->resultado, variables[n->resultado].tipo, variables[n->resultado].nombre, variables[n->resultado].valorCadena);
 
     return n;
 }

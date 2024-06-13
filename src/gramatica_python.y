@@ -74,6 +74,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 //X --> S
 codigo:
     sentencias  {
+        printf("Llamando a comprobarAST\n");
         comprobarAST($1.n); 
         printf("\n[FINALIZADO]\n");     
     }
@@ -365,7 +366,13 @@ imprimir:
 //--------------------------------------------------- METODO MAIN -----------------------------------------------
 int main(int argc, char** argv) {
     yyin = fopen(argv[1], "rt");            //Apertura del archivo test.py
-    yyout = fopen( "./python.asm", "wt" );  //Para el archivo .ASM con nombre "python.asm"
+    yyout = fopen( "./python.asm", "wt" );
+    yyout = fopen("./python.asm", "wt");
+    if (yyout == NULL) {
+        perror("Error abriendo el archivo de salida");
+        return 1;
+    }
+    printf("Archivo de salida abierto correctamente.\n");  //Para el archivo .ASM con nombre "python.asm"
 	yyparse();
     fclose(yyin);
     return 0;
