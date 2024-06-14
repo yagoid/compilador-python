@@ -43,6 +43,7 @@ Terminals unused in grammar
    INT
    FLOAT
    COMPLEX
+   BOOLEAN
    MODULO
    AUMENTAR_VALOR
 
@@ -78,9 +79,8 @@ Grammar
    19      | NUMERO
    20      | DECIMAL
    21      | STRING
-   22      | BOOLEAN
 
-   23 imprimir: IMPRIMIR PARENTESIS_IZQ expresion PARENTESIS_DER
+   22 imprimir: IMPRIMIR PARENTESIS_IZQ expresion PARENTESIS_DER
 
 
 Terminals, with rules where they appear
@@ -123,7 +123,7 @@ WHILE (290)
 WITH (291)
 YIELD (292)
 END (293) 8
-IMPRIMIR (294) 23
+IMPRIMIR (294) 22
 CADENA (295)
 VECTOR (296)
 LISTA (297)
@@ -133,25 +133,25 @@ DICT (300)
 INT (301)
 FLOAT (302)
 COMPLEX (303)
-SUMA (304) 9
-RESTA (305) 10
-MULTIPLICACION (306) 11
-DIVISION (307) 12
-MODULO (308)
-MENOR_QUE (309) 13
-MAYOR_QUE (310) 14
-AUMENTAR_VALOR (311)
-IGUAL_QUE (312) 15
-DISTINTO_QUE (313) 16
-ASIGNACION (314) 7
-PARENTESIS_IZQ (315) 23
-PARENTESIS_DER (316) 23
-DOS_PUNTOS (317) 8
-NUMERO (318) 19
-DECIMAL (319) 20
-VARIABLE (320) 7 18
-STRING (321) 21
-BOOLEAN (322) 22
+BOOLEAN (304)
+SUMA (305) 9
+RESTA (306) 10
+MULTIPLICACION (307) 11
+DIVISION (308) 12
+MODULO (309)
+MENOR_QUE (310) 13
+MAYOR_QUE (311) 14
+AUMENTAR_VALOR (312)
+IGUAL_QUE (313) 15
+DISTINTO_QUE (314) 16
+ASIGNACION (315) 7
+PARENTESIS_IZQ (316) 22
+PARENTESIS_DER (317) 22
+DOS_PUNTOS (318) 8
+NUMERO (319) 19
+DECIMAL (320) 20
+VARIABLE (321) 7 18
+STRING (322) 21
 
 
 Nonterminals, with rules where they appear
@@ -170,11 +170,11 @@ if (73)
     on left: 8, on right: 6
 expresion (74)
     on left: 9 10 11 12 13 14 15 16 17, on right: 7 8 9 10 11 12 13
-    14 15 16 23
+    14 15 16 22
 tipos (75)
-    on left: 18 19 20 21 22, on right: 9 10 11 12 13 14 15 16 17
+    on left: 18 19 20 21, on right: 9 10 11 12 13 14 15 16 17
 imprimir (76)
-    on left: 23, on right: 5
+    on left: 22, on right: 5
 
 
 state 0
@@ -201,31 +201,30 @@ state 1
     DECIMAL   shift, and go to state 11
     VARIABLE  shift, and go to state 12
     STRING    shift, and go to state 13
-    BOOLEAN   shift, and go to state 14
 
-    expresion  go to state 15
-    tipos      go to state 16
+    expresion  go to state 14
+    tipos      go to state 15
 
 
 state 2
 
-   23 imprimir: IMPRIMIR . PARENTESIS_IZQ expresion PARENTESIS_DER
+   22 imprimir: IMPRIMIR . PARENTESIS_IZQ expresion PARENTESIS_DER
 
-    PARENTESIS_IZQ  shift, and go to state 17
+    PARENTESIS_IZQ  shift, and go to state 16
 
 
 state 3
 
     7 asignacion: VARIABLE . ASIGNACION expresion
 
-    ASIGNACION  shift, and go to state 18
+    ASIGNACION  shift, and go to state 17
 
 
 state 4
 
     0 $accept: codigo . $end
 
-    $end  shift, and go to state 19
+    $end  shift, and go to state 18
 
 
 state 5
@@ -239,7 +238,7 @@ state 5
 
     $default  reduce using rule 1 (codigo)
 
-    sentencia   go to state 20
+    sentencia   go to state 19
     asignacion  go to state 7
     if          go to state 8
     imprimir    go to state 9
@@ -303,13 +302,6 @@ state 13
 
 state 14
 
-   22 tipos: BOOLEAN .
-
-    $default  reduce using rule 22 (tipos)
-
-
-state 15
-
     8 if: IF expresion . DOS_PUNTOS sentencias END
     9 expresion: expresion . SUMA tipos
    10          | expresion . RESTA tipos
@@ -320,39 +312,38 @@ state 15
    15          | expresion . IGUAL_QUE tipos
    16          | expresion . DISTINTO_QUE tipos
 
-    SUMA            shift, and go to state 21
-    RESTA           shift, and go to state 22
-    MULTIPLICACION  shift, and go to state 23
-    DIVISION        shift, and go to state 24
-    MENOR_QUE       shift, and go to state 25
-    MAYOR_QUE       shift, and go to state 26
-    IGUAL_QUE       shift, and go to state 27
-    DISTINTO_QUE    shift, and go to state 28
-    DOS_PUNTOS      shift, and go to state 29
+    SUMA            shift, and go to state 20
+    RESTA           shift, and go to state 21
+    MULTIPLICACION  shift, and go to state 22
+    DIVISION        shift, and go to state 23
+    MENOR_QUE       shift, and go to state 24
+    MAYOR_QUE       shift, and go to state 25
+    IGUAL_QUE       shift, and go to state 26
+    DISTINTO_QUE    shift, and go to state 27
+    DOS_PUNTOS      shift, and go to state 28
 
 
-state 16
+state 15
 
    17 expresion: tipos .
 
     $default  reduce using rule 17 (expresion)
 
 
-state 17
+state 16
 
-   23 imprimir: IMPRIMIR PARENTESIS_IZQ . expresion PARENTESIS_DER
+   22 imprimir: IMPRIMIR PARENTESIS_IZQ . expresion PARENTESIS_DER
 
     NUMERO    shift, and go to state 10
     DECIMAL   shift, and go to state 11
     VARIABLE  shift, and go to state 12
     STRING    shift, and go to state 13
-    BOOLEAN   shift, and go to state 14
 
-    expresion  go to state 30
-    tipos      go to state 16
+    expresion  go to state 29
+    tipos      go to state 15
 
 
-state 18
+state 17
 
     7 asignacion: VARIABLE ASIGNACION . expresion
 
@@ -360,27 +351,26 @@ state 18
     DECIMAL   shift, and go to state 11
     VARIABLE  shift, and go to state 12
     STRING    shift, and go to state 13
-    BOOLEAN   shift, and go to state 14
 
-    expresion  go to state 31
-    tipos      go to state 16
+    expresion  go to state 30
+    tipos      go to state 15
 
 
-state 19
+state 18
 
     0 $accept: codigo $end .
 
     $default  accept
 
 
-state 20
+state 19
 
     3 sentencias: sentencias sentencia .
 
     $default  reduce using rule 3 (sentencias)
 
 
-state 21
+state 20
 
     9 expresion: expresion SUMA . tipos
 
@@ -388,12 +378,11 @@ state 21
     DECIMAL   shift, and go to state 11
     VARIABLE  shift, and go to state 12
     STRING    shift, and go to state 13
-    BOOLEAN   shift, and go to state 14
 
-    tipos  go to state 32
+    tipos  go to state 31
 
 
-state 22
+state 21
 
    10 expresion: expresion RESTA . tipos
 
@@ -401,12 +390,11 @@ state 22
     DECIMAL   shift, and go to state 11
     VARIABLE  shift, and go to state 12
     STRING    shift, and go to state 13
-    BOOLEAN   shift, and go to state 14
 
-    tipos  go to state 33
+    tipos  go to state 32
 
 
-state 23
+state 22
 
    11 expresion: expresion MULTIPLICACION . tipos
 
@@ -414,12 +402,11 @@ state 23
     DECIMAL   shift, and go to state 11
     VARIABLE  shift, and go to state 12
     STRING    shift, and go to state 13
-    BOOLEAN   shift, and go to state 14
 
-    tipos  go to state 34
+    tipos  go to state 33
 
 
-state 24
+state 23
 
    12 expresion: expresion DIVISION . tipos
 
@@ -427,12 +414,11 @@ state 24
     DECIMAL   shift, and go to state 11
     VARIABLE  shift, and go to state 12
     STRING    shift, and go to state 13
-    BOOLEAN   shift, and go to state 14
 
-    tipos  go to state 35
+    tipos  go to state 34
 
 
-state 25
+state 24
 
    13 expresion: expresion MENOR_QUE . tipos
 
@@ -440,12 +426,11 @@ state 25
     DECIMAL   shift, and go to state 11
     VARIABLE  shift, and go to state 12
     STRING    shift, and go to state 13
-    BOOLEAN   shift, and go to state 14
 
-    tipos  go to state 36
+    tipos  go to state 35
 
 
-state 26
+state 25
 
    14 expresion: expresion MAYOR_QUE . tipos
 
@@ -453,12 +438,11 @@ state 26
     DECIMAL   shift, and go to state 11
     VARIABLE  shift, and go to state 12
     STRING    shift, and go to state 13
-    BOOLEAN   shift, and go to state 14
 
-    tipos  go to state 37
+    tipos  go to state 36
 
 
-state 27
+state 26
 
    15 expresion: expresion IGUAL_QUE . tipos
 
@@ -466,12 +450,11 @@ state 27
     DECIMAL   shift, and go to state 11
     VARIABLE  shift, and go to state 12
     STRING    shift, and go to state 13
-    BOOLEAN   shift, and go to state 14
 
-    tipos  go to state 38
+    tipos  go to state 37
 
 
-state 28
+state 27
 
    16 expresion: expresion DISTINTO_QUE . tipos
 
@@ -479,12 +462,11 @@ state 28
     DECIMAL   shift, and go to state 11
     VARIABLE  shift, and go to state 12
     STRING    shift, and go to state 13
-    BOOLEAN   shift, and go to state 14
 
-    tipos  go to state 39
+    tipos  go to state 38
 
 
-state 29
+state 28
 
     8 if: IF expresion DOS_PUNTOS . sentencias END
 
@@ -492,14 +474,14 @@ state 29
     IMPRIMIR  shift, and go to state 2
     VARIABLE  shift, and go to state 3
 
-    sentencias  go to state 40
+    sentencias  go to state 39
     sentencia   go to state 6
     asignacion  go to state 7
     if          go to state 8
     imprimir    go to state 9
 
 
-state 30
+state 29
 
     9 expresion: expresion . SUMA tipos
    10          | expresion . RESTA tipos
@@ -509,20 +491,20 @@ state 30
    14          | expresion . MAYOR_QUE tipos
    15          | expresion . IGUAL_QUE tipos
    16          | expresion . DISTINTO_QUE tipos
-   23 imprimir: IMPRIMIR PARENTESIS_IZQ expresion . PARENTESIS_DER
+   22 imprimir: IMPRIMIR PARENTESIS_IZQ expresion . PARENTESIS_DER
 
-    SUMA            shift, and go to state 21
-    RESTA           shift, and go to state 22
-    MULTIPLICACION  shift, and go to state 23
-    DIVISION        shift, and go to state 24
-    MENOR_QUE       shift, and go to state 25
-    MAYOR_QUE       shift, and go to state 26
-    IGUAL_QUE       shift, and go to state 27
-    DISTINTO_QUE    shift, and go to state 28
-    PARENTESIS_DER  shift, and go to state 41
+    SUMA            shift, and go to state 20
+    RESTA           shift, and go to state 21
+    MULTIPLICACION  shift, and go to state 22
+    DIVISION        shift, and go to state 23
+    MENOR_QUE       shift, and go to state 24
+    MAYOR_QUE       shift, and go to state 25
+    IGUAL_QUE       shift, and go to state 26
+    DISTINTO_QUE    shift, and go to state 27
+    PARENTESIS_DER  shift, and go to state 40
 
 
-state 31
+state 30
 
     7 asignacion: VARIABLE ASIGNACION expresion .
     9 expresion: expresion . SUMA tipos
@@ -534,98 +516,98 @@ state 31
    15          | expresion . IGUAL_QUE tipos
    16          | expresion . DISTINTO_QUE tipos
 
-    SUMA            shift, and go to state 21
-    RESTA           shift, and go to state 22
-    MULTIPLICACION  shift, and go to state 23
-    DIVISION        shift, and go to state 24
-    MENOR_QUE       shift, and go to state 25
-    MAYOR_QUE       shift, and go to state 26
-    IGUAL_QUE       shift, and go to state 27
-    DISTINTO_QUE    shift, and go to state 28
+    SUMA            shift, and go to state 20
+    RESTA           shift, and go to state 21
+    MULTIPLICACION  shift, and go to state 22
+    DIVISION        shift, and go to state 23
+    MENOR_QUE       shift, and go to state 24
+    MAYOR_QUE       shift, and go to state 25
+    IGUAL_QUE       shift, and go to state 26
+    DISTINTO_QUE    shift, and go to state 27
 
     $default  reduce using rule 7 (asignacion)
 
 
-state 32
+state 31
 
     9 expresion: expresion SUMA tipos .
 
     $default  reduce using rule 9 (expresion)
 
 
-state 33
+state 32
 
    10 expresion: expresion RESTA tipos .
 
     $default  reduce using rule 10 (expresion)
 
 
-state 34
+state 33
 
    11 expresion: expresion MULTIPLICACION tipos .
 
     $default  reduce using rule 11 (expresion)
 
 
-state 35
+state 34
 
    12 expresion: expresion DIVISION tipos .
 
     $default  reduce using rule 12 (expresion)
 
 
-state 36
+state 35
 
    13 expresion: expresion MENOR_QUE tipos .
 
     $default  reduce using rule 13 (expresion)
 
 
-state 37
+state 36
 
    14 expresion: expresion MAYOR_QUE tipos .
 
     $default  reduce using rule 14 (expresion)
 
 
-state 38
+state 37
 
    15 expresion: expresion IGUAL_QUE tipos .
 
     $default  reduce using rule 15 (expresion)
 
 
-state 39
+state 38
 
    16 expresion: expresion DISTINTO_QUE tipos .
 
     $default  reduce using rule 16 (expresion)
 
 
-state 40
+state 39
 
     3 sentencias: sentencias . sentencia
     8 if: IF expresion DOS_PUNTOS sentencias . END
 
     IF        shift, and go to state 1
-    END       shift, and go to state 42
+    END       shift, and go to state 41
     IMPRIMIR  shift, and go to state 2
     VARIABLE  shift, and go to state 3
 
-    sentencia   go to state 20
+    sentencia   go to state 19
     asignacion  go to state 7
     if          go to state 8
     imprimir    go to state 9
 
 
+state 40
+
+   22 imprimir: IMPRIMIR PARENTESIS_IZQ expresion PARENTESIS_DER .
+
+    $default  reduce using rule 22 (imprimir)
+
+
 state 41
-
-   23 imprimir: IMPRIMIR PARENTESIS_IZQ expresion PARENTESIS_DER .
-
-    $default  reduce using rule 23 (imprimir)
-
-
-state 42
 
     8 if: IF expresion DOS_PUNTOS sentencias END .
 

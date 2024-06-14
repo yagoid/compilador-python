@@ -4,6 +4,7 @@ typedef struct {  //typedef para definir al final de la estructura el nombre tSi
     int numero;             //valor int
     float decimal;          //valor float
     char* texto;            //valor char
+    int boolean;
     char *nombre;
     char *tipo;
     int registro;           //posicion  

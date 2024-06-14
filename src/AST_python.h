@@ -341,7 +341,7 @@ struct ast *crearNodoTerminalString(char *valor)
     return n;
 }
 
-struct ast *crearNodoTerminalString(bool *valor)
+struct ast *crearNodoTerminalBoolean(bool *valor)
 {
 }
 
