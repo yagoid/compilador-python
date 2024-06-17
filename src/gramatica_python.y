@@ -336,7 +336,7 @@ expresion:
 /*PRODUCCION "tipos", en esta gramática se represetan los tipos de datos:
 - identificadores (variables) - numeros enteros o decimales positivos o negativos
 - cadenas de texto - estructura parentesis
-T --> id | num | decimal | texto | boolean*/
+T --> id | num | decimal | texto | true | false*/
 tipos:
 
     //Identificador
@@ -347,22 +347,26 @@ tipos:
             int pos = buscarTabla(indice, $1, tabla);
             //Para si es de tipo numero
             if(tabla[pos].tipo==tipos[0]){
-                $$.tipo = tabla[pos].tipo; $$.numero=tabla[pos].numero; 
+                $$.tipo = tabla[pos].tipo; 
+                $$.numero=tabla[pos].numero; 
                 $$.n = crearVariableTerminal(tabla[pos].numero, tabla[pos].registro);  //Creamos un nodo terminal con los numeros   
             }
             //Para si es de tipo decimal
             else if(tabla[pos].tipo==tipos[1]){
-                $$.tipo = tabla[pos].tipo; $$.decimal=tabla[pos].decimal;
+                $$.tipo = tabla[pos].tipo; 
+                $$.decimal=tabla[pos].decimal;
                 $$.n = crearVariableTerminal(tabla[pos].decimal, tabla[pos].registro); //Creamos un nodo terminal con los numeros        
             }
             //Para si es de tipo texto
             else if(tabla[pos].tipo==tipos[2]){
-                $$.tipo = tabla[pos].tipo; $$.texto=tabla[pos].texto;
+                $$.tipo = tabla[pos].tipo; 
+                $$.texto=tabla[pos].texto;
                 $$.n = crearVariableTerminalString(tabla[pos].texto, tabla[pos].registro); //Creamos un nodo terminal con el texto        
             }
             //Para si es de tipo boolean
             else if(tabla[pos].tipo==tipos[3]){
-                $$.tipo = tabla[pos].tipo; $$.texto=tabla[pos].boolean;
+                $$.tipo = tabla[pos].tipo; 
+                $$.texto=tabla[pos].boolean;
                 $$.n = crearVariableTerminalBoolean(tabla[pos].boolean, tabla[pos].registro); //Creamos un nodo terminal con el boolean        
             }
         }
@@ -393,7 +397,14 @@ tipos:
     }
 
     //Boleanos
-    | BOOLEAN {
+    | TRUE {
+        $$.boolean = $1;
+        printf("\n> [TIPO] - Boleano: %d\n", $$.boolean); 
+        $$.n = crearNodoTerminalBoolean($1); 
+        $$.tipo = tipos[3]; 
+    }
+
+    | FALSE {
         $$.boolean = $1;
         printf("\n> [TIPO] - Boleano: %d\n", $$.boolean); 
         $$.n = crearNodoTerminalBoolean($1); 
