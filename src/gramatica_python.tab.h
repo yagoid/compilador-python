@@ -98,10 +98,11 @@
      ASIGNACION = 315,
      PARENTESIS_IZQ = 316,
      PARENTESIS_DER = 317,
-     NUMERO = 318,
-     DECIMAL = 319,
-     VARIABLE = 320,
-     STRING = 321
+     DOS_PUNTOS = 318,
+     NUMERO = 319,
+     DECIMAL = 320,
+     VARIABLE = 321,
+     STRING = 322
    };
 #endif
 
@@ -112,7 +113,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1685 of yacc.c  */
-#line 26 "gramatica_python.y"
+#line 28 "gramatica_python.y"
 
   int intVal;
   float realVal;
@@ -121,6 +122,7 @@ typedef union YYSTYPE
     int numero;
     float decimal;
     char* texto;
+    int boolean;
     char* tipo;             //Define el tipo que se esta usando
     struct ast *n;          //Para almacenar los nodos del AST
   }tr;
@@ -128,7 +130,7 @@ typedef union YYSTYPE
 
 
 /* Line 1685 of yacc.c  */
-#line 132 "gramatica_python.tab.h"
+#line 134 "gramatica_python.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

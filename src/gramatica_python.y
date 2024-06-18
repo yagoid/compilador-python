@@ -17,7 +17,7 @@ extern FILE* yyin;
 extern int num_linea; //Almacena el numero de linea durante la ejecucion
 extern tSimbolos tabla[256];
 extern int indice; //Se almacena el índice de la tabla de tSimbolos
-char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo que se detecta en flex al tipo del nodo
+char* tipos[] = {"numero", "decimal", "texto", "boolean"}; //Para parsear el tipo que se detecta en flex al tipo del nodo
 #define true 1
 #define false 0
 
@@ -42,7 +42,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 /*Declaración de los TOKENS*/
 %token FALSE NONE TRUE AND AS ASSERT ASYNC AWAIT BREAK CONTINUE CLASS DEF DEL ELIF ELSE EXCEPT FINALLY 
 %token FOR FROM GLOBAL IF IMPORT IN IS LAMBDA NONLOCAL NOT OR PASS RAISE RETURN TRY WHILE WITH YIELD END IMPRIMIR 
-%token CADENA VECTOR LISTA TUPLA SET DICT INT FLOAT COMPLEX 
+%token CADENA VECTOR LISTA TUPLA SET DICT INT FLOAT COMPLEX BOOLEAN
 %token SUMA RESTA MULTIPLICACION DIVISION MODULO MENOR_QUE MAYOR_QUE AUMENTAR_VALOR IGUAL_QUE DISTINTO_QUE ASIGNACION PARENTESIS_IZQ PARENTESIS_DER DOS_PUNTOS
 
 /*Declaración de los TOKENS que provienen de FLEX con su respectivo tipo*/
@@ -55,7 +55,9 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 %type <tr> sentencias sentencia tipos expresion asignacion imprimir  if
 
 /*Declaración de la precedencia siendo menor la del primero y mayor la del último*/
-%left SUMA RESTA MULTIPLICACION DIVISION
+%left SUMA RESTA
+%left MULTIPLICACION DIVISION
+%left MENOR_QUE MAYOR_QUE IGUAL_QUE DISTINTO_QUE
 
 %start codigo
 %%
@@ -67,7 +69,7 @@ char* tipos[] = {"numero", "decimal", "texto", "bool"}; //Para parsear el tipo q
 //A --> id = E 
 //F --> if E: S end
 //E --> E op T | T
-//T --> id | num | decimal | texto | bool
+//T --> id | num | decimal | texto | true | false
 //I --> imprimir ( E )
 
 //-----------------------------------------------  PRODUCCIONES  -------------------------------------------------------
@@ -108,30 +110,40 @@ asignacion:
 
         //Para crear un nuevo simbolo de tipo numero
         if(strcmp($3.tipo, tipos[0]) == 0){ //comprobacion si es numero
-        printf("Asignado el valor %d a la variable\n",$3.numero);
-        tabla[indice].nombre = $1; tabla[indice].tipo = tipos[0]; tabla[indice].numero = $3.numero; tabla[indice].registro = $3.n->resultado;
-        indice++; //incrementamos el valor del inidice para pasar a la siguiente posicion y dejar la anterior guardada
+            printf("Asignado el valor %d a la variable\n",$3.numero);
+            tabla[indice].nombre = $1; tabla[indice].tipo = tipos[0]; tabla[indice].numero = $3.numero; tabla[indice].registro = $3.n->resultado;
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
         }
         //Para crear un nuevo simbolo de tipo decimal
         else if(strcmp($3.tipo, tipos[1]) == 0){ //comprobacion si es decimal
-        printf("Asignado el valor %d a la variable\n",$3.decimal);
-        tabla[indice].nombre = $1; tabla[indice].tipo = tipos[1]; tabla[indice].decimal = $3.decimal; tabla[indice].registro = $3.n->resultado;
-        indice++; //incrementamos el valor del inidice para pasar a la siguiente posicion y dejar la anterior guardada
+            printf("Asignado el valor %d a la variable\n",$3.decimal);
+            tabla[indice].nombre = $1; tabla[indice].tipo = tipos[1]; tabla[indice].decimal = $3.decimal; tabla[indice].registro = $3.n->resultado;
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
         }
         //Para crear un nuevo simbolo de tipo string
         else if(strcmp($3.tipo, tipos[2]) == 0){ //comprobacion si es string
-        printf("Asignado el valor %c a la variable\n",$3.texto);
-        tabla[indice].nombre = $1; tabla[indice].tipo = tipos[2]; tabla[indice].texto = $3.texto; tabla[indice].registro = $3.n->resultado;
-        indice++; //incrementamos el valor del inidice para pasar a la siguiente posicion y dejar la anterior guardada
+            printf("Asignado el valor %c a la variable\n",$3.texto);
+            tabla[indice].nombre = $1; tabla[indice].tipo = tipos[2]; tabla[indice].texto = $3.texto; tabla[indice].registro = $3.n->resultado;
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
+        }
+        //Para crear un nuevo simbolo de tipo boolean
+        else if(strcmp($3.tipo, tipos[3]) == 0){ //comprobacion si es boolean
+            printf("Asignado el valor %d a la variable\n",$3.boolean);
+            tabla[indice].nombre = $1; tabla[indice].tipo = tipos[2]; tabla[indice].boolean = $3.boolean; tabla[indice].registro = $3.n->resultado;
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
         }
         $$.n=crearNodoNoTerminal($3.n, crearNodoVacio(), 13);
     }
+;
 
 //-------------------------------------------------- IF ---------------------------------------------------
 //F --> if E: S end
 if:
-    IF expresion DOS_PUNTOS sentencias END 
-    
+    IF expresion DOS_PUNTOS sentencias END {
+        printf("> [IF] - ESTAMOS COMPARANDO\n");
+    }
+;
+
 //-----------------------------------------------  EXPRESION ---------------------------------------------
 //PRODUCCION "expresion", en esta gramática se representa la suma, resta y otros terminos
 //E --> E op T | T
@@ -144,14 +156,16 @@ expresion:
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) { //comprobacion del tipo
             printf("> [OPERACION] - SUMA {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
-            $$.tipo = tipos[0]; $$.numero = $1.numero + $3.numero;
+            $$.tipo = tipos[0]; 
+            $$.numero = $1.numero + $3.numero;
         }
 
         //Suma de decimal + decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - SUMA {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
-            $$.tipo = tipos[1]; $$.decimal = $1.decimal + $3.decimal;
+            $$.tipo = tipos[1]; 
+            $$.decimal = $1.decimal + $3.decimal;
         }
 
         //Suma de str + str
@@ -177,13 +191,15 @@ expresion:
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
             printf("> [OPERACION] - RESTA {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 3);
-            $$.tipo = tipos[0]; $$.numero = $1.numero + $3.numero;
+            $$.tipo = tipos[0]; 
+            $$.numero = $1.numero + $3.numero;
         }
         //Resta de decimal - decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - RESTA {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 3);
-            $$.tipo = tipos[1]; $$.decimal = $1.decimal + $3.decimal;
+            $$.tipo = tipos[1]; 
+            $$.decimal = $1.decimal + $3.decimal;
         }
     }
     //MULTIPLICACION
@@ -193,13 +209,15 @@ expresion:
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
             printf("> [OPERACION] - MULTIPLICACION {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 4);
-            $$.tipo = tipos[0]; $$.numero = $1.numero + $3.numero;
+            $$.tipo = tipos[0]; 
+            $$.numero = $1.numero * $3.numero;
         }
         //Multiplicacion de decimal * decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - MULTIPLICACION {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 4);
-            $$.tipo = tipos[1]; $$.decimal = $1.decimal + $3.decimal;
+            $$.tipo = tipos[1]; 
+            $$.decimal = $1.decimal * $3.decimal;
         }
     }
     //DIVISION
@@ -209,13 +227,15 @@ expresion:
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
             printf("> [OPERACION] - DIVISION {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
-            $$.tipo = tipos[0]; $$.numero = $1.numero + $3.numero;
+            $$.tipo = tipos[0]; 
+            $$.numero = $1.numero / $3.numero;
         }
         //Division de decimal / decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - DIVISION {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
-            $$.tipo = tipos[1]; $$.decimal = $1.decimal + $3.decimal;
+            $$.tipo = tipos[1]; 
+            $$.decimal = $1.decimal / $3.decimal;
         }
     }
     //MENOR QUE
@@ -225,13 +245,29 @@ expresion:
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
             printf("> [COMPARACION] - MENOR_QUE {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 6);
-            $$.tipo = tipos[0]; $$.numero = $1.numero < $3.numero;
+            $$.tipo = tipos[3]; 
+            if ($1.numero < $3.numero) {
+                printf("Verdadero %d es menor que %d\n", $1, $3);
+                $$.boolean = 1; // Verdadero
+            }
+            else {
+                printf("Falso %d no es menor que %d\n", $1, $3);
+                $$.boolean = 0;
+            }
         }
         //MENOR_QUE de decimal / decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [COMPARACION] - MENOR_QUE {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 6);
-            $$.tipo = tipos[1]; $$.decimal = $1.decimal < $3.decimal;
+            $$.tipo = tipos[3]; 
+            if ($1.decimal < $3.decimal) {
+                printf("Verdadero %d es menor que %d\n", $1, $3);
+                $$.boolean = 1; // Verdadero
+            }
+            else {
+                printf("Falso %d no es menor que %d\n", $1, $3);
+                $$.boolean = 0;
+            }
         }
     }
     //MAYOR_QUE
@@ -247,7 +283,8 @@ expresion:
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [COMPARACION] - MAYOR_QUE {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 7);
-            $$.tipo = tipos[1]; $$.decimal = $1.decimal > $3.decimal;
+            $$.tipo = tipos[1]; 
+            $$.decimal = $1.decimal > $3.decimal;
         }
     }
     //IGUAL_QUE
@@ -257,13 +294,22 @@ expresion:
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
             printf("> [COMPARACION] - IGUAL_QUE {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 7);
-            $$.tipo = tipos[0]; $$.numero = $1.numero == $3.numero;
+            $$.tipo = tipos[3]; 
+            if ($1.numero == $3.numero) {
+                printf("Verdadero %d es igual que %d\n", $1, $3);
+                $$.boolean = 1; // Verdadero
+            }
+            else {
+                printf("Falso %d no es igual que %d\n", $1, $3);
+                $$.boolean = 0;
+            }
         }
         //IGUAL_QUE de decimal / decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [COMPARACION] - IGUAL_QUE {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 7);
-            $$.tipo = tipos[1]; $$.decimal = $1.decimal == $3.decimal;
+            $$.tipo = tipos[1]; 
+            $$.decimal = $1.decimal == $3.decimal;
         }
     }
     //DISTINTO_QUE
@@ -273,13 +319,15 @@ expresion:
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
             printf("> [COMPARACION] - DISTINTO_QUE {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 7);
-            $$.tipo = tipos[0]; $$.numero = $1.numero != $3.numero;
+            $$.tipo = tipos[0]; 
+            $$.numero = $1.numero != $3.numero;
         }
         //DISTINTO_QUE de decimal / decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [COMPARACION] - DISTINTO_QUE {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 7);
-            $$.tipo = tipos[1]; $$.decimal = $1.decimal != $3.decimal;
+            $$.tipo = tipos[1]; 
+            $$.decimal = $1.decimal != $3.decimal;
         }
     }
     | tipos {$$ = $1;} //la produccion operacion puede ser tipos, un subnivel para realizar la jerarquia de operaciones
@@ -289,7 +337,7 @@ expresion:
 /*PRODUCCION "tipos", en esta gramática se represetan los tipos de datos:
 - identificadores (variables) - numeros enteros o decimales positivos o negativos
 - cadenas de texto - estructura parentesis
-T --> id | num | decimal | texto | bool*/
+T --> id | num | decimal | texto | true | false*/
 tipos:
 
     //Identificador
@@ -300,23 +348,27 @@ tipos:
             int pos = buscarTabla(indice, $1, tabla);
             //Para si es de tipo numero
             if(tabla[pos].tipo==tipos[0]){
-                $$.tipo = tabla[pos].tipo; $$.numero=tabla[pos].numero; 
+                $$.tipo = tabla[pos].tipo; 
+                $$.numero=tabla[pos].numero; 
                 $$.n = crearVariableTerminal(tabla[pos].numero, tabla[pos].registro);  //Creamos un nodo terminal con los numeros   
             }
             //Para si es de tipo decimal
             else if(tabla[pos].tipo==tipos[1]){
-                $$.tipo = tabla[pos].tipo; $$.decimal=tabla[pos].decimal;
+                $$.tipo = tabla[pos].tipo; 
+                $$.decimal=tabla[pos].decimal;
                 $$.n = crearVariableTerminal(tabla[pos].decimal, tabla[pos].registro); //Creamos un nodo terminal con los numeros        
             }
             //Para si es de tipo texto
             else if(tabla[pos].tipo==tipos[2]){
-                $$.tipo = tabla[pos].tipo; $$.texto=tabla[pos].texto;
+                $$.tipo = tabla[pos].tipo; 
+                $$.texto=tabla[pos].texto;
                 $$.n = crearVariableTerminalString(tabla[pos].texto, tabla[pos].registro); //Creamos un nodo terminal con el texto        
             }
             //Para si es de tipo boolean
             else if(tabla[pos].tipo==tipos[3]){
-                $$.tipo = tabla[pos].tipo; $$.texto=tabla[pos].boolean;
-                $$.n = crearVariableTerminalString(tabla[pos].boolean, tabla[pos].registro); //Creamos un nodo terminal con el texto        
+                $$.tipo = tabla[pos].tipo; 
+                $$.texto=tabla[pos].boolean;
+                $$.n = crearVariableTerminalBoolean(tabla[pos].boolean, tabla[pos].registro); //Creamos un nodo terminal con el boolean        
             }
         }
     }
@@ -346,10 +398,17 @@ tipos:
     }
 
     //Boleanos
-    | BOOLEAN {
-        $$.boolean = $1;
-        printf("\n> [TIPO] - Booleano: %c\n", $$.boolean);
-        $$.n = crearNodoTerminalBoolean($1); 
+    | TRUE {
+        $$.boolean = 1;
+        printf("\n> [TIPO] - Boleano True: %d\n", $$.boolean); 
+        $$.n = crearNodoTerminalBoolean($$.boolean);
+        $$.tipo = tipos[3];
+    }
+
+    | FALSE {
+        $$.boolean = 0;
+        printf("\n> [TIPO] - Boleano False: %d\n", $$.boolean); 
+        $$.n = crearNodoTerminalBoolean($$.boolean);
         $$.tipo = tipos[3]; 
     }
 ;

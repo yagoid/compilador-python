@@ -1,6 +1,6 @@
-#line 2 "python.lex.c"
+#line 2 "pytho.lex.c"
 
-#line 4 "python.lex.c"
+#line 4 "pytho.lex.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -651,7 +651,7 @@ char *yytext;
 #include "gramatica_python.tab.h"
 
 int n_linea = 1; // Variable para contar el número de línea
-#line 655 "python.lex.c"
+#line 655 "pytho.lex.c"
 
 #define INITIAL 0
 
@@ -841,7 +841,7 @@ YY_DECL
 #line 14 "lexico_python.flex"
 
 
-#line 845 "python.lex.c"
+#line 845 "pytho.lex.c"
 
 	if ( !(yy_init) )
 		{
@@ -1287,7 +1287,7 @@ YY_RULE_SETUP
 #line 93 "lexico_python.flex"
 ECHO;
 	YY_BREAK
-#line 1291 "python.lex.c"
+#line 1291 "pytho.lex.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

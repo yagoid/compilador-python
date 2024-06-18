@@ -1,3 +1,2 @@
-resultado = "aaa" + "bbb"
-print(resultado)
-
+r = "aaa"
+print(r)

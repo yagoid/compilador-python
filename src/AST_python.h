@@ -25,6 +25,7 @@ struct variable
     float dato;        // Valor de la variable (en caso de ser flotante)
     int valorEntero;   // Valor de la variable (en caso de ser entero)
     char *valorCadena; // Valor de la variable (en caso de ser cadena)
+    int valorBoolean;
     int nombre;        // limite de caracteres de la variable
     bool disponible;   // Indica si la variable está disponible
     char *tipo;        // Tipo de la variable: "int", "float", "string", etc.
@@ -61,6 +62,7 @@ struct ast
     {
         double valorNumerico; // Valor si es numérico
         char *valorCadena;    // Valor si es una cadena
+        int valorBoolean;
     };
     // double valor;        // Almacena el valor del nodo
     char *tipo;    // Tipo de dato: "int", "float", "string"
@@ -239,13 +241,13 @@ void imprimirVariables()
             {
                 fprintf(yyout, "var_%d: .float %.3f\n", variables[i].nombre, variables[i].dato);
             }
-            else if (strcmp(variables[i].tipo, "int") == 0)
-            {
-                fprintf(yyout, "var_%d: .word %d\n", variables[i].nombre, variables[i].valorEntero);
-            }
             else if (strcmp(variables[i].tipo, "string") == 0)
             {
                 fprintf(yyout, "var_%d: .asciiz \"%c\"\n", variables[i].nombre, variables[i].valorCadena);
+            }
+            else if (strcmp(variables[i].tipo, "boolean") == 0)
+            {
+                fprintf(yyout, "var_%d: .word %d\n", variables[i].nombre, variables[i].valorBoolean);
             }
         }
     }
@@ -336,13 +338,30 @@ struct ast *crearNodoTerminalString(char *valor)
     variables[n->resultado].valorCadena = n->valorCadena;
     variables[n->resultado].nombre = n->nombreVar;
     variables[n->resultado].disponible = true;
-    // printf("Variable %d: tipo=%s, nombre=%d, valorCadena=%s\n", n->resultado, variables[n->resultado].tipo, variables[n->resultado].nombre, variables[n->resultado].valorCadena);
 
     return n;
 }
 
-struct ast *crearNodoTerminalString(bool *valor)
+struct ast *crearNodoTerminalBoolean(int valor)
 {
+    struct ast *n = malloc(sizeof(struct ast)); // Asigna memoria dinámicamente para el nuevo nodo
+    n->izq = NULL;
+    n->dcha = NULL;
+    n->tipoNodo = 1;
+    n->tipo = "boolean";
+    n->valorBoolean = valor;
+
+    n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
+    n->nombreVar = crearNombreVariable(); // Genera un nombre único para la variable
+    printf("# [AST] - Registro $f%d ocupado para var_%d = %d\n", n->resultado, n->nombreVar, n->valorBoolean);
+
+    // Actualizar el registro de variables
+    variables[n->resultado].tipo = n->tipo;
+    variables[n->resultado].dato = n->valorBoolean;
+    variables[n->resultado].nombre = n->nombreVar;
+    variables[n->resultado].disponible = true;
+
+    return n;
 }
 
 // METODO "crearNodoNoTerminal", crea un nuevo nodo, asignamos sus hijos y tipo, y buscamos nuevo registro
@@ -379,6 +398,19 @@ struct ast *crearVariableTerminalString(const char *valor, int registro)
     n->valorCadena = valor;
 
     n->valorCadena = strdup(valor); // Asigna memoria y copia el texto
+    n->resultado = registro;
+    return n;
+}
+
+// METODO "crearVariableTerminal", crear el nodo hoja para una variable ya creada
+struct ast *crearVariableTerminalBoolean(int valor, int registro)
+{
+    struct ast *n = malloc(sizeof(struct ast)); // Asigna memoria dinámicamente para el nuevo nodo
+    n->izq = NULL;
+    n->dcha = NULL;
+    n->tipoNodo = 6;
+    n->valorBoolean = valor;
+
     n->resultado = registro;
     return n;
 }
