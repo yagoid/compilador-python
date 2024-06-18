@@ -1,1 +1,2 @@
-resultado = True
+r = "aaa"
+print(r)

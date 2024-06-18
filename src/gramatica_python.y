@@ -69,7 +69,7 @@ char* tipos[] = {"numero", "decimal", "texto", "boolean"}; //Para parsear el tip
 //A --> id = E 
 //F --> if E: S end
 //E --> E op T | T
-//T --> id | num | decimal | texto | boolean
+//T --> id | num | decimal | texto | true | false
 //I --> imprimir ( E )
 
 //-----------------------------------------------  PRODUCCIONES  -------------------------------------------------------
@@ -110,27 +110,27 @@ asignacion:
 
         //Para crear un nuevo simbolo de tipo numero
         if(strcmp($3.tipo, tipos[0]) == 0){ //comprobacion si es numero
-        printf("Asignado el valor %d a la variable\n",$3.numero);
-        tabla[indice].nombre = $1; tabla[indice].tipo = tipos[0]; tabla[indice].numero = $3.numero; tabla[indice].registro = $3.n->resultado;
-        indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
+            printf("Asignado el valor %d a la variable\n",$3.numero);
+            tabla[indice].nombre = $1; tabla[indice].tipo = tipos[0]; tabla[indice].numero = $3.numero; tabla[indice].registro = $3.n->resultado;
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
         }
         //Para crear un nuevo simbolo de tipo decimal
         else if(strcmp($3.tipo, tipos[1]) == 0){ //comprobacion si es decimal
-        printf("Asignado el valor %d a la variable\n",$3.decimal);
-        tabla[indice].nombre = $1; tabla[indice].tipo = tipos[1]; tabla[indice].decimal = $3.decimal; tabla[indice].registro = $3.n->resultado;
-        indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
+            printf("Asignado el valor %d a la variable\n",$3.decimal);
+            tabla[indice].nombre = $1; tabla[indice].tipo = tipos[1]; tabla[indice].decimal = $3.decimal; tabla[indice].registro = $3.n->resultado;
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
         }
         //Para crear un nuevo simbolo de tipo string
         else if(strcmp($3.tipo, tipos[2]) == 0){ //comprobacion si es string
-        printf("Asignado el valor %c a la variable\n",$3.texto);
-        tabla[indice].nombre = $1; tabla[indice].tipo = tipos[2]; tabla[indice].texto = $3.texto; tabla[indice].registro = $3.n->resultado;
-        indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
+            printf("Asignado el valor %c a la variable\n",$3.texto);
+            tabla[indice].nombre = $1; tabla[indice].tipo = tipos[2]; tabla[indice].texto = $3.texto; tabla[indice].registro = $3.n->resultado;
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
         }
         //Para crear un nuevo simbolo de tipo boolean
         else if(strcmp($3.tipo, tipos[3]) == 0){ //comprobacion si es boolean
-        printf("Asignado el valor %c a la variable\n",$3.boolean);
-        tabla[indice].nombre = $1; tabla[indice].tipo = tipos[2]; tabla[indice].boolean = $3.boolean; tabla[indice].registro = $3.n->resultado;
-        indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
+            printf("Asignado el valor %d a la variable\n",$3.boolean);
+            tabla[indice].nombre = $1; tabla[indice].tipo = tipos[2]; tabla[indice].boolean = $3.boolean; tabla[indice].registro = $3.n->resultado;
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
         }
         $$.n=crearNodoNoTerminal($3.n, crearNodoVacio(), 13);
     }
@@ -143,6 +143,7 @@ if:
         printf("> [IF] - ESTAMOS COMPARANDO\n");
     }
 ;
+
 //-----------------------------------------------  EXPRESION ---------------------------------------------
 //PRODUCCION "expresion", en esta gramática se representa la suma, resta y otros terminos
 //E --> E op T | T
@@ -398,16 +399,16 @@ tipos:
 
     //Boleanos
     | TRUE {
-        $$.boolean = $1;
-        printf("\n> [TIPO] - Boleano: %d\n", $$.boolean); 
-        $$.n = crearNodoTerminalBoolean($1); 
-        $$.tipo = tipos[3]; 
+        $$.boolean = 1;
+        printf("\n> [TIPO] - Boleano True: %d\n", $$.boolean); 
+        $$.n = crearNodoTerminalBoolean($$.boolean);
+        $$.tipo = tipos[3];
     }
 
     | FALSE {
-        $$.boolean = $1;
-        printf("\n> [TIPO] - Boleano: %d\n", $$.boolean); 
-        $$.n = crearNodoTerminalBoolean($1); 
+        $$.boolean = 0;
+        printf("\n> [TIPO] - Boleano False: %d\n", $$.boolean); 
+        $$.n = crearNodoTerminalBoolean($$.boolean);
         $$.tipo = tipos[3]; 
     }
 ;
