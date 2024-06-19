@@ -140,7 +140,12 @@ asignacion:
 //F --> if E: S end
 if:
     IF expresion DOS_PUNTOS sentencias END {
-        printf("> [IF] - ESTAMOS COMPARANDO\n");
+        if(strcmp($2.tipo, tipos[3]) == 0 && $2.numero == 1 ){ //comprobacion si es boolean
+            printf("> [IF] - ESTAMOS COMPARANDO\n");
+        }
+        else{
+            printf("> [ERROR] - SE ESPERABA UN BOOLEAN\n");
+        }
     }
 ;
 

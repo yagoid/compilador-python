@@ -524,8 +524,8 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint16 yyrline[] =
 {
        0,    80,    80,    90,    91,    99,   100,   101,   108,   142,
-     153,   188,   206,   224,   242,   274,   291,   316,   333,   344,
-     377,   385,   393,   401,   408,   420
+     158,   193,   211,   229,   247,   279,   296,   321,   338,   349,
+     382,   390,   398,   406,   413,   425
 };
 #endif
 
@@ -1530,14 +1530,19 @@ yyreduce:
 /* Line 1464 of yacc.c  */
 #line 142 "gramatica_python.y"
     {
-        printf("> [IF] - ESTAMOS COMPARANDO\n");
+        if(strcmp((yyvsp[(2) - (5)].tr).tipo, tipos[3]) == 0 && (yyvsp[(2) - (5)].tr).numero == 1 ){ //comprobacion si es boolean
+            printf("> [IF] - ESTAMOS COMPARANDO\n");
+        }
+        else{
+            printf("> [ERROR] - SE ESPERABA UN BOOLEAN\n");
+        }
     ;}
     break;
 
   case 10:
 
 /* Line 1464 of yacc.c  */
-#line 153 "gramatica_python.y"
+#line 158 "gramatica_python.y"
     {
 
         //Suma de numero + numero
@@ -1577,7 +1582,7 @@ yyreduce:
   case 11:
 
 /* Line 1464 of yacc.c  */
-#line 188 "gramatica_python.y"
+#line 193 "gramatica_python.y"
     {
         
         //Resta de numero - numero
@@ -1600,7 +1605,7 @@ yyreduce:
   case 12:
 
 /* Line 1464 of yacc.c  */
-#line 206 "gramatica_python.y"
+#line 211 "gramatica_python.y"
     {
         
         //Multiplicacion de numero * numero
@@ -1623,7 +1628,7 @@ yyreduce:
   case 13:
 
 /* Line 1464 of yacc.c  */
-#line 224 "gramatica_python.y"
+#line 229 "gramatica_python.y"
     {
         
         //Division de numero / numero
@@ -1646,7 +1651,7 @@ yyreduce:
   case 14:
 
 /* Line 1464 of yacc.c  */
-#line 242 "gramatica_python.y"
+#line 247 "gramatica_python.y"
     {
         
         //MENOR_QUE de numero / numero
@@ -1683,7 +1688,7 @@ yyreduce:
   case 15:
 
 /* Line 1464 of yacc.c  */
-#line 274 "gramatica_python.y"
+#line 279 "gramatica_python.y"
     {
         
         //MAYOR_QUE de numero / numero
@@ -1705,7 +1710,7 @@ yyreduce:
   case 16:
 
 /* Line 1464 of yacc.c  */
-#line 291 "gramatica_python.y"
+#line 296 "gramatica_python.y"
     {
         
         //IGUAL_QUE de numero / numero
@@ -1735,7 +1740,7 @@ yyreduce:
   case 17:
 
 /* Line 1464 of yacc.c  */
-#line 316 "gramatica_python.y"
+#line 321 "gramatica_python.y"
     {
         
         //DISTINTO_QUE de numero / numero
@@ -1758,14 +1763,14 @@ yyreduce:
   case 18:
 
 /* Line 1464 of yacc.c  */
-#line 333 "gramatica_python.y"
+#line 338 "gramatica_python.y"
     {(yyval.tr) = (yyvsp[(1) - (1)].tr);;}
     break;
 
   case 19:
 
 /* Line 1464 of yacc.c  */
-#line 344 "gramatica_python.y"
+#line 349 "gramatica_python.y"
     {
         printf(" VARIABLE %s\n",(yyvsp[(1) - (1)].strVal));
         //Buscamos en la tabla el VARIABLE
@@ -1802,7 +1807,7 @@ yyreduce:
   case 20:
 
 /* Line 1464 of yacc.c  */
-#line 377 "gramatica_python.y"
+#line 382 "gramatica_python.y"
     {
         (yyval.tr).numero = (yyvsp[(1) - (1)].intVal);
         printf("\n> [TIPO] - Numero Positivo: %ld\n", (yyval.tr).numero);
@@ -1814,7 +1819,7 @@ yyreduce:
   case 21:
 
 /* Line 1464 of yacc.c  */
-#line 385 "gramatica_python.y"
+#line 390 "gramatica_python.y"
     {
         (yyval.tr).decimal = (yyvsp[(1) - (1)].realVal);
         printf("\n> [TIPO] - Decimal: %.3f\n", (yyval.tr).decimal); 
@@ -1826,7 +1831,7 @@ yyreduce:
   case 22:
 
 /* Line 1464 of yacc.c  */
-#line 393 "gramatica_python.y"
+#line 398 "gramatica_python.y"
     {
         (yyval.tr).texto = (yyvsp[(1) - (1)].strVal);
         printf("\n> [TIPO] - Texto: %c\n", (yyval.tr).texto);
@@ -1838,7 +1843,7 @@ yyreduce:
   case 23:
 
 /* Line 1464 of yacc.c  */
-#line 401 "gramatica_python.y"
+#line 406 "gramatica_python.y"
     {
         (yyval.tr).boolean = 1;
         printf("\n> [TIPO] - Boleano True: %d\n", (yyval.tr).boolean); 
@@ -1850,7 +1855,7 @@ yyreduce:
   case 24:
 
 /* Line 1464 of yacc.c  */
-#line 408 "gramatica_python.y"
+#line 413 "gramatica_python.y"
     {
         (yyval.tr).boolean = 0;
         printf("\n> [TIPO] - Boleano False: %d\n", (yyval.tr).boolean); 
@@ -1862,7 +1867,7 @@ yyreduce:
   case 25:
 
 /* Line 1464 of yacc.c  */
-#line 420 "gramatica_python.y"
+#line 425 "gramatica_python.y"
     { 
         printf("> [SENTENCIA] - Imprimir\n");
         (yyval.tr).n = crearNodoNoTerminal((yyvsp[(3) - (4)].tr).n, crearNodoVacio(), 14);        
@@ -1872,7 +1877,7 @@ yyreduce:
 
 
 /* Line 1464 of yacc.c  */
-#line 1876 "gramatica_python.tab.c"
+#line 1881 "gramatica_python.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2084,7 +2089,7 @@ yyreturn:
 
 
 /* Line 1684 of yacc.c  */
-#line 426 "gramatica_python.y"
+#line 431 "gramatica_python.y"
  
 
 //--------------------------------------------------- METODO MAIN -----------------------------------------------
