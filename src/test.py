@@ -1,4 +1,4 @@
-if 4 < 5: 
+if 6 < 4: 
     r = 5
     print(r)
 end

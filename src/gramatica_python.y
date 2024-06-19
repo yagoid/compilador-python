@@ -264,9 +264,16 @@ expresion:
         //IGUAL_QUE de decimal / decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [COMPARACION] - IGUAL_QUE {decimal / decimal}\n");
-            $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
-            $$.tipo = tipos[1]; 
-            $$.decimal = $1.decimal == $3.decimal;
+            $$.n = crearNodoNoTerminal($1.n, $3.n, 15);
+            $$.tipo = tipos[3]; 
+            if ($1.decimal == $3.decimal) {
+                printf("Verdadero %d es igual que %d\n", $1, $3);
+                $$.boolean = 1; // Verdadero
+            }
+            else {
+                printf("Falso %d no es igual que %d\n", $1, $3);
+                $$.boolean = 0;
+            }
         }
     }
     //DISTINTO_QUE
@@ -278,11 +285,11 @@ expresion:
             $$.n = crearNodoNoTerminal($1.n, $3.n, 16); 
             $$.tipo = tipos[3]; 
             if ($1.numero != $3.numero;) {
-                printf("Verdadero %d es igual que %d\n", $1, $3);
+                printf("Verdadero %d es distinto que %d\n", $1, $3);
                 $$.boolean = 1; // Verdadero
             }
             else {
-                printf("Falso %d no es igual que %d\n", $1, $3);
+                printf("Falso %d no es distinto que %d\n", $1, $3);
                 $$.boolean = 0;
             }
         }
@@ -292,11 +299,11 @@ expresion:
             $$.n = crearNodoNoTerminal($1.n, $3.n, 16);
             $$.tipo = tipos[3]; 
             if ($1.decimal != $3.decimal) {
-                printf("Verdadero %d es igual que %d\n", $1, $3);
+                printf("Verdadero %d es distinto que %d\n", $1, $3);
                 $$.boolean = 1; // Verdadero
             }
             else {
-                printf("Falso %d no es igual que %d\n", $1, $3);
+                printf("Falso %d no es distinto que %d\n", $1, $3);
                 $$.boolean = 0;
             }
         }
@@ -306,14 +313,17 @@ expresion:
         
         //MENOR_QUE de numero / numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
-            printf("> [COMPARACION] - MENOR_QUE {numero / numero}\n");
+            printf("> [COMPARACION] - MENOR_QUE iygiufyt {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 17);
             $$.tipo = tipos[3]; 
+            printf("---- %d -----\n", $1);
             if ($1.numero < $3.numero) {
+                printf("---- %d -----\n", $1);
                 printf("Verdadero %d es menor que %d\n", $1, $3);
                 $$.boolean = 1; // Verdadero
             }
             else {
+                printf("---- %d -----\n", $1);
                 printf("Falso %d no es menor que %d\n", $1, $3);
                 $$.boolean = 0;
             }
