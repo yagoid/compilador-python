@@ -1530,11 +1530,11 @@ yyreduce:
 /* Line 1464 of yacc.c  */
 #line 142 "gramatica_python.y"
     {
-        if(strcmp((yyvsp[(2) - (5)].tr).tipo, tipos[3]) == 0 && (yyvsp[(2) - (5)].tr).numero == 1 ){ //comprobacion si es boolean
+        if(strcmp((yyvsp[(2) - (5)].tr).tipo, tipos[3]) == 0 && (yyvsp[(2) - (5)].tr).boolean == 1){ //comprobacion si es boolean
             printf("> [IF] - ESTAMOS COMPARANDO\n");
         }
         else{
-            printf("> [ERROR] - SE ESPERABA UN BOOLEAN\n");
+            printf("> [ERROR] - SE ESPERABA UN BOOLEAN TRUE\n");
         }
     ;}
     break;
