@@ -26,9 +26,9 @@ struct variable
     int valorEntero;   // Valor de la variable (en caso de ser entero)
     char *valorCadena; // Valor de la variable (en caso de ser cadena)
     int valorBoolean;
-    int nombre;        // limite de caracteres de la variable
-    bool disponible;   // Indica si la variable está disponible
-    char *tipo;        // Tipo de la variable: "int", "float", "string", etc.
+    int nombre;      // limite de caracteres de la variable
+    bool disponible; // Indica si la variable está disponible
+    char *tipo;      // Tipo de la variable: "int", "float", "string", etc.
 };
 
 struct variable variables[64]; // Declaramos el array de variables usando la estructura definida
@@ -184,7 +184,55 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     }
     break;
 
-    case 15: // Comentario (no hace nada)
+    case 15: // Comprobación igual que
+    {
+        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) == comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        fprintf(yyout, "c.eq.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        borrarReg(n->izq, n->dcha);
+        break;
+    }
+
+    case 16: // Comprobación distinto que
+    {
+        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) != comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        fprintf(yyout, "c.ne.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        borrarReg(n->izq, n->dcha);
+        break;
+    }
+
+    case 17: // Comprobación menor que
+    {
+        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) < comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        fprintf(yyout, "c.lt.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        borrarReg(n->izq, n->dcha);
+        break;
+    }
+
+    case 18: // Comprobación menor igual que
+    {
+        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) <= comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        fprintf(yyout, "c.le.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        borrarReg(n->izq, n->dcha);
+        break;
+    }
+
+    case 19: // Comprobación mayor que
+    {
+        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) > comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        fprintf(yyout, "c.gt.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        borrarReg(n->izq, n->dcha);
+        break;
+    }
+
+    case 20: // Comprobación mayor igual que
+    {
+        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) >= comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        fprintf(yyout, "c.ge.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        borrarReg(n->izq, n->dcha);
+        break;
+    }
+
+    case 21: // Comentario (no hace nada)
         break;
 
     default: // Nodo no reconocido, manejo de errores
