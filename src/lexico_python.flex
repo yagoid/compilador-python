@@ -68,7 +68,9 @@ bool 		{return BOOLEAN; }
 "/"         {return DIVISION; }
 "%"			{return MODULO; }
 "<"         {return MENOR_QUE; }
+"<="         {return MENOR_IGUAL_QUE; }
 ">"         {return MAYOR_QUE; }
+">="         {return MAYOR_IGUAL_QUE; }
 "+="        {return AUMENTAR_VALOR; }
 "=="        {return IGUAL_QUE; }
 "!="        {return DISTINTO_QUE; }
