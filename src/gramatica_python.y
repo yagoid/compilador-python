@@ -44,7 +44,7 @@ char* tipos[] = {"numero", "decimal", "texto", "boolean"}; //Para parsear el tip
 %token FOR FROM GLOBAL IF IMPORT IN IS LAMBDA NONLOCAL NOT OR PASS RAISE RETURN TRY WHILE WITH YIELD END IMPRIMIR 
 %token CADENA VECTOR LISTA TUPLA SET DICT INT FLOAT COMPLEX BOOLEAN
 %token SUMA RESTA MULTIPLICACION DIVISION MODULO MENOR_QUE MAYOR_QUE AUMENTAR_VALOR IGUAL_QUE DISTINTO_QUE ASIGNACION PARENTESIS_IZQ PARENTESIS_DER DOS_PUNTOS
-%toke MENOR_IGUAL_QUE MAYOR_IGUAL_QUE
+%token MENOR_IGUAL_QUE MAYOR_IGUAL_QUE
 
 /*Declaración de los TOKENS que provienen de FLEX con su respectivo tipo*/
 %token <intVal> NUMERO 
@@ -284,7 +284,7 @@ expresion:
             printf("> [COMPARACION] - DISTINTO_QUE {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 16); 
             $$.tipo = tipos[3]; 
-            if ($1.numero != $3.numero;) {
+            if ($1.numero != $3.numero) {
                 printf("Verdadero %d es distinto que %d\n", $1, $3);
                 $$.boolean = 1; // Verdadero
             }
@@ -313,17 +313,14 @@ expresion:
         
         //MENOR_QUE de numero / numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
-            printf("> [COMPARACION] - MENOR_QUE iygiufyt {numero / numero}\n");
+            printf("> [COMPARACION] - MENOR_QUE {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 17);
             $$.tipo = tipos[3]; 
-            printf("---- %d -----\n", $1);
             if ($1.numero < $3.numero) {
-                printf("---- %d -----\n", $1);
                 printf("Verdadero %d es menor que %d\n", $1, $3);
                 $$.boolean = 1; // Verdadero
             }
             else {
-                printf("---- %d -----\n", $1);
                 printf("Falso %d no es menor que %d\n", $1, $3);
                 $$.boolean = 0;
             }

@@ -99,10 +99,12 @@
      PARENTESIS_IZQ = 316,
      PARENTESIS_DER = 317,
      DOS_PUNTOS = 318,
-     NUMERO = 319,
-     DECIMAL = 320,
-     VARIABLE = 321,
-     STRING = 322
+     MENOR_IGUAL_QUE = 319,
+     MAYOR_IGUAL_QUE = 320,
+     NUMERO = 321,
+     DECIMAL = 322,
+     VARIABLE = 323,
+     STRING = 324
    };
 #endif
 
@@ -130,7 +132,7 @@ typedef union YYSTYPE
 
 
 /* Line 1685 of yacc.c  */
-#line 134 "gramatica_python.tab.h"
+#line 136 "gramatica_python.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
