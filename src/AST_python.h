@@ -22,13 +22,13 @@ bool registros[32] = {
 struct variable
 {
     // char *nombre;      // Nombre de la variable, utilizando un puntero a char para nombres dinámicos
-    float dato;        // Valor de la variable (en caso de ser flotante)
+    double valorFloat; // Valor de la variable (en caso de ser flotante)
     int valorEntero;   // Valor de la variable (en caso de ser entero)
     char *valorCadena; // Valor de la variable (en caso de ser cadena)
-    int valorBoolean;
-    int nombre;      // limite de caracteres de la variable
-    bool disponible; // Indica si la variable está disponible
-    char *tipo;      // Tipo de la variable: "int", "float", "string", etc.
+    int valorBoolean;  // Valor de la variable (en caso de ser booleano)
+    int nombre;        // limite de caracteres de la variable
+    bool disponible;   // Indica si la variable está disponible
+    char *tipo;        // Tipo de la variable: "int", "float", "string", "boolean".
 };
 
 struct variable variables[64]; // Declaramos el array de variables usando la estructura definida
@@ -60,12 +60,13 @@ struct ast
     int tipoNodo;     // Almacena el tipo de nodo
     union
     {
-        double valorNumerico; // Valor si es numérico
-        char *valorCadena;    // Valor si es una cadena
-        int valorBoolean;
+        int valorEntero;     // Valor si es entero
+        double valorDecimal; // Valor si es decimal
+        char *valorCadena;   // Valor si es una cadena
+        int valorBoolean;    // Valor si es una Boolean
     };
     // double valor;        // Almacena el valor del nodo
-    char *tipo;    // Tipo de dato: "int", "float", "string"
+    char *tipo;    // Tipo de dato: "int", "float", "string", "boolean"
     int resultado; // Registro donde está el resultado
     int nombreVar; // Indica el nombre de la variable
 };
@@ -80,25 +81,66 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     switch (n->tipoNodo)
     {
     case 1: // Nueva hoja en el árbol
-        dato = n->valorNumerico;
-        fprintf(yyout, "lwc1 $f%d, var_%d\n", n->resultado, n->nombreVar);
+        dato = n->valorDecimal;
+        // printf("tipo nueva variable: %s\n", n->tipo);
+
+        if (strcmp(n->tipo, "int") == 0)
+        {
+            fprintf(yyout, "lw $t%d, var_%d\n", n->resultado, n->nombreVar);
+        }
+        else if (strcmp(n->tipo, "float") == 0)
+        {
+            fprintf(yyout, "lwc1 $f%d, var_%d\n", n->resultado, n->nombreVar);
+        }
+        else if (strcmp(n->tipo, "string") == 0)
+        {
+            fprintf(yyout, "lb $t%d, var_%d\n", n->resultado, n->nombreVar);
+        }
+        else if (strcmp(n->tipo, "boolean") == 0)
+        {
+            fprintf(yyout, "lw $t%d, var_%d\n", n->resultado, n->nombreVar);
+        }
         break;
 
     case 2: // Nueva suma
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) + comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "add.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+
+        if (strcmp(n->izq->tipo, "int") == 0)
+        {
+            fprintf(yyout, "add $t%d, $t%d, $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        }
+        else if (strcmp(n->izq->tipo, "float") == 0)
+        {
+            fprintf(yyout, "add.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        }
         borrarReg(n->izq, n->dcha);
         break;
 
     case 3: // Nueva resta
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) - comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "sub.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+
+        if (strcmp(n->izq->tipo, "int") == 0)
+        {
+            fprintf(yyout, "sub $t%d, $t%d, $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        }
+        else if (strcmp(n->izq->tipo, "float") == 0)
+        {
+            fprintf(yyout, "sub.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        }
         borrarReg(n->izq, n->dcha);
         break;
 
     case 4: // Nueva multiplicación
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) * comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "mul.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+
+        if (strcmp(n->izq->tipo, "int") == 0)
+        {
+            fprintf(yyout, "mul $t%d, $t%d, $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        }
+        else if (strcmp(n->izq->tipo, "float") == 0)
+        {
+            fprintf(yyout, "mul.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        }
         borrarReg(n->izq, n->dcha);
         break;
 
@@ -109,12 +151,21 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
             return 0;
         }
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) / comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "div.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+
+        if (strcmp(n->izq->tipo, "int") == 0)
+        {
+            fprintf(yyout, "div $t%d, $t%d, $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        }
+        else if (strcmp(n->izq->tipo, "float") == 0)
+        {
+            fprintf(yyout, "div.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        }
+
         borrarReg(n->izq, n->dcha);
         break;
 
     case 6: // Nueva variable
-        dato = n->valorNumerico;
+        dato = n->valorDecimal;
         break;
 
     case 7: // Lista de sentencias
@@ -285,13 +336,17 @@ void imprimirVariables()
         {
             // printf("\ni=%d --> nombre de variable=%c\n", i, variables[i].nombre);
 
-            if (strcmp(variables[i].tipo, "float") == 0)
+            if (strcmp(variables[i].tipo, "int") == 0)
             {
-                fprintf(yyout, "var_%d: .float %.3f\n", variables[i].nombre, variables[i].dato);
+                fprintf(yyout, "var_%d: .word %d\n", variables[i].nombre, variables[i].valorEntero);
+            }
+            else if (strcmp(variables[i].tipo, "float") == 0)
+            {
+                fprintf(yyout, "var_%d: .float %.3f\n", variables[i].nombre, variables[i].valorFloat);
             }
             else if (strcmp(variables[i].tipo, "string") == 0)
             {
-                fprintf(yyout, "var_%d: .asciiz \"%c\"\n", variables[i].nombre, variables[i].valorCadena);
+                fprintf(yyout, "var_%d: .asciiz %s\n", variables[i].nombre, variables[i].valorCadena);
             }
             else if (strcmp(variables[i].tipo, "boolean") == 0)
             {
@@ -347,22 +402,44 @@ struct ast *crearNodoVacio()
     return n;
 }
 
-struct ast *crearNodoTerminal(double valor)
+struct ast *crearNodoTerminalDouble(double valor)
 {
     struct ast *n = malloc(sizeof(struct ast)); // Asigna memoria dinámicamente para el nuevo nodo
     n->izq = NULL;
     n->dcha = NULL;
     n->tipoNodo = 1;
     n->tipo = "float";
-    n->valorNumerico = valor;
+    n->valorDecimal = valor;
 
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
     n->nombreVar = crearNombreVariable(); // Genera un nombre único para la variable
-    printf("# [AST] - Registro $f%d ocupado para var_%d = %.3f\n", n->resultado, n->nombreVar, n->valorNumerico);
+    printf("# [AST] - Registro $f%d ocupado para var_%d = %.3f\n", n->resultado, n->nombreVar, n->valorDecimal);
 
     // Actualizar el registro de variables
     variables[n->resultado].tipo = n->tipo;
-    variables[n->resultado].dato = n->valorNumerico;
+    variables[n->resultado].valorFloat = n->valorDecimal;
+    variables[n->resultado].nombre = n->nombreVar;
+    variables[n->resultado].disponible = true;
+
+    return n;
+}
+
+struct ast *crearNodoTerminalInt(int valor)
+{
+    struct ast *n = malloc(sizeof(struct ast)); // Asigna memoria dinámicamente para el nuevo nodo
+    n->izq = NULL;
+    n->dcha = NULL;
+    n->tipoNodo = 1;
+    n->tipo = "int";
+    n->valorEntero = valor;
+
+    n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
+    n->nombreVar = crearNombreVariable(); // Genera un nombre único para la variable
+    printf("# [AST] - Registro $f%d ocupado para var_%d = %d\n", n->resultado, n->nombreVar, n->valorEntero);
+
+    // Actualizar el registro de variables
+    variables[n->resultado].tipo = n->tipo;
+    variables[n->resultado].valorEntero = n->valorEntero;
     variables[n->resultado].nombre = n->nombreVar;
     variables[n->resultado].disponible = true;
 
@@ -405,7 +482,7 @@ struct ast *crearNodoTerminalBoolean(int valor)
 
     // Actualizar el registro de variables
     variables[n->resultado].tipo = n->tipo;
-    variables[n->resultado].dato = n->valorBoolean;
+    variables[n->resultado].valorBoolean = n->valorBoolean;
     variables[n->resultado].nombre = n->nombreVar;
     variables[n->resultado].disponible = true;
 
@@ -423,14 +500,27 @@ struct ast *crearNodoNoTerminal(struct ast *izq, struct ast *dcha, int tipoNodo)
     return n;
 }
 
-// METODO "crearVariableTerminal", crear el nodo hoja para una variable ya creada
-struct ast *crearVariableTerminal(double valor, int registro)
+// METODO "crearVariableTerminalDouble", crear el nodo hoja para una variable ya creada con valor double
+struct ast *crearVariableTerminalDouble(double valor, int registro)
 {
     struct ast *n = malloc(sizeof(struct ast)); // Asigna memoria dinámicamente para el nuevo nodo
     n->izq = NULL;
     n->dcha = NULL;
     n->tipoNodo = 6;
-    n->valorNumerico = valor;
+    n->valorDecimal = valor;
+
+    n->resultado = registro;
+    return n;
+}
+
+// METODO "crearVariableTerminalInt", crear el nodo hoja para una variable ya creada con valor entero
+struct ast *crearVariableTerminalInt(int valor, int registro)
+{
+    struct ast *n = malloc(sizeof(struct ast)); // Asigna memoria dinámicamente para el nuevo nodo
+    n->izq = NULL;
+    n->dcha = NULL;
+    n->tipoNodo = 6;
+    n->valorEntero = valor;
 
     n->resultado = registro;
     return n;
