@@ -12,4 +12,10 @@ while, 11
 if-else, 12
 imprimir, 13
 asignacion, 14
-comentario, 15
+igual_que, 15
+distinto_que, 16
+menor_que, 17
+menor_igual_que, 18
+mayor_que,19
+mayor_igual_que, 20
+comentario, 21

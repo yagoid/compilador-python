@@ -348,7 +348,7 @@ expresion:
             printf("> [COMPARACION] - MENOR_IGUAL_QUE {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 18);
             $$.tipo = tipos[3]; 
-            if ($1.numero <= $3.numero) {
+            if ($1.numero < $3.numero || $1.numero == $3.numero) {
                 printf("Verdadero %d es menor o igual que %d\n", $1, $3);
                 $$.boolean = 1; // Verdadero
             }
@@ -362,7 +362,7 @@ expresion:
             printf("> [COMPARACION] - MENOR_IGUAL_QUE {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 18);
             $$.tipo = tipos[3]; 
-            if ($1.decimal <= $3.decimal) {
+            if ($1.decimal < $3.decimal || $1.decimal == $3.decimal) {
                 printf("Verdadero %d es menor o igual que %d\n", $1, $3);
                 $$.boolean = 1; // Verdadero
             }
@@ -412,7 +412,7 @@ expresion:
             printf("> [COMPARACION] - MAYOR_IGUAL_QUE {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 20);
             $$.tipo = tipos[3]; 
-            if ($1.numero >= $3.numero) {
+            if ($1.numero > $3.numero || $1.numero == $3.numero) {
                 printf("Verdadero %d es mayor o igual que %d\n", $1, $3);
                 $$.boolean = 1; // Verdadero
             }
@@ -426,7 +426,7 @@ expresion:
             printf("> [COMPARACION] - MAYOR_IGUAL_QUE {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 20);
             $$.tipo = tipos[3]; 
-            if ($1.decimal >= $3.decimal) {
+            if ($1.decimal > $3.decimal || $1.decimal == $3.decimal) {
                 printf("Verdadero %d es mayor o igual que %d\n", $1, $3);
                 $$.boolean = 1; // Verdadero
             }
