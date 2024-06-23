@@ -456,13 +456,13 @@ tipos:
             if(tabla[pos].tipo==tipos[0]){
                 $$.tipo = tabla[pos].tipo; 
                 $$.numero=tabla[pos].numero; 
-                $$.n = crearVariableTerminal(tabla[pos].numero, tabla[pos].registro);  //Creamos un nodo terminal con los numeros   
+                $$.n = crearVariableTerminalInt(tabla[pos].numero, tabla[pos].registro);  //Creamos un nodo terminal con los numeros   
             }
             //Para si es de tipo decimal
             else if(tabla[pos].tipo==tipos[1]){
                 $$.tipo = tabla[pos].tipo; 
                 $$.decimal=tabla[pos].decimal;
-                $$.n = crearVariableTerminal(tabla[pos].decimal, tabla[pos].registro); //Creamos un nodo terminal con los numeros        
+                $$.n = crearVariableTerminalDouble(tabla[pos].decimal, tabla[pos].registro); //Creamos un nodo terminal con los numeros        
             }
             //Para si es de tipo texto
             else if(tabla[pos].tipo==tipos[2]){
@@ -483,7 +483,7 @@ tipos:
     | NUMERO {
         $$.numero = $1;
         printf("\n> [TIPO] - Numero Positivo: %ld\n", $$.numero);
-        $$.n = crearNodoTerminal($1); 
+        $$.n = crearNodoTerminalInt($1); 
         $$.tipo = tipos[0]; 
     }
 
@@ -491,7 +491,7 @@ tipos:
     | DECIMAL {
         $$.decimal = $1;
         printf("\n> [TIPO] - Decimal: %.3f\n", $$.decimal); 
-        $$.n = crearNodoTerminal($1); 
+        $$.n = crearNodoTerminalDouble($1);
         $$.tipo = tipos[1];  
     }
 
