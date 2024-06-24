@@ -79,7 +79,7 @@ char* tipos[] = {"numero", "decimal", "texto", "boolean"}; //Para parsear el tip
 //X --> S
 codigo:
     sentencias  {
-        printf("Llamando a comprobarAST\n");
+        printf("\nLlamando a comprobarAST\n");
         comprobarAST($1.n); 
         printf("\n[FINALIZADO]\n");     
     }
@@ -123,7 +123,7 @@ asignacion:
         }
         //Para crear un nuevo simbolo de tipo string
         else if(strcmp($3.tipo, tipos[2]) == 0){ //comprobacion si es string
-            printf("Asignado el valor %c a la variable\n",$3.texto);
+            printf("Asignado el valor %s a la variable\n",$3.texto);
             tabla[indice].nombre = $1; tabla[indice].tipo = tipos[2]; tabla[indice].texto = $3.texto; tabla[indice].registro = $3.n->resultado;
             indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
         }
@@ -498,7 +498,7 @@ tipos:
     //Cadena de caracteres
     | STRING {
         $$.texto = $1;
-        printf("\n> [TIPO] - Texto: %c\n", $$.texto);
+        printf("\n> [TIPO] - Texto: %s\n", $$.texto);
         $$.n = crearNodoTerminalString($1); 
         $$.tipo = tipos[2]; 
     }

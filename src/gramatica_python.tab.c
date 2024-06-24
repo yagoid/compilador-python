@@ -501,11 +501,10 @@ static const yytype_int8 yyrhs[] =
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
-{
-       0,    81,    81,    91,    92,   100,   101,   102,   109,   143,
-     159,   194,   212,   230,   248,   280,   312,   347,   379,   411,
-     442,   453,   486,   494,   502,   510,   517,   529
-};
+    {
+        0, 81, 81, 91, 92, 100, 101, 102, 109, 143,
+        159, 194, 212, 230, 248, 280, 312, 347, 379, 411,
+        442, 453, 486, 494, 502, 510, 517, 529};
 #endif
 
 #if YYDEBUG || YYERROR_VERBOSE || YYTOKEN_TABLE
@@ -1716,272 +1715,311 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 312 "gramatica_python.y"
-    {
-        
-        //MENOR_QUE de numero / numero
-        if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0) {  //comprobacion del tipo
-            printf("> [COMPARACION] - MENOR_QUE {numero / numero}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 17);
-            (yyval.tr).tipo = tipos[3]; 
-            printf("---- %d -----\n", (yyvsp[(3) - (3)].tr));
-            if ((yyvsp[(1) - (3)].tr).numero < (yyvsp[(3) - (3)].tr).numero) {
-                printf("---- %d -----\n", (yyvsp[(1) - (3)].tr));
-                printf("Verdadero %d es menor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr).numero);
-                (yyval.tr).boolean = 1; // Verdadero
-            }
-            else {
-                printf("---- %d -----\n", (yyvsp[(3) - (3)].tr));
-                printf("Falso %d no es menor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr).numero);
-                (yyval.tr).boolean = 0;
-            }
-        }
-        //MENOR_QUE de decimal / decimal
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [COMPARACION] - MENOR_QUE {decimal / decimal}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 17);
-            (yyval.tr).tipo = tipos[3]; 
-            if ((yyvsp[(1) - (3)].tr).decimal < (yyvsp[(3) - (3)].tr).decimal) {
-                printf("Verdadero %d es menor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 1; // Verdadero
-            }
-            else {
-                printf("Falso %d no es menor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 0;
-            }
-        }
-    ;}
-    break;
+  {
+
+    // MENOR_QUE de numero / numero
+    if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0)
+    { // comprobacion del tipo
+      printf("> [COMPARACION] - MENOR_QUE {numero / numero}\n");
+      (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 17);
+      (yyval.tr).tipo = tipos[3];
+      printf("---- %d -----\n", (yyvsp[(3) - (3)].tr));
+      if ((yyvsp[(1) - (3)].tr).numero < (yyvsp[(3) - (3)].tr).numero)
+      {
+        printf("---- %d -----\n", (yyvsp[(1) - (3)].tr));
+        printf("Verdadero %d es menor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr).numero);
+        (yyval.tr).boolean = 1; // Verdadero
+      }
+      else
+      {
+        printf("---- %d -----\n", (yyvsp[(3) - (3)].tr));
+        printf("Falso %d no es menor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr).numero);
+        (yyval.tr).boolean = 0;
+      }
+    }
+    // MENOR_QUE de decimal / decimal
+    else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0)
+    { // comprobacion del tipo
+      printf("> [COMPARACION] - MENOR_QUE {decimal / decimal}\n");
+      (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 17);
+      (yyval.tr).tipo = tipos[3];
+      if ((yyvsp[(1) - (3)].tr).decimal < (yyvsp[(3) - (3)].tr).decimal)
+      {
+        printf("Verdadero %d es menor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 1; // Verdadero
+      }
+      else
+      {
+        printf("Falso %d no es menor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 0;
+      }
+    };
+  }
+  break;
 
   case 17:
 
 /* Line 1464 of yacc.c  */
 #line 347 "gramatica_python.y"
-    {
-        
-        //MENOR_IGUAL_QUE de numero / numero
-        if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0) {  //comprobacion del tipo
-            printf("> [COMPARACION] - MENOR_IGUAL_QUE {numero / numero}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 18);
-            (yyval.tr).tipo = tipos[3]; 
-            if ((yyvsp[(1) - (3)].tr).numero <= (yyvsp[(3) - (3)].tr).numero) {
-                printf("Verdadero %d es menor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 1; // Verdadero
-            }
-            else {
-                printf("Falso %d no es menor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 0;
-            }
-        }
-        //MENOR_IGUAL_QUE de decimal / decimal
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [COMPARACION] - MENOR_IGUAL_QUE {decimal / decimal}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 18);
-            (yyval.tr).tipo = tipos[3]; 
-            if ((yyvsp[(1) - (3)].tr).decimal <= (yyvsp[(3) - (3)].tr).decimal) {
-                printf("Verdadero %d es menor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 1; // Verdadero
-            }
-            else {
-                printf("Falso %d no es menor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 0;
-            }
-        }
-    ;}
-    break;
+  {
+
+    // MENOR_IGUAL_QUE de numero / numero
+    if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0)
+    { // comprobacion del tipo
+      printf("> [COMPARACION] - MENOR_IGUAL_QUE {numero / numero}\n");
+      (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 18);
+      (yyval.tr).tipo = tipos[3];
+      if ((yyvsp[(1) - (3)].tr).numero <= (yyvsp[(3) - (3)].tr).numero)
+      {
+        printf("Verdadero %d es menor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 1; // Verdadero
+      }
+      else
+      {
+        printf("Falso %d no es menor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 0;
+      }
+    }
+    // MENOR_IGUAL_QUE de decimal / decimal
+    else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0)
+    { // comprobacion del tipo
+      printf("> [COMPARACION] - MENOR_IGUAL_QUE {decimal / decimal}\n");
+      (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 18);
+      (yyval.tr).tipo = tipos[3];
+      if ((yyvsp[(1) - (3)].tr).decimal <= (yyvsp[(3) - (3)].tr).decimal)
+      {
+        printf("Verdadero %d es menor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 1; // Verdadero
+      }
+      else
+      {
+        printf("Falso %d no es menor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 0;
+      }
+    };
+  }
+  break;
 
   case 18:
 
 /* Line 1464 of yacc.c  */
 #line 379 "gramatica_python.y"
-    {
-        
-        //MAYOR_QUE de numero / numero
-        if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0) {  //comprobacion del tipo
-            printf("> [COMPARACION] - MAYOR_QUE {numero / numero}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 19);
-            (yyval.tr).tipo = tipos[3]; 
-            if ((yyvsp[(1) - (3)].tr).numero > (yyvsp[(3) - (3)].tr).numero) {
-                printf("Verdadero %d es mayor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 1; // Verdadero
-            }
-            else {
-                printf("Falso %d no es mayor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 0;
-            }
-        }
-        //MAYOR_QUE de decimal / decimal
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [COMPARACION] - MAYOR_QUE {decimal / decimal}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 19);
-            (yyval.tr).tipo = tipos[3]; 
-            if ((yyvsp[(1) - (3)].tr).decimal > (yyvsp[(3) - (3)].tr).decimal) {
-                printf("Verdadero %d es mayor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 1; // Verdadero
-            }
-            else {
-                printf("Falso %d no es mayor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 0;
-            }
-        }
-    ;}
-    break;
+  {
+
+    // MAYOR_QUE de numero / numero
+    if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0)
+    { // comprobacion del tipo
+      printf("> [COMPARACION] - MAYOR_QUE {numero / numero}\n");
+      (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 19);
+      (yyval.tr).tipo = tipos[3];
+      if ((yyvsp[(1) - (3)].tr).numero > (yyvsp[(3) - (3)].tr).numero)
+      {
+        printf("Verdadero %d es mayor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 1; // Verdadero
+      }
+      else
+      {
+        printf("Falso %d no es mayor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 0;
+      }
+    }
+    // MAYOR_QUE de decimal / decimal
+    else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0)
+    { // comprobacion del tipo
+      printf("> [COMPARACION] - MAYOR_QUE {decimal / decimal}\n");
+      (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 19);
+      (yyval.tr).tipo = tipos[3];
+      if ((yyvsp[(1) - (3)].tr).decimal > (yyvsp[(3) - (3)].tr).decimal)
+      {
+        printf("Verdadero %d es mayor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 1; // Verdadero
+      }
+      else
+      {
+        printf("Falso %d no es mayor que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 0;
+      }
+    };
+  }
+  break;
 
   case 19:
 
 /* Line 1464 of yacc.c  */
 #line 411 "gramatica_python.y"
-    {
-        
-        //MAYOR_IGUAL_QUE de numero / numero
-        if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0) {  //comprobacion del tipo
-            printf("> [COMPARACION] - MAYOR_IGUAL_QUE {numero / numero}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 20);
-            (yyval.tr).tipo = tipos[3]; 
-            if ((yyvsp[(1) - (3)].tr).numero >= (yyvsp[(3) - (3)].tr).numero) {
-                printf("Verdadero %d es mayor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 1; // Verdadero
-            }
-            else {
-                printf("Falso %d no es mayor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 0;
-            }
-        }
-        //MAYOR_IGUAL_QUE de decimal / decimal
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [COMPARACION] - MAYOR_IGUAL_QUE {decimal / decimal}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 20);
-            (yyval.tr).tipo = tipos[3]; 
-            if ((yyvsp[(1) - (3)].tr).decimal >= (yyvsp[(3) - (3)].tr).decimal) {
-                printf("Verdadero %d es mayor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 1; // Verdadero
-            }
-            else {
-                printf("Falso %d no es mayor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
-                (yyval.tr).boolean = 0;
-            }
-        }
-    ;}
-    break;
+  {
+
+    // MAYOR_IGUAL_QUE de numero / numero
+    if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0)
+    { // comprobacion del tipo
+      printf("> [COMPARACION] - MAYOR_IGUAL_QUE {numero / numero}\n");
+      (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 20);
+      (yyval.tr).tipo = tipos[3];
+      if ((yyvsp[(1) - (3)].tr).numero >= (yyvsp[(3) - (3)].tr).numero)
+      {
+        printf("Verdadero %d es mayor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 1; // Verdadero
+      }
+      else
+      {
+        printf("Falso %d no es mayor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 0;
+      }
+    }
+    // MAYOR_IGUAL_QUE de decimal / decimal
+    else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0)
+    { // comprobacion del tipo
+      printf("> [COMPARACION] - MAYOR_IGUAL_QUE {decimal / decimal}\n");
+      (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 20);
+      (yyval.tr).tipo = tipos[3];
+      if ((yyvsp[(1) - (3)].tr).decimal >= (yyvsp[(3) - (3)].tr).decimal)
+      {
+        printf("Verdadero %d es mayor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 1; // Verdadero
+      }
+      else
+      {
+        printf("Falso %d no es mayor o igual que %d\n", (yyvsp[(1) - (3)].tr), (yyvsp[(3) - (3)].tr));
+        (yyval.tr).boolean = 0;
+      }
+    };
+  }
+  break;
 
   case 20:
 
 /* Line 1464 of yacc.c  */
 #line 442 "gramatica_python.y"
-    {(yyval.tr) = (yyvsp[(1) - (1)].tr);;}
-    break;
+  {
+    (yyval.tr) = (yyvsp[(1) - (1)].tr);
+    ;
+  }
+  break;
 
   case 21:
 
 /* Line 1464 of yacc.c  */
 #line 453 "gramatica_python.y"
-    {
-        printf(" VARIABLE %s\n",(yyvsp[(1) - (1)].strVal));
-        //Buscamos en la tabla el VARIABLE
-        if(buscarTabla(indice, (yyvsp[(1) - (1)].strVal), tabla) != -1){     //En este IF entra si buscarTabla devuelve la posicion
-            int pos = buscarTabla(indice, (yyvsp[(1) - (1)].strVal), tabla);
-            //Para si es de tipo numero
-            if(tabla[pos].tipo==tipos[0]){
-                (yyval.tr).tipo = tabla[pos].tipo; 
-                (yyval.tr).numero=tabla[pos].numero; 
-                (yyval.tr).n = crearVariableTerminal(tabla[pos].numero, tabla[pos].registro);  //Creamos un nodo terminal con los numeros   
-            }
-            //Para si es de tipo decimal
-            else if(tabla[pos].tipo==tipos[1]){
-                (yyval.tr).tipo = tabla[pos].tipo; 
-                (yyval.tr).decimal=tabla[pos].decimal;
-                (yyval.tr).n = crearVariableTerminal(tabla[pos].decimal, tabla[pos].registro); //Creamos un nodo terminal con los numeros        
-            }
-            //Para si es de tipo texto
-            else if(tabla[pos].tipo==tipos[2]){
-                (yyval.tr).tipo = tabla[pos].tipo; 
-                (yyval.tr).texto=tabla[pos].texto;
-                (yyval.tr).n = crearVariableTerminalString(tabla[pos].texto, tabla[pos].registro); //Creamos un nodo terminal con el texto        
-            }
-            //Para si es de tipo boolean
-            else if(tabla[pos].tipo==tipos[3]){
-                (yyval.tr).tipo = tabla[pos].tipo; 
-                (yyval.tr).texto=tabla[pos].boolean;
-                (yyval.tr).n = crearVariableTerminalBoolean(tabla[pos].boolean, tabla[pos].registro); //Creamos un nodo terminal con el boolean        
-            }
-        }
-    ;}
-    break;
+  {
+    printf(" VARIABLE %s\n", (yyvsp[(1) - (1)].strVal));
+    // Buscamos en la tabla el VARIABLE
+    if (buscarTabla(indice, (yyvsp[(1) - (1)].strVal), tabla) != -1)
+    { // En este IF entra si buscarTabla devuelve la posicion
+      int pos = buscarTabla(indice, (yyvsp[(1) - (1)].strVal), tabla);
+      // Para si es de tipo numero
+      if (tabla[pos].tipo == tipos[0])
+      {
+        (yyval.tr).tipo = tabla[pos].tipo;
+        (yyval.tr).numero = tabla[pos].numero;
+        (yyval.tr).n = crearVariableTerminalInt(tabla[pos].numero, tabla[pos].registro); // Creamos un nodo terminal con los numeros
+      }
+      // Para si es de tipo decimal
+      else if (tabla[pos].tipo == tipos[1])
+      {
+        (yyval.tr).tipo = tabla[pos].tipo;
+        (yyval.tr).decimal = tabla[pos].decimal;
+        (yyval.tr).n = crearVariableTerminalDouble(tabla[pos].decimal, tabla[pos].registro); // Creamos un nodo terminal con los numeros
+      }
+      // Para si es de tipo texto
+      else if (tabla[pos].tipo == tipos[2])
+      {
+        (yyval.tr).tipo = tabla[pos].tipo;
+        (yyval.tr).texto = tabla[pos].texto;
+        (yyval.tr).n = crearVariableTerminalString(tabla[pos].texto, tabla[pos].registro); // Creamos un nodo terminal con el texto
+      }
+      // Para si es de tipo boolean
+      else if (tabla[pos].tipo == tipos[3])
+      {
+        (yyval.tr).tipo = tabla[pos].tipo;
+        (yyval.tr).texto = tabla[pos].boolean;
+        (yyval.tr).n = crearVariableTerminalBoolean(tabla[pos].boolean, tabla[pos].registro); // Creamos un nodo terminal con el boolean
+      }
+    };
+  }
+  break;
 
   case 22:
 
 /* Line 1464 of yacc.c  */
 #line 486 "gramatica_python.y"
-    {
-        (yyval.tr).numero = (yyvsp[(1) - (1)].intVal);
-        printf("\n> [TIPO] - Numero Positivo: %ld\n", (yyval.tr).numero);
-        (yyval.tr).n = crearNodoTerminal((yyvsp[(1) - (1)].intVal)); 
-        (yyval.tr).tipo = tipos[0]; 
-    ;}
-    break;
+  {
+    (yyval.tr).numero = (yyvsp[(1) - (1)].intVal);
+    printf("\n> [TIPO] - Numero Positivo: %ld\n", (yyval.tr).numero);
+    (yyval.tr).n = crearNodoTerminalInt((yyvsp[(1) - (1)].intVal));
+    (yyval.tr).tipo = tipos[0];
+    ;
+  }
+  break;
 
   case 23:
 
 /* Line 1464 of yacc.c  */
 #line 494 "gramatica_python.y"
-    {
-        (yyval.tr).decimal = (yyvsp[(1) - (1)].realVal);
-        printf("\n> [TIPO] - Decimal: %.3f\n", (yyval.tr).decimal); 
-        (yyval.tr).n = crearNodoTerminal((yyvsp[(1) - (1)].realVal)); 
-        (yyval.tr).tipo = tipos[1];  
-    ;}
-    break;
+  {
+    (yyval.tr).decimal = (yyvsp[(1) - (1)].realVal);
+    printf("\n> [TIPO] - Decimal: %.3f\n", (yyval.tr).decimal);
+    (yyval.tr).n = crearNodoTerminalDouble((yyvsp[(1) - (1)].realVal));
+    (yyval.tr).tipo = tipos[1];
+    ;
+  }
+  break;
 
   case 24:
 
 /* Line 1464 of yacc.c  */
 #line 502 "gramatica_python.y"
-    {
-        (yyval.tr).texto = (yyvsp[(1) - (1)].strVal);
-        printf("\n> [TIPO] - Texto: %c\n", (yyval.tr).texto);
-        (yyval.tr).n = crearNodoTerminalString((yyvsp[(1) - (1)].strVal)); 
-        (yyval.tr).tipo = tipos[2]; 
-    ;}
-    break;
+  {
+    (yyval.tr).texto = (yyvsp[(1) - (1)].strVal);
+    printf("\n> [TIPO] - Texto: %c\n", (yyval.tr).texto);
+    (yyval.tr).n = crearNodoTerminalString((yyvsp[(1) - (1)].strVal));
+    (yyval.tr).tipo = tipos[2];
+    ;
+  }
+  break;
 
   case 25:
 
 /* Line 1464 of yacc.c  */
 #line 510 "gramatica_python.y"
-    {
-        (yyval.tr).boolean = 1;
-        printf("\n> [TIPO] - Boleano True: %d\n", (yyval.tr).boolean); 
-        (yyval.tr).n = crearNodoTerminalBoolean((yyval.tr).boolean);
-        (yyval.tr).tipo = tipos[3];
-    ;}
-    break;
+  {
+    (yyval.tr).boolean = 1;
+    printf("\n> [TIPO] - Boleano True: %d\n", (yyval.tr).boolean);
+    (yyval.tr).n = crearNodoTerminalBoolean((yyval.tr).boolean);
+    (yyval.tr).tipo = tipos[3];
+    ;
+  }
+  break;
 
   case 26:
 
 /* Line 1464 of yacc.c  */
 #line 517 "gramatica_python.y"
-    {
-        (yyval.tr).boolean = 0;
-        printf("\n> [TIPO] - Boleano False: %d\n", (yyval.tr).boolean); 
-        (yyval.tr).n = crearNodoTerminalBoolean((yyval.tr).boolean);
-        (yyval.tr).tipo = tipos[3]; 
-    ;}
-    break;
+  {
+    (yyval.tr).boolean = 0;
+    printf("\n> [TIPO] - Boleano False: %d\n", (yyval.tr).boolean);
+    (yyval.tr).n = crearNodoTerminalBoolean((yyval.tr).boolean);
+    (yyval.tr).tipo = tipos[3];
+    ;
+  }
+  break;
 
   case 27:
 
 /* Line 1464 of yacc.c  */
 #line 529 "gramatica_python.y"
-    { 
-        printf("> [SENTENCIA] - Imprimir\n");
-        (yyval.tr).n = crearNodoNoTerminal((yyvsp[(3) - (4)].tr).n, crearNodoVacio(), 14);        
-    ;}
-    break;
+  {
+    printf("> [SENTENCIA] - Imprimir\n");
+    (yyval.tr).n = crearNodoNoTerminal((yyvsp[(3) - (4)].tr).n, crearNodoVacio(), 14);
+    ;
+  }
+  break;
 
 /* Line 1464 of yacc.c  */
 #line 2004 "gramatica_python.tab.c"
-      default: break;
-    }
-  YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
+  default:
+    break;
+  }
+  YY_SYMBOL_PRINT("-> $$ =", yyr1[yyn], &yyval, &yyloc);
 
   YYPOPSTACK(yylen);
   yylen = 0;
@@ -2181,7 +2219,6 @@ yyreturn:
 
 /* Line 1684 of yacc.c  */
 #line 535 "gramatica_python.y"
- 
 
 //--------------------------------------------------- METODO MAIN -----------------------------------------------
 int main(int argc, char **argv)

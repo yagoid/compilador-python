@@ -5,6 +5,13 @@
 #include <stdbool.h>
 
 // ----------------------------- DECLARACION DE VARIABLES Y ESTRUCTURAS --------------------------------------------
+
+#define NUM_REG_V 2
+#define NUM_REG_A 4
+#define NUM_REG_T 10
+#define NUM_REG_S 8
+#define NUM_REG_F 32
+
 extern FILE *yyout;
 int contadorEtiqueta = 0; // Variable para el control de las etiquetas
 int numMaxRegistros = 32; // Variable que indica el numero maximo de registros disponibles
@@ -15,8 +22,19 @@ bool registros[32] = {
     true, true, true, true, true, true, true, true,
     true, true, true, true, true, true, true, true,
     true, true, true, true, true, true, true, true,
-    true, true, true, true, true, true, true, true};
+    true, true, true, true, true, true, false, false};
 // Los registros 30 y 31 están reservados por defecto para imprimir por pantalla
+
+// typedef struct
+// {
+//     bool reg_v[NUM_REG_V]; // Registros para valores de retorno de funciones
+//     bool reg_a[NUM_REG_A]; // Argumentos para funciones
+//     bool reg_t[NUM_REG_T]; // Registros temporales
+//     bool reg_s[NUM_REG_S]; // Preservados por las subrutinas
+//     bool reg_f[NUM_REG_F]; // Punto Flotante
+// } Registros;
+
+// Registros registros;
 
 // Estructura variable, se hará uso de la misma para almacenar e imprimir las variables del codigo python
 struct variable
@@ -32,25 +50,6 @@ struct variable
 };
 
 struct variable variables[64]; // Declaramos el array de variables usando la estructura definida
-
-struct funcion
-{
-    char *nombre;               // Nombre de la función
-    char *tipoRetorno;          // Tipo de retorno de la función
-    struct variable params[10]; // Parámetros de la función (puedes ajustar el tamaño según tus necesidades)
-    int numParams;              // Número de parámetros
-};
-
-struct funcion funciones[32]; // Arreglo para almacenar las funciones
-
-struct ambito
-{
-    struct variable variables[64];
-    int numVariables;
-};
-
-struct ambito pilaAmbitos[32];
-int indiceAmbito = 0;
 
 // Estructura AST, se define la estructura de los nodos del arbol
 struct ast
@@ -81,56 +80,62 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     switch (n->tipoNodo)
     {
     case 1: // Nueva hoja en el árbol
+        printf("1\n");
         dato = n->valorDecimal;
         // printf("tipo nueva variable: %s\n", n->tipo);
 
         if (strcmp(n->tipo, "int") == 0)
         {
-            fprintf(yyout, "lw $t%d, var_%d\n", n->resultado, n->nombreVar);
+            fprintf(yyout, "lw $t%d, var_%d     # Cargar var_%d en $t%d\n", n->resultado, n->nombreVar, n->nombreVar, n->resultado);
         }
         else if (strcmp(n->tipo, "float") == 0)
         {
-            fprintf(yyout, "lwc1 $f%d, var_%d\n", n->resultado, n->nombreVar);
+            fprintf(yyout, "lwc1 $f%d, var_%d   # Cargar var_%d en $f%d\n", n->resultado, n->nombreVar, n->nombreVar, n->resultado);
         }
         else if (strcmp(n->tipo, "string") == 0)
         {
-            fprintf(yyout, "lb $t%d, var_%d\n", n->resultado, n->nombreVar);
+            fprintf(yyout, "lb $t%d, var_%d     # Cargar var_%d en $t%d\n", n->resultado, n->nombreVar, n->nombreVar, n->resultado);
         }
         else if (strcmp(n->tipo, "boolean") == 0)
         {
-            fprintf(yyout, "lw $t%d, var_%d\n", n->resultado, n->nombreVar);
+            fprintf(yyout, "lw $t%d, var_%d     # Cargar var_%d en $t%d\n", n->resultado, n->nombreVar, n->nombreVar, n->resultado);
         }
         break;
 
     case 2: // Nueva suma
+        printf("2\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) + comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
         if (strcmp(n->izq->tipo, "int") == 0)
         {
-            fprintf(yyout, "add $t%d, $t%d, $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+            // fprintf(yyout, "add $t%d, $t%d, $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+            fprintf(yyout, "add $t%d, $t%d, $t%d    # Sumar $t%d y $t%d, guardar en $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado, n->izq->resultado, n->dcha->resultado, n->resultado);
         }
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
-            fprintf(yyout, "add.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+            // fprintf(yyout, "add.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+            fprintf(yyout, "add.s $f%d, $f%d, $f%d  # Sumar $f%d y $f%d, guardar en $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado, n->izq->resultado, n->dcha->resultado, n->resultado);
         }
         borrarReg(n->izq, n->dcha);
         break;
 
     case 3: // Nueva resta
+        printf("3\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) - comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
         if (strcmp(n->izq->tipo, "int") == 0)
         {
-            fprintf(yyout, "sub $t%d, $t%d, $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+            fprintf(yyout, "sub $t%d, $t%d, $t%d    # Restar $t%d de $t%d, guardar en $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado, n->dcha->resultado, n->izq->resultado, n->resultado);
         }
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
-            fprintf(yyout, "sub.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+            fprintf(yyout, "sub.s $f%d, $f%d, $f%d    # Restar $f%d de $f%d, guardar en $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado, n->dcha->resultado, n->izq->resultado, n->resultado);
         }
         borrarReg(n->izq, n->dcha);
         break;
 
     case 4: // Nueva multiplicación
+        printf("4\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) * comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
         if (strcmp(n->izq->tipo, "int") == 0)
@@ -145,6 +150,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         break;
 
     case 5: // Nueva división
+        printf("5\n");
         if (comprobarValorNodo(n->dcha, contadorEtiquetaLocal) == 0)
         {
             gestionarError("Error: División por cero.");
@@ -165,27 +171,32 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         break;
 
     case 6: // Nueva variable
+        printf("6\n");
         dato = n->valorDecimal;
         break;
 
     case 7: // Lista de sentencias
+        printf("7\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         break;
 
     case 8: // Operación AND
+        printf("8\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) && comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "and $t%d, $t%d, $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
         break;
 
     case 9: // Operación OR
+        printf("9\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) || comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "or $t%d, $t%d, $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
         break;
 
     case 10: // Operación NOT
+        printf("10\n");
         dato = !comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         fprintf(yyout, "not $t%d, $t%d\n", n->resultado, n->izq->resultado);
         borrarReg(n->izq, n->dcha);
@@ -193,6 +204,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 11: // Bucle while
     {
+        printf("11\n");
         int etiquetaInicio = contadorEtiquetaLocal++;
         int etiquetaFin = contadorEtiquetaLocal++;
         fprintf(yyout, "etiqueta_%d:\n", etiquetaInicio);
@@ -208,6 +220,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 12: // Condición if-else
     {
+        printf("12\n");
         int etiquetaElse = contadorEtiquetaLocal++;
         int etiquetaFin = contadorEtiquetaLocal++;
         if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
@@ -224,12 +237,15 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 13: // Nueva asignación
     {
+        printf("13\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
     }
     break;
 
     case 14: // Nuevo imprimir
     {
+        printf("14\n");
+        printf("tipo variable: %s\n", n->izq->tipo);
         comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         funcionImprimir(n->izq);
     }
@@ -237,6 +253,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 15: // Comprobación igual que
     {
+        printf("15\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) == comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.eq.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -245,6 +262,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 16: // Comprobación distinto que
     {
+        printf("16\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) != comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.ne.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -253,6 +271,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 17: // Comprobación menor que
     {
+        printf("17\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) < comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.lt.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -261,6 +280,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 18: // Comprobación menor igual que
     {
+        printf("18\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) <= comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.le.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -269,6 +289,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 19: // Comprobación mayor que
     {
+        printf("19\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) > comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.gt.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -277,6 +298,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 20: // Comprobación mayor igual que
     {
+        printf("20\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) >= comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.ge.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -308,16 +330,41 @@ comprobarAST(struct ast *n)
     fprintf(yyout, "\n#--------------------- Ejecuciones ---------------------");
     fprintf(yyout, "\n.text\n");
     fprintf(yyout, "lwc1 $f31, zero\n");
+    printf("\nNodos del arbol utilizados:\n");
     comprobarValorNodo(n, contadorEtiqueta); // Comprueba el valor del nodo
 }
 
 // METODO "imprimir", imprime el codigo .asm que hace referencia a la funcion imprimir de latino
 funcionImprimir(struct ast *n)
 {
-    fprintf(yyout, "li $v0, 2\n");                            // entero
-    fprintf(yyout, "add.s $f12, $f31, $f%d\n", n->resultado); // Mover del registro n al registro 30 (es el que empleamos para imprimir)
-    fprintf(yyout, "mov.s $f30, $f12  #Movemos el registro 12 al 30 iniciado a false\n");
-    fprintf(yyout, "syscall #Llamada al sistema\n");
+    if (strcmp(n->tipo, "int") == 0)
+    {
+        // Imprimir entero
+        fprintf(yyout, "li $v0, 1\n");                    // Código de sistema para imprimir entero
+        fprintf(yyout, "move $a0, $t%d\n", n->resultado); // Mover el resultado al registro $a0
+    }
+    else if (strcmp(n->tipo, "double") == 0)
+    {
+        // Imprimir punto flotante
+        fprintf(yyout, "li $v0, 2\n"); // Código de sistema para imprimir float
+        // fprintf(yyout, "mov.s $f12, $f%d\n", n->resultado); // Mover el resultado al registro $f12
+        fprintf(yyout, "add.s $f12, $f31, $f%d\n", n->resultado); // Mover del registro n al registro 30 (es el que empleamos para imprimir)
+        fprintf(yyout, "mov.s $f30, $f12    # Movemos el registro 12 al 30 iniciado a false\n");
+    }
+    else if (strcmp(n->tipo, "string") == 0)
+    {
+        // Imprimir carácter
+        fprintf(yyout, "li $v0, 11\n");                   // Código de sistema para imprimir carácter
+        fprintf(yyout, "move $a0, $t%d\n", n->resultado); // Mover el resultado al registro $a0
+    }
+    else if (strcmp(n->tipo, "bool") == 0)
+    {
+        // Imprimir booleano (0 o 1)
+        fprintf(yyout, "li $v0, 1\n");                    // Código de sistema para imprimir entero
+        fprintf(yyout, "move $a0, $t%d\n", n->resultado); // Mover el resultado al registro $a0
+    }
+
+    fprintf(yyout, "syscall     # Llamada al sistema\n");
     saltoLinea(); // Introducimos un salto de linea
 }
 
@@ -456,7 +503,7 @@ struct ast *crearNodoTerminalString(char *valor)
     n->valorCadena = valor;
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
     n->nombreVar = crearNombreVariable(); // Genera un nombre único para la variable
-    printf("# [AST] - Registro $f%d ocupado para var_%d = %c\n", n->resultado, n->nombreVar, n->valorCadena);
+    printf("# [AST] - Registro $f%d ocupado para var_%d = %s\n", n->resultado, n->nombreVar, n->valorCadena);
 
     // Actualizar el registro de variables
     variables[n->resultado].tipo = n->tipo;
@@ -507,6 +554,7 @@ struct ast *crearVariableTerminalDouble(double valor, int registro)
     n->izq = NULL;
     n->dcha = NULL;
     n->tipoNodo = 6;
+    n->tipo = "double";
     n->valorDecimal = valor;
 
     n->resultado = registro;
@@ -520,6 +568,7 @@ struct ast *crearVariableTerminalInt(int valor, int registro)
     n->izq = NULL;
     n->dcha = NULL;
     n->tipoNodo = 6;
+    n->tipo = "int";
     n->valorEntero = valor;
 
     n->resultado = registro;
@@ -533,6 +582,7 @@ struct ast *crearVariableTerminalString(const char *valor, int registro)
     n->izq = NULL;
     n->dcha = NULL;
     n->tipoNodo = 6;
+    n->tipo = "string";
     n->valorCadena = valor;
 
     n->valorCadena = strdup(valor); // Asigna memoria y copia el texto
@@ -547,6 +597,7 @@ struct ast *crearVariableTerminalBoolean(int valor, int registro)
     n->izq = NULL;
     n->dcha = NULL;
     n->tipoNodo = 6;
+    n->tipo = "boolean";
     n->valorBoolean = valor;
 
     n->resultado = registro;
