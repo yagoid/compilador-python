@@ -270,14 +270,14 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     }
     break;
 
-    case 13: // Nueva asignación
+    case 15: // Nueva asignación
     {
         printf("13\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
     }
     break;
 
-    case 14: // Nuevo imprimir
+    case 16: // Nuevo imprimir
     {
         printf("14\n");
         printf("tipo variable: %s\n", n->izq->tipo);
@@ -286,7 +286,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     }
     break;
 
-    case 15: // Comprobación igual que
+    case 17: // Comprobación igual que
     {
         printf("15\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) == comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
@@ -295,7 +295,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         break;
     }
 
-    case 16: // Comprobación distinto que
+    case 18: // Comprobación distinto que
     {
         printf("16\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) != comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
@@ -304,7 +304,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         break;
     }
 
-    case 17: // Comprobación menor que
+    case 19: // Comprobación menor que
     {
         printf("17\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) < comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
@@ -313,7 +313,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         break;
     }
 
-    case 18: // Comprobación menor igual que
+    case 20: // Comprobación menor igual que
     {
         printf("18\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) <= comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
@@ -322,7 +322,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         break;
     }
 
-    case 19: // Comprobación mayor que
+    case 21: // Comprobación mayor que
     {
         printf("19\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) > comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
@@ -331,7 +331,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         break;
     }
 
-    case 20: // Comprobación mayor igual que
+    case 22: // Comprobación mayor igual que
     {
         printf("20\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) >= comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
@@ -340,7 +340,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         break;
     }
 
-    case 21: // Comentario (no hace nada)
+    case 23: // Comentario (no hace nada)
         break;
 
     default: // Nodo no reconocido, manejo de errores
