@@ -140,7 +140,7 @@ asignacion:
 //-------------------------------------------------- IF ---------------------------------------------------
 //F --> if E: S RF end
 if:
-    IF expresion DOS_PUNTOS sentencias rescursivo_if END {
+    IF expresion DOS_PUNTOS sentencias rescursivo_if {
         if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
             printf("> [IF] - ESTAMOS COMPARANDO\n");
             $$.n=crearNodoNoTerminalIf($2.n, $4.n, $5.n, 12);
@@ -163,11 +163,13 @@ rescursivo_if:
             printf("> [ERROR] - SE ESPERABA UN BOOLEAN TRUE\n");
         }
     }
-    | ELSE DOS_PUNTOS sentencias {
-        $$.n=crearNodoNoTerminalIf($3.n, crearNodoVacio(), 14);
+    | ELSE DOS_PUNTOS sentencias rescursivo_if{
+        printf("> [ELSE] - SI NO\n");
+        $$.n=crearNodoNoTerminal($3.n, $4.n, 14);
     }
-    | $$.N = NULL; printf("es NULL\n");
-
+    | END{
+        $$.n = crearNodoVacio()
+    }
 ;
 
 //-----------------------------------------------  EXPRESION ---------------------------------------------
