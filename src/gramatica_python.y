@@ -53,7 +53,7 @@ char* tipos[] = {"numero", "decimal", "texto", "boolean"}; //Para parsear el tip
 %token <strVal> STRING
 
 /*Declaración de los TOKENS NO TERMINALES con su estructura*/
-%type <tr> sentencias sentencia tipos expresion asignacion imprimir  if
+%type <tr> sentencias sentencia tipos expresion asignacion imprimir if rescursivo_if
 
 /*Declaración de la precedencia siendo menor la del primero y mayor la del último*/
 %left SUMA RESTA
@@ -138,16 +138,35 @@ asignacion:
 ;
 
 //-------------------------------------------------- IF ---------------------------------------------------
-//F --> if E: S end
+//F --> if E: S RF end
 if:
-    IF expresion DOS_PUNTOS sentencias END {
+    IF expresion DOS_PUNTOS sentencias rescursivo_if END {
         if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
             printf("> [IF] - ESTAMOS COMPARANDO\n");
+            $$.n=crearNodoNoTerminal($3.n, crearNodoVacio(), 12);
         }
         else{
             printf("> [ERROR] - SE ESPERABA UN BOOLEAN TRUE\n");
         }
     }
+;
+
+//RF --> elif E: S RF | else S | NULL
+rescursivo_if:
+    ELIF expresion DOS_PUNTOS sentencias rescursivo_if {
+        if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
+            printf("> [ELIF] - ESTAMOS COMPARANDO\n");
+            $$.n=crearNodoNoTerminal($2.n, $4.n, $5.n, 12);
+        }
+        else{
+            printf("> [ERROR] - SE ESPERABA UN BOOLEAN TRUE\n");
+        }
+    }
+    | ELSE DOS_PUNTOS sentencias {
+        $$.n=crearNodoNoTerminal($3.n, crearNodoVacio(), 12);
+    }
+    | $$.N = NULL; printf("es NULL\n");
+
 ;
 
 //-----------------------------------------------  EXPRESION ---------------------------------------------

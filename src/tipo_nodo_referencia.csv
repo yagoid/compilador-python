@@ -9,13 +9,15 @@ and, 8
 or, 9
 not, 10
 while, 11
-if-else, 12
-imprimir, 13
-asignacion, 14
-igual_que, 15
-distinto_que, 16
-menor_que, 17
-menor_igual_que, 18
-mayor_que,19
-mayor_igual_que, 20
-comentario, 21
+if, 12
+elif, 13
+else, 14
+asignacion, 15
+imprimir, 16
+igual_que, 17
+distinto_que, 18
+menor_que, 19
+menor_igual_que, 20
+mayor_que,21
+mayor_igual_que, 22
+comentario, 23
