@@ -54,9 +54,10 @@ struct variable variables[64]; // Declaramos el array de variables usando la est
 // Estructura AST, se define la estructura de los nodos del arbol
 struct ast
 {
-    struct ast *izq;  // Nodo izquierdo del arbol
-    struct ast *dcha; // Nodo derecho del arbol
-    int tipoNodo;     // Almacena el tipo de nodo
+    struct ast *izq;    // Nodo izquierdo del arbol
+    struct ast *center; // Nodo centro del arbol para if
+    struct ast *dcha;   // Nodo derecho del arbol
+    int tipoNodo;       // Almacena el tipo de nodo
     union
     {
         int valorEntero;     // Valor si es entero
@@ -218,7 +219,41 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     }
     break;
 
-    case 12: // Condición if-else
+    case 12: // Condición if
+    {
+        printf("12\n");
+        int etiquetaElse = contadorEtiquetaLocal++;
+        int etiquetaFin = contadorEtiquetaLocal++;
+        if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
+        {
+            fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
+        }
+        comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
+        fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
+        fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
+        comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
+        fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
+    }
+    break;
+
+    case 13: // Condición elif
+    {
+        printf("12\n");
+        int etiquetaElse = contadorEtiquetaLocal++;
+        int etiquetaFin = contadorEtiquetaLocal++;
+        if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
+        {
+            fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
+        }
+        comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
+        fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
+        fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
+        comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
+        fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
+    }
+    break;
+
+    case 14: // Condición else
     {
         printf("12\n");
         int etiquetaElse = contadorEtiquetaLocal++;
@@ -541,6 +576,17 @@ struct ast *crearNodoNoTerminal(struct ast *izq, struct ast *dcha, int tipoNodo)
 {
     struct ast *n = malloc(sizeof(struct ast)); // Crea un nuevo nodo
     n->izq = izq;
+    n->dcha = dcha;
+    n->tipoNodo = tipoNodo;        // Asignamos al nodo genérico sus hijos y tipo
+    n->resultado = encontrarReg(); // Hacemos llamada al método para buscar un nuevo registro
+    return n;
+}
+
+struct ast *crearNodoNoTerminalIf(struct ast *izq, struct ast *center, struct ast *dcha, int tipoNodo)
+{
+    struct ast *n = malloc(sizeof(struct ast)); // Crea un nuevo nodo
+    n->izq = izq;
+    n->center = center;
     n->dcha = dcha;
     n->tipoNodo = tipoNodo;        // Asignamos al nodo genérico sus hijos y tipo
     n->resultado = encontrarReg(); // Hacemos llamada al método para buscar un nuevo registro
