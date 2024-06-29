@@ -222,64 +222,64 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 12: // Condición if
     {
         printf("12\n");
-        int etiquetaElse = contadorEtiquetaLocal++;
-        int etiquetaFin = contadorEtiquetaLocal++;
-        if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
-        {
-            fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
-        }
-        comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
-        fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
-        comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
+        // int etiquetaElse = contadorEtiquetaLocal++;
+        // int etiquetaFin = contadorEtiquetaLocal++;
+        // if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
+        // {
+        //     fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
+        // }
+        // comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
+        // fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
+        // comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
     }
     break;
 
     case 13: // Condición elif
     {
-        printf("12\n");
-        int etiquetaElse = contadorEtiquetaLocal++;
-        int etiquetaFin = contadorEtiquetaLocal++;
-        if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
-        {
-            fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
-        }
-        comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
-        fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
-        comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
+        printf("13\n");
+        // int etiquetaElse = contadorEtiquetaLocal++;
+        // int etiquetaFin = contadorEtiquetaLocal++;
+        // if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
+        // {
+        //     fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
+        // }
+        // comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
+        // fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
+        // comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
     }
     break;
 
     case 14: // Condición else
     {
-        printf("12\n");
-        int etiquetaElse = contadorEtiquetaLocal++;
-        int etiquetaFin = contadorEtiquetaLocal++;
-        if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
-        {
-            fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
-        }
-        comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
-        fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
-        comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
+        printf("14\n");
+        // int etiquetaElse = contadorEtiquetaLocal++;
+        // int etiquetaFin = contadorEtiquetaLocal++;
+        // if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
+        // {
+        //     fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
+        // }
+        // comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
+        // fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
+        // comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
     }
     break;
 
     case 15: // Nueva asignación
     {
-        printf("13\n");
+        printf("15\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
     }
     break;
 
     case 16: // Nuevo imprimir
     {
-        printf("14\n");
+        printf("16\n");
         printf("tipo variable: %s\n", n->izq->tipo);
         comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         funcionImprimir(n->izq);
@@ -288,7 +288,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 17: // Comprobación igual que
     {
-        printf("15\n");
+        printf("17\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) == comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.eq.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -297,7 +297,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 18: // Comprobación distinto que
     {
-        printf("16\n");
+        printf("18\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) != comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.ne.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -306,7 +306,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 19: // Comprobación menor que
     {
-        printf("17\n");
+        printf("19\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) < comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.lt.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -315,7 +315,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 20: // Comprobación menor igual que
     {
-        printf("18\n");
+        printf("20\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) <= comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.le.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -324,7 +324,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 21: // Comprobación mayor que
     {
-        printf("19\n");
+        printf("21\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) > comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.gt.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -333,7 +333,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 22: // Comprobación mayor igual que
     {
-        printf("20\n");
+        printf("22\n");
         dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) >= comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "c.ge.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
@@ -369,7 +369,7 @@ comprobarAST(struct ast *n)
     comprobarValorNodo(n, contadorEtiqueta); // Comprueba el valor del nodo
 }
 
-// METODO "imprimir", imprime el codigo .asm que hace referencia a la funcion imprimir de latino
+// METODO "imprimir", imprime el codigo .asm que hace referencia a la funcion imprimir de python
 funcionImprimir(struct ast *n)
 {
     if (strcmp(n->tipo, "int") == 0)
@@ -590,6 +590,8 @@ struct ast *crearNodoNoTerminalIf(struct ast *izq, struct ast *center, struct as
     n->dcha = dcha;
     n->tipoNodo = tipoNodo;        // Asignamos al nodo genérico sus hijos y tipo
     n->resultado = encontrarReg(); // Hacemos llamada al método para buscar un nuevo registro
+
+    // printf("tipoNodo: %d\n", tipoNodo);
     return n;
 }
 
