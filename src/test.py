@@ -1,7 +1,9 @@
 a = 7.5
 b = 7.6
 
-if a <= b: 
-    r = 5
-    print(r)
+while a < b:
+    f = 1
+    print(f)
 end
+
+a = a + 0.1
