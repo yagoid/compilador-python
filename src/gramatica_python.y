@@ -53,7 +53,7 @@ char* tipos[] = {"numero", "decimal", "texto", "boolean"}; //Para parsear el tip
 %token <strVal> STRING
 
 /*Declaración de los TOKENS NO TERMINALES con su estructura*/
-%type <tr> sentencias sentencia tipos expresion asignacion imprimir if rescursivo_if
+%type <tr> sentencias sentencia tipos expresion asignacion imprimir if rescursivo_if while
 
 /*Declaración de la precedencia siendo menor la del primero y mayor la del último*/
 %left SUMA RESTA
@@ -66,9 +66,11 @@ char* tipos[] = {"numero", "decimal", "texto", "boolean"}; //Para parsear el tip
 //GRAMATICA
 //X --> S
 //S --> D | S D
-//D --> A | I | F
+//D --> A | I | F | W
 //A --> id = E 
-//F --> if E: S end
+//F --> if E: S RF
+//RF--> elif E: S RF | else E | end
+//W --> while E: S end
 //E --> E op T | T
 //T --> id | num | decimal | texto | true | false
 //I --> imprimir ( E )
@@ -95,11 +97,12 @@ sentencias:
 ;
 
 //PRODUCCION "sentencia", puede estar formado por asignaciones, condicionales, bucles whiles, imprimir
-//D --> A | I | F
+//D --> A | I | F | W
 sentencia:   //Por defecto bison, asigna $1 a $$ por lo que no es obligatoria realizar la asignacion
-    asignacion              
-    | imprimir  
-    | if     
+    asignacion
+    | imprimir
+    | if
+    | while
 ;
 
 //-------------------------------------------------------- ASIGNACION --------------------------------------------------------
@@ -138,7 +141,7 @@ asignacion:
 ;
 
 //-------------------------------------------------- IF ---------------------------------------------------
-//F --> if E: S RF end
+//F --> if E: S RF
 if:
     IF expresion DOS_PUNTOS sentencias rescursivo_if {
         if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
@@ -151,8 +154,8 @@ if:
     }
 ;
 
-//--------------------------------------------------RECURSIVO IF ---------------------------------------------------
-//RF --> elif E: S RF | else S | NULL
+//-------------------------------------------------- RECURSIVO IF ---------------------------------------------------
+//RF --> elif E: S RF | else S | end
 rescursivo_if:
     ELIF expresion DOS_PUNTOS sentencias rescursivo_if {
         if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
@@ -169,6 +172,20 @@ rescursivo_if:
     }
     | END{
         $$.n = crearNodoVacio()
+    }
+;
+
+//-------------------------------------------------- WHILE ---------------------------------------------------
+//W --> while E: S end
+while:
+    WHILE expresion DOS_PUNTOS sentencias END {
+        if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
+            printf("> [WHILE] - ESTAMOS EN UN BUCLE\n");
+            $$.n=crearNodoNoTerminal($2.n, $4.n, 11);
+        }
+        else{
+            printf("> [ERROR] - SE ESPERABA UN BOOLEAN TRUE\n");
+        }
     }
 ;
 
