@@ -117,6 +117,30 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
             // fprintf(yyout, "add.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
             fprintf(yyout, "add.s $f%d, $f%d, $f%d  # Sumar $f%d y $f%d, guardar en $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado, n->izq->resultado, n->dcha->resultado, n->resultado);
         }
+        else if (strcmp(n->izq->tipo, "string") == 0)
+        {
+            // Concatenar la primera cadena al destino
+            fprintf(yyout, "concat_strings_%d:\n", n->resultado);
+            fprintf(yyout, "lb $t0, 0($t%d)             # Cargar un byte de la primera cadena\n", n->izq->resultado);
+            fprintf(yyout, "beqz $t0, copy_second_%d    # Si es el fin de la cadena (NUL), ir a copiar la segunda cadena\n", n->resultado);
+            fprintf(yyout, "sb $t0, 0($t%d)             # Almacenar el byte en el destino\n", n->resultado);
+            fprintf(yyout, "addi $t%d, $t%d, 1          # Incrementar el puntero de la primera cadena\n", n->izq->resultado, n->izq->resultado);
+            fprintf(yyout, "addi $t%d, $t%d, 1          # Incrementar el puntero del destino\n", n->resultado, n->resultado);
+            fprintf(yyout, "j concat_strings_%d         # Repetir el bucle\n", n->resultado);
+
+            // Copiar la segunda cadena al destino
+            fprintf(yyout, "copy_second_%d:\n", n->resultado);
+            fprintf(yyout, "lb $t0, 0($t%d)             # Cargar un byte de la segunda cadena\n", n->dcha->resultado);
+            fprintf(yyout, "beqz $t0, end_concat_%d     # Si es el fin de la cadena (NUL), terminar la concatenación\n", n->resultado);
+            fprintf(yyout, "sb $t0, 0($t%d)             # Almacenar el byte en el destino\n", n->resultado);
+            fprintf(yyout, "addi $t%d, $t%d, 1          # Incrementar el puntero de la segunda cadena\n", n->dcha->resultado, n->dcha->resultado);
+            fprintf(yyout, "addi $t%d, $t%d, 1          # Incrementar el puntero del destino\n", n->resultado, n->resultado);
+            fprintf(yyout, "j copy_second_%d            # Repetir el bucle\n", n->resultado);
+
+            // Finalizar la concatenación
+            fprintf(yyout, "end_concat_%d:\n", n->resultado);
+            fprintf(yyout, "sb $zero, 0($t%d)           # Almacenar el carácter NUL al final de la cadena concatenada\n", n->resultado);
+        }
         borrarReg(n->izq, n->dcha);
         break;
 
@@ -280,7 +304,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 16: // Nuevo imprimir
     {
         printf("16\n");
-        printf("tipo variable: %s\n", n->izq->tipo);
+        // printf("tipo variable: %s\n", n->izq->tipo);
         comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         funcionImprimir(n->izq);
     }
