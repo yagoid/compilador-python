@@ -3,25 +3,27 @@
 .data
 saltoLinea: .asciiz "\n"
 zero: .float 0.0
-var_0: .float 7.500
-var_1: .float 7.600
-var_2: .word 1
-var_3: .float 0.100
+var_0: .asciiz "Hola"
+var_1: .asciiz " Peter"
 
 #--------------------- Ejecuciones ---------------------
 .text
 lwc1 $f31, zero
-lwc1 $f0, var_0   # Cargar var_0 en $f0
-lwc1 $f2, var_1   # Cargar var_1 en $f2
-etiqueta_0:
-c.lt.s $f5, $f0, $f2
-lw $t6, var_2     # Cargar var_2 en $t6
-li $v0, 1
-move $a0, $t6
-syscall     # Llamada al sistema
-li $v0, 4
-la $a0, saltoLinea
-syscall #Llamada al sistema
-j etiqueta_0
-etiqueta_1:
-lwc1 $f12, var_3   # Cargar var_3 en $f12
+lb $t0, var_0     # Cargar var_0 en $t0
+lb $t2, var_1     # Cargar var_1 en $t2
+concat_strings_5:
+lb $t0, 0($t0)             # Cargar un byte de la primera cadena
+beqz $t0, copy_second_5    # Si es el fin de la cadena (NUL), ir a copiar la segunda cadena
+sb $t0, 0($t5)             # Almacenar el byte en el destino
+addi $t0, $t0, 1          # Incrementar el puntero de la primera cadena
+addi $t5, $t5, 1          # Incrementar el puntero del destino
+j concat_strings_5         # Repetir el bucle
+copy_second_5:
+lb $t0, 0($t2)             # Cargar un byte de la segunda cadena
+beqz $t0, end_concat_5     # Si es el fin de la cadena (NUL), terminar la concatenaci?n
+sb $t0, 0($t5)             # Almacenar el byte en el destino
+addi $t2, $t2, 1          # Incrementar el puntero de la segunda cadena
+addi $t5, $t5, 1          # Incrementar el puntero del destino
+j copy_second_5            # Repetir el bucle
+end_concat_5:
+sb $zero, 0($t5)           # Almacenar el car?cter NUL al final de la cadena concatenada
