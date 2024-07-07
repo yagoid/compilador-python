@@ -246,48 +246,51 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 12: // Condición if
     {
         printf("12\n");
-        int etiquetaElse = contadorEtiquetaLocal++;
-        int etiquetaFin = contadorEtiquetaLocal++;
-        if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
-        {
-            fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
-        }
-        comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
-        fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
-        comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
+        // int etiquetaElse = contadorEtiquetaLocal++;
+        // int etiquetaFin = contadorEtiquetaLocal++;
+        // printf("etiquetaElse: %d, etiquetaFin: %d\n", etiquetaElse, etiquetaFin);
+        // if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
+        // {
+        //     fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
+        // }
+        // comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
+        // fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
+        // comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
     }
     break;
 
     case 13: // Condición elif
     {
         printf("13\n");
-        int etiquetaElif = contadorEtiquetaLocal++;
-        int etiquetaFin = contadorEtiquetaLocal++;
-        if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
-        {
-            fprintf(yyout, "j etiqueta_%d\n", etiquetaElif);
-        }
-        comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
-        fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaElif);
-        comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
+        // int etiquetaElif = contadorEtiquetaLocal++;
+        // int etiquetaFin = contadorEtiquetaLocal++;
+        // printf("etiquetaElif: %d, etiquetaFin: %d\n", etiquetaElif, etiquetaFin);
+        // if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
+        // {
+        //     fprintf(yyout, "j etiqueta_%d\n", etiquetaElif);
+        // }
+        // comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
+        // fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaElif);
+        // comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
     }
     break;
 
     case 14: // Condición else
     {
         printf("14\n");
-        int etiquetaElse = contadorEtiquetaLocal++;
-        int etiquetaFin = contadorEtiquetaLocal++;
-        // El caso else no verifica condición
-        comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
-        fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
-        comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
+        // int etiquetaElse = contadorEtiquetaLocal++;
+        // int etiquetaFin = contadorEtiquetaLocal++;
+        // printf("etiquetaElse: %d, etiquetaFin: %d\n", etiquetaElse, etiquetaFin);
+        // // El caso else no verifica condición
+        // comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
+        // fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
+        // comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
+        // fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
     }
     break;
 
