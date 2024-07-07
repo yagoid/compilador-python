@@ -263,15 +263,15 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 13: // Condición elif
     {
         printf("13\n");
-        int etiquetaElse = contadorEtiquetaLocal++;
+        int etiquetaElif = contadorEtiquetaLocal++;
         int etiquetaFin = contadorEtiquetaLocal++;
         if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
         {
-            fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
+            fprintf(yyout, "j etiqueta_%d\n", etiquetaElif);
         }
         comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
         fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
+        fprintf(yyout, "etiqueta_%d:\n", etiquetaElif);
         comprobarValorNodo(n->dcha->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
     }
@@ -282,10 +282,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         printf("14\n");
         int etiquetaElse = contadorEtiquetaLocal++;
         int etiquetaFin = contadorEtiquetaLocal++;
-        if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
-        {
-            fprintf(yyout, "j etiqueta_%d\n", etiquetaElse);
-        }
+        // El caso else no verifica condición
         comprobarValorNodo(n->dcha->izq, contadorEtiquetaLocal);
         fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
         fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
