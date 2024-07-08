@@ -1,0 +1,64 @@
+Archivo de salida abierto correctamente.
+
+> [TIPO] - Decimal: 7.500
+# [AST] - Registro $f0 ocupado para var_0 = 7.500
+> [SENTENCIA] - Asignacion
+Asignado el valor 0 a la variable
+
+> [TIPO] - Decimal: 7.600
+# [AST] - Registro $f2 ocupado para var_1 = 7.600
+> [SENTENCIA] - Asignacion
+Asignado el valor 1610612736 a la variable
+ VARIABLE a
+[tSimbolos] Primera posicion libre: 2
+[tSimbolos] Primera posicion libre: 2
+ VARIABLE b
+[tSimbolos] Primera posicion libre: 2
+[tSimbolos] Primera posicion libre: 2
+> [COMPARACION] - MENOR_QUE {decimal / decimal}
+Verdadero 11708272 es menor que 1089470464
+ VARIABLE a
+[tSimbolos] Primera posicion libre: 2
+[tSimbolos] Primera posicion libre: 2
+
+> [TIPO] - Decimal: 0.100
+# [AST] - Registro $f6 ocupado para var_2 = 0.100
+> [OPERACION] - SUMA {decimal / decimal}
+> [SENTENCIA] - Asignacion
+Asignado el valor 1610612736 a la variable
+
+> [TIPO] - Numero Positivo: 1
+# [AST] - Registro $f9 ocupado para var_3 = 1
+> [SENTENCIA] - Asignacion
+Asignado el valor 1 a la variable
+ VARIABLE f
+[tSimbolos] Primera posicion libre: 4
+[tSimbolos] Primera posicion libre: 4
+> [SENTENCIA] - Imprimir
+> [WHILE] - ESTAMOS EN UN BUCLE
+
+Llamando a comprobarAST
+
+Nodos del arbol utilizados:
+7
+7
+15
+1
+15
+1
+11
+19
+6
+6
+7
+7
+15
+2
+6
+1
+15
+1
+16
+6
+
+[FINALIZADO]
