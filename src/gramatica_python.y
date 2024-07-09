@@ -197,7 +197,7 @@ expresion:
     //SUMA
     expresion SUMA tipos {
 
-        //Suma de numero + numero
+        //SUMA de numero + numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) { //comprobacion del tipo
             printf("> [OPERACION] - SUMA {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
@@ -205,7 +205,7 @@ expresion:
             $$.numero = $1.numero + $3.numero;
         }
 
-        //Suma de decimal + decimal
+        //SUMA de decimal + decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - SUMA {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
@@ -213,7 +213,7 @@ expresion:
             $$.decimal = $1.decimal + $3.decimal;
         }
 
-        //Suma de str + str
+        //SUMA de str + str
         else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - SUMA {texto / texto}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
@@ -232,14 +232,14 @@ expresion:
     //RESTA
     | expresion RESTA tipos {
         
-        //Resta de numero - numero
+        //RESTA de numero - numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
             printf("> [OPERACION] - RESTA {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 3);
             $$.tipo = tipos[0]; 
             $$.numero = $1.numero + $3.numero;
         }
-        //Resta de decimal - decimal
+        //RESTA de decimal - decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - RESTA {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 3);
@@ -250,14 +250,14 @@ expresion:
     //MULTIPLICACION
     | expresion MULTIPLICACION tipos {
         
-        //Multiplicacion de numero * numero
+        //MULTIPLICACION de numero * numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
             printf("> [OPERACION] - MULTIPLICACION {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 4);
             $$.tipo = tipos[0]; 
             $$.numero = $1.numero * $3.numero;
         }
-        //Multiplicacion de decimal * decimal
+        //MULTIPLICACION de decimal * decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - MULTIPLICACION {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 4);
@@ -268,19 +268,29 @@ expresion:
     //DIVISION
     | expresion DIVISION tipos {
         
-        //Division de numero / numero
+        //DIVISION de numero / numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
-            printf("> [OPERACION] - DIVISION {numero / numero}\n");
-            $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
-            $$.tipo = tipos[0]; 
-            $$.numero = $1.numero / $3.numero;
+            if ($3.numero == 0) {
+                printf("> [ERROR] - DIVISION {numero / 0}\n");
+            }
+            else {
+                printf("> [OPERACION] - DIVISION {numero / numero}\n");
+                $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
+                $$.tipo = tipos[0]; 
+                $$.numero = $1.numero / $3.numero;
+            }  
         }
-        //Division de decimal / decimal
+        //DIVISION de decimal / decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [OPERACION] - DIVISION {decimal / decimal}\n");
-            $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
-            $$.tipo = tipos[1]; 
-            $$.decimal = $1.decimal / $3.decimal;
+            f ($3.numero == 0) {
+                printf("> [ERROR] - DIVISION {decimal / 0}\n");
+            }
+            else {
+                printf("> [OPERACION] - DIVISION {decimal / decimal}\n");
+                $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
+                $$.tipo = tipos[1]; 
+                $$.decimal = $1.decimal / $3.decimal;
+            }
         }
     }
     //IGUAL_QUE
