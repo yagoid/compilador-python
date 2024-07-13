@@ -21,6 +21,8 @@ j label_end_5            # Saltar a la etiqueta de finalización
 label_true_5:            # Etiqueta si la comparación es verdadera
 li $t5, 1                # Almacenar 1 (verdadero) en $t5
 label_end_5:             # Etiqueta de finalización
+c.eq.s $f0, $f31          # Comparar si $f0 es igual a 0.0
+bc1t etiqueta_1          # Si es verdadero (igual a 0.0), saltar a etiqueta de fin
 lw $t6, var_2     # Cargar var_2 en $t6
 li $v0, 1
 move $a0, $t6

@@ -74,15 +74,15 @@ struct ast
 //-----------------------------------------------  METODOS -------------------------------------------------------
 
 // Función para comprobar el valor del nodo y generar el código correspondiente
-double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
+struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 {
-    double dato;
+    struct ast *reg;
 
     switch (n->tipoNodo)
     {
     case 1: // Nueva hoja en el árbol
         printf("1\n");
-        dato = n->valorDecimal;
+        reg = n;
         // printf("tipo nueva variable: %s\n", n->tipo);
 
         if (strcmp(n->tipo, "int") == 0)
@@ -105,7 +105,8 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 2: // Nueva suma
         printf("2\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) + comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
         if (strcmp(n->izq->tipo, "int") == 0)
         {
@@ -146,7 +147,8 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 3: // Nueva resta
         printf("3\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) - comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
         if (strcmp(n->izq->tipo, "int") == 0)
         {
@@ -161,7 +163,8 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 4: // Nueva multiplicación
         printf("4\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) * comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
         if (strcmp(n->izq->tipo, "int") == 0)
         {
@@ -176,12 +179,13 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 5: // Nueva división
         printf("5\n");
-        if (comprobarValorNodo(n->dcha, contadorEtiquetaLocal) == 0)
-        {
-            gestionarError("Error: División por cero.");
-            return 0;
-        }
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) / comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        // if (comprobarValorNodo(n->dcha, contadorEtiquetaLocal) == 0)
+        // {
+        //     gestionarError("Error: División por cero.");
+        //     return 0;
+        // }
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
         if (strcmp(n->izq->tipo, "int") == 0)
         {
@@ -197,32 +201,34 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 6: // Nueva variable
         printf("6\n");
-        dato = n->valorDecimal;
+        reg = n;
         break;
 
     case 7: // Lista de sentencias
         printf("7\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         break;
 
     case 8: // Operación AND
         printf("8\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) && comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "and $t%d, $t%d, $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
         break;
 
     case 9: // Operación OR
         printf("9\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) || comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
         fprintf(yyout, "or $t%d, $t%d, $t%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
         borrarReg(n->izq, n->dcha);
         break;
 
     case 10: // Operación NOT
         printf("10\n");
-        dato = !comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        reg = !comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         fprintf(yyout, "not $t%d, $t%d\n", n->resultado, n->izq->resultado);
         borrarReg(n->izq, n->dcha);
         break;
@@ -232,12 +238,29 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         printf("11\n");
         int etiquetaInicio = contadorEtiquetaLocal++;
         int etiquetaFin = contadorEtiquetaLocal++;
+
         fprintf(yyout, "etiqueta_%d:\n", etiquetaInicio);
-        if (!comprobarValorNodo(n->izq, contadorEtiquetaLocal))
+
+        // n->izq es la condición del while
+        struct ast *reg_cond = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+
+        // Evaluar la condición del while
+        if (strcmp(reg_cond->tipo, "int") == 0 || strcmp(reg_cond->tipo, "boolean") == 0)
         {
-            fprintf(yyout, "j etiqueta_%d\n", etiquetaFin);
+            fprintf(yyout, "beqz $t%d, etiqueta_%d    # Si $t%d es 0, saltar a etiqueta de fin\n",
+                    reg_cond->resultado, etiquetaFin, reg_cond->resultado);
         }
+        else if (strcmp(reg_cond->tipo, "float") == 0)
+        {
+            // Evaluar condición para flotantes
+            fprintf(yyout, "c.eq.s $f%d, $f31          # Comparar si $f%d es igual a 0.0\n",
+                    reg_cond->resultado, reg_cond->resultado);
+            fprintf(yyout, "bc1t etiqueta_%d          # Si es verdadero (igual a 0.0), saltar a etiqueta de fin\n", etiquetaFin);
+        }
+
+        // n->dcha es el cuerpo del while
         comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+
         fprintf(yyout, "j etiqueta_%d\n", etiquetaInicio);
         fprintf(yyout, "etiqueta_%d:\n", etiquetaFin);
     }
@@ -338,7 +361,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 15: // Nueva asignación
     {
         printf("15\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
     }
     break;
 
@@ -351,20 +374,60 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     }
     break;
 
-    case 17: // Comprobación igual que
+    case 17: // Comprobación igual que ( == )
     {
         printf("17\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) == comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "c.eq.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+
+        if (strcmp(n->izq->tipo, "int") == 0)
+        {
+            fprintf(yyout, "seq $t%d, $t%d, $t%d      # Comparar si $t%d == $t%d, almacenar resultado en $t%d\n",
+                    n->resultado, n->izq->resultado, n->dcha->resultado,
+                    n->izq->resultado, n->dcha->resultado, n->resultado);
+        }
+        else if (strcmp(n->izq->tipo, "float") == 0)
+        {
+            fprintf(yyout, "c.eq.s $f%d, $f%d         # Comparar si $f%d == $f%d\n",
+                    n->izq->resultado, n->dcha->resultado,
+                    n->izq->resultado, n->dcha->resultado);
+            fprintf(yyout, "bc1t label_true_%d        # Si el resultado de la comparación es verdadero, saltar a label_true_%d\n", n->resultado, n->resultado);
+            fprintf(yyout, "li $t%d, 0                # Si no, almacenar 0 (falso) en $t%d\n", n->resultado, n->resultado);
+            fprintf(yyout, "j label_end_%d            # Saltar a la etiqueta de finalización\n", n->resultado);
+            fprintf(yyout, "label_true_%d:            # Etiqueta si la comparación es verdadera\n", n->resultado);
+            fprintf(yyout, "li $t%d, 1                # Almacenar 1 (verdadero) en $t%d\n", n->resultado, n->resultado);
+            fprintf(yyout, "label_end_%d:             # Etiqueta de finalización\n", n->resultado);
+        }
+
         borrarReg(n->izq, n->dcha);
         break;
     }
 
-    case 18: // Comprobación distinto que
+    case 18: // Comprobación distinto que ( != )
     {
         printf("18\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) != comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
-        fprintf(yyout, "c.ne.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+
+        if (strcmp(n->izq->tipo, "int") == 0)
+        {
+            fprintf(yyout, "sne $t%d, $t%d, $t%d      # Comparar si $t%d != $t%d, almacenar resultado en $t%d\n",
+                    n->resultado, n->izq->resultado, n->dcha->resultado,
+                    n->izq->resultado, n->dcha->resultado, n->resultado);
+        }
+        else if (strcmp(n->izq->tipo, "float") == 0)
+        {
+            fprintf(yyout, "c.eq.s $f%d, $f%d         # Comparar si $f%d == $f%d\n",
+                    n->izq->resultado, n->dcha->resultado,
+                    n->izq->resultado, n->dcha->resultado);
+            fprintf(yyout, "bc1f label_true_%d        # Si el resultado de la comparación es falso, saltar a label_true_%d\n", n->resultado, n->resultado);
+            fprintf(yyout, "li $t%d, 0                # Si son iguales, almacenar 0 (falso) en $t%d\n", n->resultado, n->resultado);
+            fprintf(yyout, "j label_end_%d            # Saltar a la etiqueta de finalización\n", n->resultado);
+            fprintf(yyout, "label_true_%d:            # Etiqueta si la comparación es falsa\n", n->resultado);
+            fprintf(yyout, "li $t%d, 1                # Almacenar 1 (verdadero) en $t%d\n", n->resultado, n->resultado);
+            fprintf(yyout, "label_end_%d:             # Etiqueta de finalización\n", n->resultado);
+        }
+
         borrarReg(n->izq, n->dcha);
         break;
     }
@@ -372,7 +435,8 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 19: // Comprobación menor que ( < )
     {
         printf("19\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) < comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
         if (strcmp(n->izq->tipo, "int") == 0)
         {
@@ -399,7 +463,8 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 20: // Comprobación menor igual que  ( <= )
     {
         printf("20\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) <= comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
         if (strcmp(n->izq->tipo, "int") == 0)
         {
@@ -429,7 +494,8 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 21: // Comprobación mayor que  ( > )
     {
         printf("21\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) > comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
         if (strcmp(n->izq->tipo, "int") == 0)
         {
@@ -457,7 +523,8 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 22: // Comprobación mayor igual que ( >= )
     {
         printf("22\n");
-        dato = comprobarValorNodo(n->izq, contadorEtiquetaLocal) >= comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+        reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
         if (strcmp(n->izq->tipo, "int") == 0)
         {
@@ -492,7 +559,7 @@ double comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         break;
     }
 
-    return dato; // Devolvemos el valor
+    return reg; // Devolvemos el registro
 }
 
 // METODO "crearNombreVariable", incremente el valor de la variable "nombreVariable"
