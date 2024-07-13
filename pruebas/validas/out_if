@@ -1,0 +1,42 @@
+Archivo de salida abierto correctamente.
+
+> [TIPO] - Numero Positivo: 7
+# [AST] - Registro $f0 ocupado para var_0 = 7
+> [SENTENCIA] - Asignacion
+Asignado el valor 7 a la variable
+
+> [TIPO] - Numero Positivo: 8
+# [AST] - Registro $f2 ocupado para var_1 = 8
+> [SENTENCIA] - Asignacion
+Asignado el valor 8 a la variable
+ VARIABLE a
+[tSimbolos] Primera posicion libre: 2
+[tSimbolos] Primera posicion libre: 2
+ VARIABLE b
+[tSimbolos] Primera posicion libre: 2
+[tSimbolos] Primera posicion libre: 2
+> [COMPARACION] - MENOR_QUE {numero / numero}
+Verdadero 7 es menor que 0
+
+> [TIPO] - Numero Positivo: 8
+# [AST] - Registro $f6 ocupado para var_2 = 8
+> [SENTENCIA] - Asignacion
+Asignado el valor 8 a la variable
+ VARIABLE j
+[tSimbolos] Primera posicion libre: 3
+[tSimbolos] Primera posicion libre: 3
+> [SENTENCIA] - Imprimir
+> [IF] - ESTAMOS COMPARANDO
+
+Llamando a comprobarAST
+
+Nodos del arbol utilizados:
+7
+7
+15
+1
+15
+1
+12
+
+[FINALIZADO]

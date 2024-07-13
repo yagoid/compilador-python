@@ -1,0 +1,43 @@
+Archivo de salida abierto correctamente.
+
+> [TIPO] - Numero Positivo: 6
+# [AST] - Registro $f0 ocupado para var_0 = 6
+> [SENTENCIA] - Asignacion
+Asignado el valor 6 a la variable
+
+> [TIPO] - Numero Positivo: 7
+# [AST] - Registro $f2 ocupado para var_1 = 7
+> [SENTENCIA] - Asignacion
+Asignado el valor 7 a la variable
+ VARIABLE a
+[tSimbolos] Primera posicion libre: 2
+[tSimbolos] Primera posicion libre: 2
+ VARIABLE b
+[tSimbolos] Primera posicion libre: 2
+[tSimbolos] Primera posicion libre: 2
+> [OPERACION] - MULTIPLICACION {numero / numero}
+> [SENTENCIA] - Asignacion
+Asignado el valor 42 a la variable
+ VARIABLE c
+[tSimbolos] Primera posicion libre: 3
+[tSimbolos] Primera posicion libre: 3
+> [SENTENCIA] - Imprimir
+
+Llamando a comprobarAST
+
+Nodos del arbol utilizados:
+7
+7
+7
+15
+1
+15
+1
+15
+4
+6
+6
+16
+6
+
+[FINALIZADO]

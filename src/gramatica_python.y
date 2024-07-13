@@ -144,7 +144,7 @@ asignacion:
 //F --> if E: S RF
 if:
     IF expresion DOS_PUNTOS sentencias rescursivo_if {
-        if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
+        if(strcmp($2.tipo, tipos[3]) == 0){ //comprobacion si es boolean
             printf("> [IF] - ESTAMOS COMPARANDO\n");
             $$.n=crearNodoNoTerminalIf($2.n, $4.n, $5.n, 12);
         }
@@ -158,7 +158,7 @@ if:
 //RF --> elif E: S RF | else S | end
 rescursivo_if:
     ELIF expresion DOS_PUNTOS sentencias rescursivo_if {
-        if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
+        if(strcmp($2.tipo, tipos[3]) == 0){ //comprobacion si es boolean
             printf("> [ELIF] - ESTAMOS COMPARANDO\n");
             $$.n=crearNodoNoTerminalIf($2.n, $4.n, $5.n, 13);
         }
@@ -179,7 +179,7 @@ rescursivo_if:
 //W --> while E: S end
 while:
     WHILE expresion DOS_PUNTOS sentencias END {
-        if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
+        if(strcmp($2.tipo, tipos[3]) == 0){ //comprobacion si es boolean
             printf("> [WHILE] - ESTAMOS EN UN BUCLE\n");
             $$.n=crearNodoNoTerminal($2.n, $4.n, 11);
         }
@@ -197,7 +197,7 @@ expresion:
     //SUMA
     expresion SUMA tipos {
 
-        //Suma de numero + numero
+        //SUMA de numero + numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) { //comprobacion del tipo
             printf("> [OPERACION] - SUMA {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
@@ -205,7 +205,7 @@ expresion:
             $$.numero = $1.numero + $3.numero;
         }
 
-        //Suma de decimal + decimal
+        //SUMA de decimal + decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - SUMA {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
@@ -213,7 +213,7 @@ expresion:
             $$.decimal = $1.decimal + $3.decimal;
         }
 
-        //Suma de str + str
+        //SUMA de str + str
         else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - SUMA {texto / texto}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 2);
@@ -228,59 +228,165 @@ expresion:
                 printf("Error al asignar memoria para la concatenacion de cadenas.\n");
             }
         }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - SUMA {numero / decimal}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - SUMA {numero / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - SUMA {decimal / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - SUMA {decimal / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - SUMA {string / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - SUMA {string / decimal}\n");
+        }
     }
     //RESTA
     | expresion RESTA tipos {
         
-        //Resta de numero - numero
+        //RESTA de numero - numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
             printf("> [OPERACION] - RESTA {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 3);
             $$.tipo = tipos[0]; 
             $$.numero = $1.numero + $3.numero;
         }
-        //Resta de decimal - decimal
+        //RESTA de decimal - decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - RESTA {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 3);
             $$.tipo = tipos[1]; 
             $$.decimal = $1.decimal + $3.decimal;
         }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - RESTA {numero / decimal}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - RESTA {numero / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - RESTA {decimal / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - RESTA {decimal / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - RESTA {string / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - RESTA {string / decimal}\n");
+        }
     }
     //MULTIPLICACION
     | expresion MULTIPLICACION tipos {
         
-        //Multiplicacion de numero * numero
+        //MULTIPLICACION de numero * numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
             printf("> [OPERACION] - MULTIPLICACION {numero / numero}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 4);
             $$.tipo = tipos[0]; 
             $$.numero = $1.numero * $3.numero;
         }
-        //Multiplicacion de decimal * decimal
+        //MULTIPLICACION de decimal * decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - MULTIPLICACION {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 4);
             $$.tipo = tipos[1]; 
             $$.decimal = $1.decimal * $3.decimal;
         }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MULTIPLICACION {numero / decimal}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MULTIPLICACION {numero / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MULTIPLICACION {decimal / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MULTIPLICACION {decimal / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MULTIPLICACION {string / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MULTIPLICACION {string / decimal}\n");
+        }
     }
     //DIVISION
     | expresion DIVISION tipos {
         
-        //Division de numero / numero
+        //DIVISION de numero / numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
-            printf("> [OPERACION] - DIVISION {numero / numero}\n");
-            $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
-            $$.tipo = tipos[0]; 
-            $$.numero = $1.numero / $3.numero;
+            if ($3.numero == 0.0) {
+                printf("> [ERROR] - DIVISION {numero / 0}\n");
+            }
+            else {
+                printf("> [OPERACION] - DIVISION {numero / numero}\n");
+                $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
+                $$.tipo = tipos[0]; 
+                $$.numero = $1.numero / $3.numero;
+            }  
         }
-        //Division de decimal / decimal
+        //DIVISION de decimal / decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [OPERACION] - DIVISION {decimal / decimal}\n");
-            $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
-            $$.tipo = tipos[1]; 
-            $$.decimal = $1.decimal / $3.decimal;
+            if ($3.numero == 0.0) {
+                printf("> [ERROR] - DIVISION {decimal / 0}\n");
+            }
+            else {
+                printf("> [OPERACION] - DIVISION {decimal / decimal}\n");
+                $$.n = crearNodoNoTerminal($1.n, $3.n, 5);
+                $$.tipo = tipos[1]; 
+                $$.decimal = $1.decimal / $3.decimal;
+            }
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DIVISION {numero / decimal}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DIVISION {numero / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DIVISION {decimal / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DIVISION {decimal / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DIVISION {string / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DIVISION {string / decimal}\n");
         }
     }
     //IGUAL_QUE
@@ -314,6 +420,30 @@ expresion:
                 $$.boolean = 0;
             }
         }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - IGUAL_QUE {numero / decimal}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - IGUAL_QUE {numero / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - IGUAL_QUE {decimal / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - IGUAL_QUE {decimal / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - IGUAL_QUE {string / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - IGUAL_QUE {string / decimal}\n");
+        }
     }
     //DISTINTO_QUE
     | expresion DISTINTO_QUE tipos {
@@ -345,6 +475,30 @@ expresion:
                 printf("Falso %d no es distinto que %d\n", $1, $3);
                 $$.boolean = 0;
             }
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DISTINTO_QUE {numero / decimal}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DISTINTO_QUE {numero / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DISTINTO_QUE {decimal / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DISTINTO_QUE {decimal / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DISTINTO_QUE {string / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - DISTINTO_QUE {string / decimal}\n");
         }
     }
     //MENOR QUE
@@ -378,6 +532,30 @@ expresion:
                 $$.boolean = 0;
             }
         }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_QUE {numero / decimal}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_QUE {numero / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_QUE {decimal / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_QUE {decimal / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_QUE {string / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_QUE {string / decimal}\n");
+        }
     }
     //MENOR IGUAL QUE
     | expresion MENOR_IGUAL_QUE tipos {
@@ -409,6 +587,30 @@ expresion:
                 printf("Falso %d no es menor o igual que %d\n", $1, $3);
                 $$.boolean = 0;
             }
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_IGUAL_QUE {numero / decimal}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_IGUAL_QUE {numero / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_IGUAL_QUE {decimal / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_IGUAL_QUE {decimal / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_IGUAL_QUE {string / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MENOR_IGUAL_QUE {string / decimal}\n");
         }
     }
     //MAYOR QUE
@@ -442,9 +644,33 @@ expresion:
                 $$.boolean = 0;
             }
         }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_QUE {numero / decimal}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_QUE {numero / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_QUE {decimal / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_QUE {decimal / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_QUE {string / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_QUE {string / decimal}\n");
+        }
     }
     //MAYOR IGUAL QUE
-    | expresion MAYOR_QUE tipos {
+    | expresion MAYOR_IGUAL_QUE tipos {
         
         //MAYOR_IGUAL_QUE de numero / numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
@@ -460,6 +686,7 @@ expresion:
                 $$.boolean = 0;
             }
         }
+
         //MAYOR_IGUAL_QUE de decimal / decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [COMPARACION] - MAYOR_IGUAL_QUE {decimal / decimal}\n");
@@ -473,6 +700,30 @@ expresion:
                 printf("Falso %d no es mayor o igual que %d\n", $1, $3);
                 $$.boolean = 0;
             }
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_IGUAL_QUE {numero / decimal}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_IGUAL_QUE {numero / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_IGUAL_QUE {decimal / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[2]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_IGUAL_QUE {decimal / string}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[0]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_IGUAL_QUE {string / numero}\n");
+        }
+
+        else if (strcmp($1.tipo, tipos[2]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [ERROR] - MAYOR_IGUAL_QUE {string / decimal}\n");
         }
     }
     | tipos {$$ = $1;} //la produccion operacion puede ser tipos, un subnivel para realizar la jerarquia de operaciones
