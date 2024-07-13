@@ -41,15 +41,6 @@ Terminals unused in grammar
    BOOLEAN
    MODULO
    AUMENTAR_VALOR
-   MAYOR_IGUAL_QUE
-
-
-Rules useless in parser due to conflicts
-
-   23 expresion: expresion MAYOR_QUE tipos
-
-
-State 43 conflicts: 19 reduce/reduce
 
 
 Grammar
@@ -85,7 +76,7 @@ Grammar
    20          | expresion MENOR_QUE tipos
    21          | expresion MENOR_IGUAL_QUE tipos
    22          | expresion MAYOR_QUE tipos
-   23          | expresion MAYOR_QUE tipos
+   23          | expresion MAYOR_IGUAL_QUE tipos
    24          | tipos
 
    25 tipos: VARIABLE
@@ -155,7 +146,7 @@ MULTIPLICACION (307) 16
 DIVISION (308) 17
 MODULO (309)
 MENOR_QUE (310) 20
-MAYOR_QUE (311) 22 23
+MAYOR_QUE (311) 22
 AUMENTAR_VALOR (312)
 IGUAL_QUE (313) 18
 DISTINTO_QUE (314) 19
@@ -164,7 +155,7 @@ PARENTESIS_IZQ (316) 31
 PARENTESIS_DER (317) 31
 DOS_PUNTOS (318) 9 10 11 13
 MENOR_IGUAL_QUE (319) 21
-MAYOR_IGUAL_QUE (320)
+MAYOR_IGUAL_QUE (320) 23
 NUMERO (321) 26
 DECIMAL (322) 27
 VARIABLE (323) 8 25
@@ -376,7 +367,7 @@ state 18
    20          | expresion . MENOR_QUE tipos
    21          | expresion . MENOR_IGUAL_QUE tipos
    22          | expresion . MAYOR_QUE tipos
-   23          | expresion . MAYOR_QUE tipos
+   23          | expresion . MAYOR_IGUAL_QUE tipos
 
     SUMA             shift, and go to state 25
     RESTA            shift, and go to state 26
@@ -388,6 +379,7 @@ state 18
     DISTINTO_QUE     shift, and go to state 32
     DOS_PUNTOS       shift, and go to state 33
     MENOR_IGUAL_QUE  shift, and go to state 34
+    MAYOR_IGUAL_QUE  shift, and go to state 35
 
 
 state 19
@@ -409,7 +401,7 @@ state 20
    20          | expresion . MENOR_QUE tipos
    21          | expresion . MENOR_IGUAL_QUE tipos
    22          | expresion . MAYOR_QUE tipos
-   23          | expresion . MAYOR_QUE tipos
+   23          | expresion . MAYOR_IGUAL_QUE tipos
 
     SUMA             shift, and go to state 25
     RESTA            shift, and go to state 26
@@ -419,8 +411,9 @@ state 20
     MAYOR_QUE        shift, and go to state 30
     IGUAL_QUE        shift, and go to state 31
     DISTINTO_QUE     shift, and go to state 32
-    DOS_PUNTOS       shift, and go to state 35
+    DOS_PUNTOS       shift, and go to state 36
     MENOR_IGUAL_QUE  shift, and go to state 34
+    MAYOR_IGUAL_QUE  shift, and go to state 35
 
 
 state 21
@@ -434,7 +427,7 @@ state 21
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    expresion  go to state 36
+    expresion  go to state 37
     tipos      go to state 19
 
 
@@ -449,7 +442,7 @@ state 22
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    expresion  go to state 37
+    expresion  go to state 38
     tipos      go to state 19
 
 
@@ -478,7 +471,7 @@ state 25
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    tipos  go to state 38
+    tipos  go to state 39
 
 
 state 26
@@ -492,7 +485,7 @@ state 26
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    tipos  go to state 39
+    tipos  go to state 40
 
 
 state 27
@@ -506,7 +499,7 @@ state 27
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    tipos  go to state 40
+    tipos  go to state 41
 
 
 state 28
@@ -520,7 +513,7 @@ state 28
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    tipos  go to state 41
+    tipos  go to state 42
 
 
 state 29
@@ -534,13 +527,12 @@ state 29
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    tipos  go to state 42
+    tipos  go to state 43
 
 
 state 30
 
    22 expresion: expresion MAYOR_QUE . tipos
-   23          | expresion MAYOR_QUE . tipos
 
     FALSE     shift, and go to state 12
     TRUE      shift, and go to state 13
@@ -549,7 +541,7 @@ state 30
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    tipos  go to state 43
+    tipos  go to state 44
 
 
 state 31
@@ -563,7 +555,7 @@ state 31
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    tipos  go to state 44
+    tipos  go to state 45
 
 
 state 32
@@ -577,7 +569,7 @@ state 32
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    tipos  go to state 45
+    tipos  go to state 46
 
 
 state 33
@@ -589,7 +581,7 @@ state 33
     IMPRIMIR  shift, and go to state 3
     VARIABLE  shift, and go to state 4
 
-    sentencias  go to state 46
+    sentencias  go to state 47
     sentencia   go to state 7
     asignacion  go to state 8
     if          go to state 9
@@ -608,10 +600,24 @@ state 34
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    tipos  go to state 47
+    tipos  go to state 48
 
 
 state 35
+
+   23 expresion: expresion MAYOR_IGUAL_QUE . tipos
+
+    FALSE     shift, and go to state 12
+    TRUE      shift, and go to state 13
+    NUMERO    shift, and go to state 14
+    DECIMAL   shift, and go to state 15
+    VARIABLE  shift, and go to state 16
+    STRING    shift, and go to state 17
+
+    tipos  go to state 49
+
+
+state 36
 
    13 while: WHILE expresion DOS_PUNTOS . sentencias END
 
@@ -620,7 +626,7 @@ state 35
     IMPRIMIR  shift, and go to state 3
     VARIABLE  shift, and go to state 4
 
-    sentencias  go to state 48
+    sentencias  go to state 50
     sentencia   go to state 7
     asignacion  go to state 8
     if          go to state 9
@@ -628,7 +634,7 @@ state 35
     imprimir    go to state 11
 
 
-state 36
+state 37
 
    14 expresion: expresion . SUMA tipos
    15          | expresion . RESTA tipos
@@ -639,7 +645,7 @@ state 36
    20          | expresion . MENOR_QUE tipos
    21          | expresion . MENOR_IGUAL_QUE tipos
    22          | expresion . MAYOR_QUE tipos
-   23          | expresion . MAYOR_QUE tipos
+   23          | expresion . MAYOR_IGUAL_QUE tipos
    31 imprimir: IMPRIMIR PARENTESIS_IZQ expresion . PARENTESIS_DER
 
     SUMA             shift, and go to state 25
@@ -650,11 +656,12 @@ state 36
     MAYOR_QUE        shift, and go to state 30
     IGUAL_QUE        shift, and go to state 31
     DISTINTO_QUE     shift, and go to state 32
-    PARENTESIS_DER   shift, and go to state 49
+    PARENTESIS_DER   shift, and go to state 51
     MENOR_IGUAL_QUE  shift, and go to state 34
+    MAYOR_IGUAL_QUE  shift, and go to state 35
 
 
-state 37
+state 38
 
     8 asignacion: VARIABLE ASIGNACION expresion .
    14 expresion: expresion . SUMA tipos
@@ -666,7 +673,7 @@ state 37
    20          | expresion . MENOR_QUE tipos
    21          | expresion . MENOR_IGUAL_QUE tipos
    22          | expresion . MAYOR_QUE tipos
-   23          | expresion . MAYOR_QUE tipos
+   23          | expresion . MAYOR_IGUAL_QUE tipos
 
     SUMA             shift, and go to state 25
     RESTA            shift, and go to state 26
@@ -677,141 +684,110 @@ state 37
     IGUAL_QUE        shift, and go to state 31
     DISTINTO_QUE     shift, and go to state 32
     MENOR_IGUAL_QUE  shift, and go to state 34
+    MAYOR_IGUAL_QUE  shift, and go to state 35
 
     $default  reduce using rule 8 (asignacion)
 
 
-state 38
+state 39
 
    14 expresion: expresion SUMA tipos .
 
     $default  reduce using rule 14 (expresion)
 
 
-state 39
+state 40
 
    15 expresion: expresion RESTA tipos .
 
     $default  reduce using rule 15 (expresion)
 
 
-state 40
+state 41
 
    16 expresion: expresion MULTIPLICACION tipos .
 
     $default  reduce using rule 16 (expresion)
 
 
-state 41
+state 42
 
    17 expresion: expresion DIVISION tipos .
 
     $default  reduce using rule 17 (expresion)
 
 
-state 42
+state 43
 
    20 expresion: expresion MENOR_QUE tipos .
 
     $default  reduce using rule 20 (expresion)
 
 
-state 43
+state 44
 
    22 expresion: expresion MAYOR_QUE tipos .
-   23          | expresion MAYOR_QUE tipos .
 
-    $end             reduce using rule 22 (expresion)
-    $end             [reduce using rule 23 (expresion)]
-    ELIF             reduce using rule 22 (expresion)
-    ELIF             [reduce using rule 23 (expresion)]
-    ELSE             reduce using rule 22 (expresion)
-    ELSE             [reduce using rule 23 (expresion)]
-    IF               reduce using rule 22 (expresion)
-    IF               [reduce using rule 23 (expresion)]
-    WHILE            reduce using rule 22 (expresion)
-    WHILE            [reduce using rule 23 (expresion)]
-    END              reduce using rule 22 (expresion)
-    END              [reduce using rule 23 (expresion)]
-    IMPRIMIR         reduce using rule 22 (expresion)
-    IMPRIMIR         [reduce using rule 23 (expresion)]
-    SUMA             reduce using rule 22 (expresion)
-    SUMA             [reduce using rule 23 (expresion)]
-    RESTA            reduce using rule 22 (expresion)
-    RESTA            [reduce using rule 23 (expresion)]
-    MULTIPLICACION   reduce using rule 22 (expresion)
-    MULTIPLICACION   [reduce using rule 23 (expresion)]
-    DIVISION         reduce using rule 22 (expresion)
-    DIVISION         [reduce using rule 23 (expresion)]
-    MENOR_QUE        reduce using rule 22 (expresion)
-    MENOR_QUE        [reduce using rule 23 (expresion)]
-    MAYOR_QUE        reduce using rule 22 (expresion)
-    MAYOR_QUE        [reduce using rule 23 (expresion)]
-    IGUAL_QUE        reduce using rule 22 (expresion)
-    IGUAL_QUE        [reduce using rule 23 (expresion)]
-    DISTINTO_QUE     reduce using rule 22 (expresion)
-    DISTINTO_QUE     [reduce using rule 23 (expresion)]
-    PARENTESIS_DER   reduce using rule 22 (expresion)
-    PARENTESIS_DER   [reduce using rule 23 (expresion)]
-    DOS_PUNTOS       reduce using rule 22 (expresion)
-    DOS_PUNTOS       [reduce using rule 23 (expresion)]
-    MENOR_IGUAL_QUE  reduce using rule 22 (expresion)
-    MENOR_IGUAL_QUE  [reduce using rule 23 (expresion)]
-    VARIABLE         reduce using rule 22 (expresion)
-    VARIABLE         [reduce using rule 23 (expresion)]
-    $default         reduce using rule 22 (expresion)
+    $default  reduce using rule 22 (expresion)
 
 
-state 44
+state 45
 
    18 expresion: expresion IGUAL_QUE tipos .
 
     $default  reduce using rule 18 (expresion)
 
 
-state 45
+state 46
 
    19 expresion: expresion DISTINTO_QUE tipos .
 
     $default  reduce using rule 19 (expresion)
 
 
-state 46
+state 47
 
     3 sentencias: sentencias . sentencia
     9 if: IF expresion DOS_PUNTOS sentencias . rescursivo_if
 
-    ELIF      shift, and go to state 50
-    ELSE      shift, and go to state 51
+    ELIF      shift, and go to state 52
+    ELSE      shift, and go to state 53
     IF        shift, and go to state 1
     WHILE     shift, and go to state 2
-    END       shift, and go to state 52
+    END       shift, and go to state 54
     IMPRIMIR  shift, and go to state 3
     VARIABLE  shift, and go to state 4
 
     sentencia      go to state 24
     asignacion     go to state 8
     if             go to state 9
-    rescursivo_if  go to state 53
+    rescursivo_if  go to state 55
     while          go to state 10
     imprimir       go to state 11
 
 
-state 47
+state 48
 
    21 expresion: expresion MENOR_IGUAL_QUE tipos .
 
     $default  reduce using rule 21 (expresion)
 
 
-state 48
+state 49
+
+   23 expresion: expresion MAYOR_IGUAL_QUE tipos .
+
+    $default  reduce using rule 23 (expresion)
+
+
+state 50
 
     3 sentencias: sentencias . sentencia
    13 while: WHILE expresion DOS_PUNTOS sentencias . END
 
     IF        shift, and go to state 1
     WHILE     shift, and go to state 2
-    END       shift, and go to state 54
+    END       shift, and go to state 56
     IMPRIMIR  shift, and go to state 3
     VARIABLE  shift, and go to state 4
 
@@ -822,14 +798,14 @@ state 48
     imprimir    go to state 11
 
 
-state 49
+state 51
 
    31 imprimir: IMPRIMIR PARENTESIS_IZQ expresion PARENTESIS_DER .
 
     $default  reduce using rule 31 (imprimir)
 
 
-state 50
+state 52
 
    10 rescursivo_if: ELIF . expresion DOS_PUNTOS sentencias rescursivo_if
 
@@ -840,39 +816,39 @@ state 50
     VARIABLE  shift, and go to state 16
     STRING    shift, and go to state 17
 
-    expresion  go to state 55
+    expresion  go to state 57
     tipos      go to state 19
 
 
-state 51
+state 53
 
    11 rescursivo_if: ELSE . DOS_PUNTOS sentencias rescursivo_if
 
-    DOS_PUNTOS  shift, and go to state 56
+    DOS_PUNTOS  shift, and go to state 58
 
 
-state 52
+state 54
 
    12 rescursivo_if: END .
 
     $default  reduce using rule 12 (rescursivo_if)
 
 
-state 53
+state 55
 
     9 if: IF expresion DOS_PUNTOS sentencias rescursivo_if .
 
     $default  reduce using rule 9 (if)
 
 
-state 54
+state 56
 
    13 while: WHILE expresion DOS_PUNTOS sentencias END .
 
     $default  reduce using rule 13 (while)
 
 
-state 55
+state 57
 
    10 rescursivo_if: ELIF expresion . DOS_PUNTOS sentencias rescursivo_if
    14 expresion: expresion . SUMA tipos
@@ -884,7 +860,7 @@ state 55
    20          | expresion . MENOR_QUE tipos
    21          | expresion . MENOR_IGUAL_QUE tipos
    22          | expresion . MAYOR_QUE tipos
-   23          | expresion . MAYOR_QUE tipos
+   23          | expresion . MAYOR_IGUAL_QUE tipos
 
     SUMA             shift, and go to state 25
     RESTA            shift, and go to state 26
@@ -894,11 +870,12 @@ state 55
     MAYOR_QUE        shift, and go to state 30
     IGUAL_QUE        shift, and go to state 31
     DISTINTO_QUE     shift, and go to state 32
-    DOS_PUNTOS       shift, and go to state 57
+    DOS_PUNTOS       shift, and go to state 59
     MENOR_IGUAL_QUE  shift, and go to state 34
+    MAYOR_IGUAL_QUE  shift, and go to state 35
 
 
-state 56
+state 58
 
    11 rescursivo_if: ELSE DOS_PUNTOS . sentencias rescursivo_if
 
@@ -907,7 +884,7 @@ state 56
     IMPRIMIR  shift, and go to state 3
     VARIABLE  shift, and go to state 4
 
-    sentencias  go to state 58
+    sentencias  go to state 60
     sentencia   go to state 7
     asignacion  go to state 8
     if          go to state 9
@@ -915,7 +892,7 @@ state 56
     imprimir    go to state 11
 
 
-state 57
+state 59
 
    10 rescursivo_if: ELIF expresion DOS_PUNTOS . sentencias rescursivo_if
 
@@ -924,7 +901,7 @@ state 57
     IMPRIMIR  shift, and go to state 3
     VARIABLE  shift, and go to state 4
 
-    sentencias  go to state 59
+    sentencias  go to state 61
     sentencia   go to state 7
     asignacion  go to state 8
     if          go to state 9
@@ -932,56 +909,56 @@ state 57
     imprimir    go to state 11
 
 
-state 58
+state 60
 
     3 sentencias: sentencias . sentencia
    11 rescursivo_if: ELSE DOS_PUNTOS sentencias . rescursivo_if
 
-    ELIF      shift, and go to state 50
-    ELSE      shift, and go to state 51
+    ELIF      shift, and go to state 52
+    ELSE      shift, and go to state 53
     IF        shift, and go to state 1
     WHILE     shift, and go to state 2
-    END       shift, and go to state 52
+    END       shift, and go to state 54
     IMPRIMIR  shift, and go to state 3
     VARIABLE  shift, and go to state 4
 
     sentencia      go to state 24
     asignacion     go to state 8
     if             go to state 9
-    rescursivo_if  go to state 60
+    rescursivo_if  go to state 62
     while          go to state 10
     imprimir       go to state 11
 
 
-state 59
+state 61
 
     3 sentencias: sentencias . sentencia
    10 rescursivo_if: ELIF expresion DOS_PUNTOS sentencias . rescursivo_if
 
-    ELIF      shift, and go to state 50
-    ELSE      shift, and go to state 51
+    ELIF      shift, and go to state 52
+    ELSE      shift, and go to state 53
     IF        shift, and go to state 1
     WHILE     shift, and go to state 2
-    END       shift, and go to state 52
+    END       shift, and go to state 54
     IMPRIMIR  shift, and go to state 3
     VARIABLE  shift, and go to state 4
 
     sentencia      go to state 24
     asignacion     go to state 8
     if             go to state 9
-    rescursivo_if  go to state 61
+    rescursivo_if  go to state 63
     while          go to state 10
     imprimir       go to state 11
 
 
-state 60
+state 62
 
    11 rescursivo_if: ELSE DOS_PUNTOS sentencias rescursivo_if .
 
     $default  reduce using rule 11 (rescursivo_if)
 
 
-state 61
+state 63
 
    10 rescursivo_if: ELIF expresion DOS_PUNTOS sentencias rescursivo_if .
 

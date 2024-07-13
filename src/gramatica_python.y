@@ -144,7 +144,7 @@ asignacion:
 //F --> if E: S RF
 if:
     IF expresion DOS_PUNTOS sentencias rescursivo_if {
-        if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
+        if(strcmp($2.tipo, tipos[3]) == 0){ //comprobacion si es boolean
             printf("> [IF] - ESTAMOS COMPARANDO\n");
             $$.n=crearNodoNoTerminalIf($2.n, $4.n, $5.n, 12);
         }
@@ -158,7 +158,7 @@ if:
 //RF --> elif E: S RF | else S | end
 rescursivo_if:
     ELIF expresion DOS_PUNTOS sentencias rescursivo_if {
-        if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
+        if(strcmp($2.tipo, tipos[3]) == 0){ //comprobacion si es boolean
             printf("> [ELIF] - ESTAMOS COMPARANDO\n");
             $$.n=crearNodoNoTerminalIf($2.n, $4.n, $5.n, 13);
         }
@@ -179,7 +179,7 @@ rescursivo_if:
 //W --> while E: S end
 while:
     WHILE expresion DOS_PUNTOS sentencias END {
-        if(strcmp($2.tipo, tipos[3]) == 0 && $2.boolean == 1){ //comprobacion si es boolean
+        if(strcmp($2.tipo, tipos[3]) == 0){ //comprobacion si es boolean
             printf("> [WHILE] - ESTAMOS EN UN BUCLE\n");
             $$.n=crearNodoNoTerminal($2.n, $4.n, 11);
         }
@@ -342,7 +342,7 @@ expresion:
         
         //DIVISION de numero / numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
-            if ($3.numero == 0) {
+            if ($3.numero == 0.0) {
                 printf("> [ERROR] - DIVISION {numero / 0}\n");
             }
             else {
@@ -354,7 +354,7 @@ expresion:
         }
         //DIVISION de decimal / decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
-            if ($3.numero == 0) {
+            if ($3.numero == 0.0) {
                 printf("> [ERROR] - DIVISION {decimal / 0}\n");
             }
             else {
@@ -670,7 +670,7 @@ expresion:
         }
     }
     //MAYOR IGUAL QUE
-    | expresion MAYOR_QUE tipos {
+    | expresion MAYOR_IGUAL_QUE tipos {
         
         //MAYOR_IGUAL_QUE de numero / numero
         if (strcmp($1.tipo, tipos[0]) == 0 && strcmp($3.tipo, tipos[0]) == 0) {  //comprobacion del tipo
@@ -689,7 +689,7 @@ expresion:
 
         //MAYOR_IGUAL_QUE de decimal / decimal
         else if (strcmp($1.tipo, tipos[1]) == 0 && strcmp($3.tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [COMPARACION] - MAYOR_IGUAL_QUEcimal / decimal}\n");
+            printf("> [COMPARACION] - MAYOR_IGUAL_QUE {decimal / decimal}\n");
             $$.n = crearNodoNoTerminal($1.n, $3.n, 22);
             $$.tipo = tipos[3]; 
             if ($1.decimal > $3.decimal || $1.decimal == $3.decimal) {
