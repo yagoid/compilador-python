@@ -171,7 +171,7 @@ rescursivo_if:
         $$.n=crearNodoNoTerminal($3.n, $4.n, 14);
     }
     | END{
-        $$.n = crearNodoVacio()
+        $$.n = crearNodoEnd(23);
     }
 ;
 
