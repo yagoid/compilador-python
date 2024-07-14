@@ -1,4 +1,12 @@
-a = 7
-b = 0
+a = 7.5
+b = 7.6
 
-c = a / b
+if a < b:
+    f = 1
+    print(f)
+elif a == b:
+    f = 2
+else:
+    print(b)
+end
+

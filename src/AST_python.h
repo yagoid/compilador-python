@@ -58,6 +58,7 @@ struct ast
     struct ast *center; // Nodo centro del arbol para if
     struct ast *dcha;   // Nodo derecho del arbol
     int tipoNodo;       // Almacena el tipo de nodo
+    char tipoReg;       // Almacena el tipo de registro: v, a, t, s o f
     union
     {
         int valorEntero;     // Valor si es entero
@@ -269,34 +270,55 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 12: // Instrucción if
     {
         printf("12\n");
-        int etiquetaElse = contadorEtiquetaLocal++;
+        int etiquetaFinIf = contadorEtiquetaLocal++;
+        int etiquetaFinCondicion = contadorEtiquetaLocal++;
 
         // n->izq es la condición del if
         struct ast *reg_cond = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
 
-        // Evaluar la condición del if
+        // Evaluar la condición del if es false
         if (strcmp(reg_cond->tipo, "int") == 0 || strcmp(reg_cond->tipo, "boolean") == 0)
         {
-            fprintf(yyout, "beqz $t%d, etiqueta_%d    # Si $t%d es 0, saltar a etiqueta else\n",
-                    reg_cond->resultado, etiquetaElse, reg_cond->resultado);
+            fprintf(yyout, "beqz $t%d, etiqueta_%d    # Si $t%d es 0, saltar a etiqueta fin if\n",
+                    reg_cond->resultado, etiquetaFinIf, reg_cond->resultado);
+
+            // n->center: cuerpo del if
+            comprobarValorNodo(n->center, contadorEtiquetaLocal);
+
+            // Si existe else o elif
+            if (n->dcha->tipoNodo == 13 || n->dcha->tipoNodo == 14)
+            {
+                fprintf(yyout, "bnez $t%d, etiqueta_%d    # Si $t%d no es 0, saltar a etiqueta de fin condición\n",
+                        reg_cond->resultado, etiquetaFinCondicion, reg_cond->resultado);
+            }
         }
         else if (strcmp(reg_cond->tipo, "float") == 0)
         {
-            // Evaluar condición para flotantes
             fprintf(yyout, "c.eq.s $f%d, $f31          # Comparar si $f%d es igual a 0.0\n",
                     reg_cond->resultado, reg_cond->resultado);
-            fprintf(yyout, "bc1t etiqueta_%d          # Si es verdadero (igual a 0.0), saltar a etiqueta else\n", etiquetaElse);
+            fprintf(yyout, "bc1t etiqueta_%d          # Si es verdadero (igual a 0.0), saltar a etiqueta fin if\n", etiquetaFinIf);
+
+            // n->center: cuerpo del if
+            comprobarValorNodo(n->center, contadorEtiquetaLocal);
+
+            // Si existe else o elif
+            if (n->dcha->tipoNodo == 13 || n->dcha->tipoNodo == 14)
+            {
+                fprintf(yyout, "bc1f etiqueta_%d          # Si es falso (no igual a 0.0), saltar a etiqueta de fin condición\n", etiquetaFinCondicion);
+            }
         }
 
-        // n->center es el cuerpo del if
-        comprobarValorNodo(n->center, contadorEtiquetaLocal);
+        fprintf(yyout, "etiqueta_%d:\n", etiquetaFinIf);
 
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
+        // n->dcha: else, elif o END
+        // printf("tipo nodo: %d:\n", n->dcha->tipoNodo);
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
-        // Si hay una parte else (n->dcha no es NULL), la procesamos
-        if (n->dcha != NULL)
+        // Si existe else o elif
+        if (n->dcha->tipoNodo == 13 || n->dcha->tipoNodo == 14)
         {
-            comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+            // Si el if es true, se saltan las condiciones else y elif
+            fprintf(yyout, "etiqueta_%d:\n", etiquetaFinCondicion);
         }
     }
     break;
@@ -304,42 +326,58 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 13: // Instrucción elif (else if)
     {
         printf("13\n");
-        int etiquetaElse = contadorEtiquetaLocal++;
+        int etiquetaFinElif = contadorEtiquetaLocal++;
+        int etiquetaFinCondicion = contadorEtiquetaLocal++;
 
         // n->izq es la condición del if
         struct ast *reg_cond = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
 
         // Evaluar la condición del if
-        printf("a");
         if (strcmp(reg_cond->tipo, "int") == 0 || strcmp(reg_cond->tipo, "boolean") == 0)
         {
-            printf("b");
-            printf("resultado %d\n", reg_cond->resultado);
+            // printf("resultado %d\n", reg_cond->resultado);
             fprintf(yyout, "beqz $t%d, etiqueta_%d    # Si $t%d es 0, saltar a etiqueta else\n",
-                    reg_cond->resultado, etiquetaElse, reg_cond->resultado);
-            printf("b");
+                    reg_cond->resultado, etiquetaFinElif, reg_cond->resultado);
+
+            // n->center es el cuerpo del if
+            comprobarValorNodo(n->center, contadorEtiquetaLocal);
+
+            // Si existe else o elif
+            if (n->dcha->tipoNodo == 13 || n->dcha->tipoNodo == 14)
+            {
+                fprintf(yyout, "bnez $t%d, etiqueta_%d    # Si $t%d no es 0, saltar a etiqueta de fin condición\n",
+                        reg_cond->resultado, etiquetaFinCondicion, reg_cond->resultado);
+            }
         }
         else if (strcmp(reg_cond->tipo, "float") == 0)
         {
-            printf("c");
             // Evaluar condición para flotantes
             fprintf(yyout, "c.eq.s $f%d, $f31          # Comparar si $f%d es igual a 0.0\n",
                     reg_cond->resultado, reg_cond->resultado);
-            fprintf(yyout, "bc1t etiqueta_%d          # Si es verdadero (igual a 0.0), saltar a etiqueta else\n", etiquetaElse);
+            fprintf(yyout, "bc1t etiqueta_%d          # Si es verdadero (igual a 0.0), saltar a etiqueta else\n", etiquetaFinElif);
+
+            // n->center es el cuerpo del if
+            comprobarValorNodo(n->center, contadorEtiquetaLocal);
+
+            // Si existe else o elif
+            if (n->dcha->tipoNodo == 13 || n->dcha->tipoNodo == 14)
+            {
+                fprintf(yyout, "bc1f etiqueta_%d          # Si es falso (no igual a 0.0), saltar a etiqueta de fin condición\n", etiquetaFinCondicion);
+            }
         }
 
-        printf("d");
+        // printf("tipoNodo %d\n", n->center->tipoNodo);
 
-        // n->center es el cuerpo del if
-        comprobarValorNodo(n->center, contadorEtiquetaLocal);
+        fprintf(yyout, "etiqueta_%d:\n", etiquetaFinElif);
 
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
+        // n->dcha: else, elif o END
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
-        // Si hay una parte else (n->dcha no es NULL), la procesamos
-        if (n->dcha != NULL)
+        // Si existe else o elif
+        if (n->dcha->tipoNodo == 13 || n->dcha->tipoNodo == 14)
         {
-            printf("e");
-            comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+            // Si el elif es true, se saltan las condiciones else y elif
+            fprintf(yyout, "etiqueta_%d:\n", etiquetaFinCondicion);
         }
     }
     break;
@@ -347,19 +385,12 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 14: // Instrucción else
     {
         printf("14\n");
-        int etiquetaElse = contadorEtiquetaLocal++;
 
-        fprintf(yyout, "etiqueta_%d:\n", etiquetaElse);
-
-        if (n->izq != NULL)
-        {
-            comprobarValorNodo(n->izq, contadorEtiquetaLocal);
-        }
-        // Si hay una parte else (n->extra no es NULL), la procesamos
-        if (n->dcha != NULL)
-        {
-            comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
-        }
+        // n->izq: Cuerpo de else
+        comprobarValorNodo(n->izq, contadorEtiquetaLocal);
+        
+        // n->dcha: END
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
     }
     break;
 
@@ -673,7 +704,39 @@ saltoLinea()
 
 int encontrarReg()
 {
-    for (int posicion = 0; posicion < numMaxRegistros; posicion++)
+    // for (int posicion = 0; posicion < NUM_REG_V; posicion++)
+    // {
+    //     if (registros[posicion] == true)
+    //     {                                // Encuentra el primer registro libre
+    //         registros[posicion] = false; // Marca el registro como ocupado
+    //         return posicion;             // Retorna la posición del registro libre
+    //     }
+    // }
+    // for (int posicion = 0; posicion < NUM_REG_A; posicion++)
+    // {
+    //     if (registros[posicion] == true)
+    //     {                                // Encuentra el primer registro libre
+    //         registros[posicion] = false; // Marca el registro como ocupado
+    //         return posicion;             // Retorna la posición del registro libre
+    //     }
+    // }
+    // for (int posicion = 0; posicion < NUM_REG_T; posicion++)
+    // {
+    //     if (registros[posicion] == true)
+    //     {                                // Encuentra el primer registro libre
+    //         registros[posicion] = false; // Marca el registro como ocupado
+    //         return posicion;             // Retorna la posición del registro libre
+    //     }
+    // }
+    // for (int posicion = 0; posicion < NUM_REG_S; posicion++)
+    // {
+    //     if (registros[posicion] == true)
+    //     {                                // Encuentra el primer registro libre
+    //         registros[posicion] = false; // Marca el registro como ocupado
+    //         return posicion;             // Retorna la posición del registro libre
+    //     }
+    // }
+    for (int posicion = 0; posicion < NUM_REG_F; posicion++)
     {
         if (registros[posicion] == true)
         {                                // Encuentra el primer registro libre
@@ -713,7 +776,7 @@ struct ast *crearNodoEnd(int tipoNodo)
 {
     struct ast *n = malloc(sizeof(struct ast)); // Crea un nuevo nodo
     n->tipoNodo = tipoNodo;                     // Asignamos al nodo genérico sus hijos y tipo
-    n->resultado = encontrarReg();              // Hacemos llamada al método para buscar un nuevo registro
+    // n->resultado = encontrarReg();              // Hacemos llamada al método para buscar un nuevo registro
 
     // printf("tipoNodo: %d\n", tipoNodo);
     return n;
@@ -726,6 +789,7 @@ struct ast *crearNodoTerminalDouble(double valor)
     n->dcha = NULL;
     n->tipoNodo = 1;
     n->tipo = "float";
+    n->tipoReg = "f";
     n->valorDecimal = valor;
 
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
@@ -748,6 +812,7 @@ struct ast *crearNodoTerminalInt(int valor)
     n->dcha = NULL;
     n->tipoNodo = 1;
     n->tipo = "int";
+    n->tipoReg = "t";
     n->valorEntero = valor;
 
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
@@ -770,6 +835,7 @@ struct ast *crearNodoTerminalString(char *valor)
     n->dcha = NULL;
     n->tipoNodo = 1;
     n->tipo = "string";
+    n->tipoReg = "t";
     n->valorCadena = valor;
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
     n->nombreVar = crearNombreVariable(); // Genera un nombre único para la variable
@@ -791,6 +857,7 @@ struct ast *crearNodoTerminalBoolean(int valor)
     n->dcha = NULL;
     n->tipoNodo = 1;
     n->tipo = "boolean";
+    n->tipoReg = "t";
     n->valorBoolean = valor;
 
     n->resultado = encontrarReg();        // Hacemos llamada al método para buscar un nuevo registro
@@ -824,7 +891,7 @@ struct ast *crearNodoNoTerminalIf(struct ast *izq, struct ast *center, struct as
     n->center = center;
     n->dcha = dcha;
     n->tipoNodo = tipoNodo;        // Asignamos al nodo genérico sus hijos y tipo
-    n->resultado = encontrarReg(); // Hacemos llamada al método para buscar un nuevo registro
+    // n->resultado = encontrarReg(); // Hacemos llamada al método para buscar un nuevo registro
 
     // printf("tipoNodo: %d\n", tipoNodo);
     return n;
