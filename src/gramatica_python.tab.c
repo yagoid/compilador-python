@@ -1604,7 +1604,7 @@ yyreduce:
 /* Line 1464 of yacc.c  */
 #line 173 "gramatica_python.y"
     {
-        (yyval.tr).n = crearNodoVacio()
+        (yyval.tr).n = crearNodoEnd(23);
     ;}
     break;
 
@@ -1801,7 +1801,7 @@ yyreduce:
         }
         //DIVISION de decimal / decimal
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            if ((yyvsp[(3) - (3)].tr).numero == 0) {
+            if ((yyvsp[(3) - (3)].tr).numero == 0.0) {
                 printf("> [ERROR] - DIVISION {decimal / 0}\n");
             }
             else {
