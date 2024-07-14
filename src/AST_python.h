@@ -249,13 +249,13 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         if (strcmp(reg_cond->tipo, "int") == 0 || strcmp(reg_cond->tipo, "boolean") == 0)
         {
             fprintf(yyout, "beqz $t%d, etiqueta_%d    # Si $t%d es 0, saltar a etiqueta de fin\n",
-                    reg_cond->resultado, etiquetaFin, reg_cond->resultado);
+                    n->izq->resultado, etiquetaFin, n->izq->resultado);
         }
         else if (strcmp(reg_cond->tipo, "float") == 0)
         {
             // Evaluar condición para flotantes
             fprintf(yyout, "c.eq.s $f%d, $f31          # Comparar si $f%d es igual a 0.0\n",
-                    reg_cond->resultado, reg_cond->resultado);
+                    n->izq->resultado, n->izq->resultado);
             fprintf(yyout, "bc1t etiqueta_%d          # Si es verdadero (igual a 0.0), saltar a etiqueta de fin\n", etiquetaFin);
         }
 
@@ -280,7 +280,7 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         if (strcmp(reg_cond->tipo, "int") == 0 || strcmp(reg_cond->tipo, "boolean") == 0)
         {
             fprintf(yyout, "beqz $t%d, etiqueta_%d    # Si $t%d es 0, saltar a etiqueta fin if\n",
-                    reg_cond->resultado, etiquetaFinIf, reg_cond->resultado);
+                    n->izq->resultado, etiquetaFinIf, n->izq->resultado);
 
             // n->center: cuerpo del if
             comprobarValorNodo(n->center, contadorEtiquetaLocal);
@@ -289,13 +289,13 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
             if (n->dcha->tipoNodo == 13 || n->dcha->tipoNodo == 14)
             {
                 fprintf(yyout, "bnez $t%d, etiqueta_%d    # Si $t%d no es 0, saltar a etiqueta de fin condición\n",
-                        reg_cond->resultado, etiquetaFinCondicion, reg_cond->resultado);
+                        n->izq->resultado, etiquetaFinCondicion, n->izq->resultado);
             }
         }
         else if (strcmp(reg_cond->tipo, "float") == 0)
         {
             fprintf(yyout, "c.eq.s $f%d, $f31          # Comparar si $f%d es igual a 0.0\n",
-                    reg_cond->resultado, reg_cond->resultado);
+                    n->izq->resultado, n->izq->resultado);
             fprintf(yyout, "bc1t etiqueta_%d          # Si es verdadero (igual a 0.0), saltar a etiqueta fin if\n", etiquetaFinIf);
 
             // n->center: cuerpo del if
@@ -337,7 +337,7 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         {
             // printf("resultado %d\n", reg_cond->resultado);
             fprintf(yyout, "beqz $t%d, etiqueta_%d    # Si $t%d es 0, saltar a etiqueta else\n",
-                    reg_cond->resultado, etiquetaFinElif, reg_cond->resultado);
+                    n->izq->resultado, etiquetaFinElif, n->izq->resultado);
 
             // n->center es el cuerpo del if
             comprobarValorNodo(n->center, contadorEtiquetaLocal);
@@ -346,14 +346,14 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
             if (n->dcha->tipoNodo == 13 || n->dcha->tipoNodo == 14)
             {
                 fprintf(yyout, "bnez $t%d, etiqueta_%d    # Si $t%d no es 0, saltar a etiqueta de fin condición\n",
-                        reg_cond->resultado, etiquetaFinCondicion, reg_cond->resultado);
+                        n->izq->resultado, etiquetaFinCondicion, n->izq->resultado);
             }
         }
         else if (strcmp(reg_cond->tipo, "float") == 0)
         {
             // Evaluar condición para flotantes
             fprintf(yyout, "c.eq.s $f%d, $f31          # Comparar si $f%d es igual a 0.0\n",
-                    reg_cond->resultado, reg_cond->resultado);
+                    n->izq->resultado, n->izq->resultado);
             fprintf(yyout, "bc1t etiqueta_%d          # Si es verdadero (igual a 0.0), saltar a etiqueta else\n", etiquetaFinElif);
 
             // n->center es el cuerpo del if
@@ -421,18 +421,22 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
             fprintf(yyout, "seq $t%d, $t%d, $t%d      # Comparar si $t%d == $t%d, almacenar resultado en $t%d\n",
                     n->resultado, n->izq->resultado, n->dcha->resultado,
                     n->izq->resultado, n->dcha->resultado, n->resultado);
+
+            // printf("valor izq: %d, valor dcha: %d\n",
+            //         variables[n->izq->resultado].valorEntero, variables[n->dcha->resultado].valorEntero);
         }
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
-            fprintf(yyout, "c.eq.s $f%d, $f%d         # Comparar si $f%d == $f%d\n",
-                    n->izq->resultado, n->dcha->resultado,
-                    n->izq->resultado, n->dcha->resultado);
-            fprintf(yyout, "bc1t label_true_%d        # Si el resultado de la comparación es verdadero, saltar a label_true_%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "li $t%d, 0                # Si no, almacenar 0 (falso) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "j label_end_%d            # Saltar a la etiqueta de finalización\n", n->resultado);
-            fprintf(yyout, "label_true_%d:            # Etiqueta si la comparación es verdadera\n", n->resultado);
-            fprintf(yyout, "li $t%d, 1                # Almacenar 1 (verdadero) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "label_end_%d:             # Etiqueta de finalización\n", n->resultado);
+            fprintf(yyout, "c.eq.s $f%d, $f%d\n", n->izq->resultado, n->dcha->resultado);
+            fprintf(yyout, "bc1t son_iguales_%d\n", n->izq->resultado);
+            fprintf(yyout, "nop\n");
+            fprintf(yyout, "li $t0, 0\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "j fin_igual_%d\n", n->izq->resultado);
+            fprintf(yyout, "son_iguales_%d:\n", n->izq->resultado);
+            fprintf(yyout, "li $t0, 1065353216\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "fin_igual_%d:\n", n->izq->resultado);
         }
 
         borrarReg(n->izq, n->dcha);
@@ -453,15 +457,16 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         }
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
-            fprintf(yyout, "c.eq.s $f%d, $f%d         # Comparar si $f%d == $f%d\n",
-                    n->izq->resultado, n->dcha->resultado,
-                    n->izq->resultado, n->dcha->resultado);
-            fprintf(yyout, "bc1f label_true_%d        # Si el resultado de la comparación es falso, saltar a label_true_%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "li $t%d, 0                # Si son iguales, almacenar 0 (falso) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "j label_end_%d            # Saltar a la etiqueta de finalización\n", n->resultado);
-            fprintf(yyout, "label_true_%d:            # Etiqueta si la comparación es falsa\n", n->resultado);
-            fprintf(yyout, "li $t%d, 1                # Almacenar 1 (verdadero) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "label_end_%d:             # Etiqueta de finalización\n", n->resultado);
+            fprintf(yyout, "c.eq.s $f%d, $f%d\n", n->izq->resultado, n->dcha->resultado);
+            fprintf(yyout, "bc1t son_distintos_%d\n", n->izq->resultado);
+            fprintf(yyout, "nop\n");
+            fprintf(yyout, "li $t0, 1065353216\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "j fin_son_distintos_%d\n", n->izq->resultado);
+            fprintf(yyout, "son_distintos_%d:\n", n->izq->resultado);
+            fprintf(yyout, "li $t0, 0\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "fin_son_distintos_%d:\n", n->izq->resultado);
         }
 
         borrarReg(n->izq, n->dcha);
@@ -480,15 +485,16 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         }
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
-            fprintf(yyout, "c.lt.s $f%d, $f%d         # Comparar si $f%d < $f%d\n",
-                    n->izq->resultado, n->dcha->resultado,
-                    n->izq->resultado, n->dcha->resultado);
-            fprintf(yyout, "bc1t label_true_%d        # Si el resultado de la comparación es verdadero, saltar a label_true_%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "li $t%d, 0                # Si no, almacenar 0 (falso) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "j label_end_%d            # Saltar a la etiqueta de finalización\n", n->resultado);
-            fprintf(yyout, "label_true_%d:            # Etiqueta si la comparación es verdadera\n", n->resultado);
-            fprintf(yyout, "li $t%d, 1                # Almacenar 1 (verdadero) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "label_end_%d:             # Etiqueta de finalización\n", n->resultado);
+            fprintf(yyout, "c.lt.s $f%d, $f%d\n", n->izq->resultado, n->dcha->resultado);
+            fprintf(yyout, "bc1t es_menor_%d\n", n->izq->resultado);
+            fprintf(yyout, "nop\n");
+            fprintf(yyout, "li $t0, 0\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "j fin_menor_%d\n", n->izq->resultado);
+            fprintf(yyout, "es_menor_%d:\n", n->izq->resultado);
+            fprintf(yyout, "li $t0, 1065353216\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "fin_menor_%d:\n", n->izq->resultado);
         }
 
         // fprintf(yyout, "c.lt.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
@@ -512,15 +518,16 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         }
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
-            fprintf(yyout, "c.lt.s $f%d, $f%d         # Comparar si $f%d < $f%d\n",
-                    n->dcha->resultado, n->izq->resultado,
-                    n->dcha->resultado, n->izq->resultado);
-            fprintf(yyout, "bc1f label_true_%d        # Si el resultado de la comparación es falso (<=), saltar a label_true_%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "li $t%d, 0                # Si no, almacenar 0 (falso) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "j label_end_%d            # Saltar a la etiqueta de finalización\n", n->resultado);
-            fprintf(yyout, "label_true_%d:            # Etiqueta si la comparación es verdadera\n", n->resultado);
-            fprintf(yyout, "li $t%d, 1                # Almacenar 1 (verdadero) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "label_end_%d:             # Etiqueta de finalización\n", n->resultado);
+            fprintf(yyout, "c.le.s $f%d, $f%d\n", n->izq->resultado, n->dcha->resultado);
+            fprintf(yyout, "bc1t es_menor_o_igual_%d\n", n->izq->resultado);
+            fprintf(yyout, "nop\n");
+            fprintf(yyout, "li $t0, 0\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "j fin_menor_o_igual_%d\n", n->izq->resultado);
+            fprintf(yyout, "es_menor_o_igual_%d:\n", n->izq->resultado);
+            fprintf(yyout, "li $t0, 1065353216\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "fin_menor_o_igual_%d:\n", n->izq->resultado);
         }
 
         borrarReg(n->izq, n->dcha);
@@ -541,15 +548,16 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         }
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
-            fprintf(yyout, "c.lt.s $f%d, $f%d         # Comparar si $f%d < $f%d\n",
-                    n->dcha->resultado, n->izq->resultado,
-                    n->dcha->resultado, n->izq->resultado);
-            fprintf(yyout, "bc1t label_true_%d        # Si el resultado de la comparación es verdadero, saltar a label_true_%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "li $t%d, 0                # Si no, almacenar 0 (falso) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "j label_end_%d            # Saltar a la etiqueta de finalización\n", n->resultado);
-            fprintf(yyout, "label_true_%d:            # Etiqueta si la comparación es verdadera\n", n->resultado);
-            fprintf(yyout, "li $t%d, 1                # Almacenar 1 (verdadero) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "label_end_%d:             # Etiqueta de finalización\n", n->resultado);
+            fprintf(yyout, "c.lt.s $f%d, $f%d\n", n->dcha->resultado, n->izq->resultado);
+            fprintf(yyout, "bc1t es_mayor_%d\n", n->izq->resultado);
+            fprintf(yyout, "nop\n");
+            fprintf(yyout, "li $t0, 0\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "j fin_mayor_%d\n", n->izq->resultado);
+            fprintf(yyout, "es_mayor_%d:\n", n->izq->resultado);
+            fprintf(yyout, "li $t0, 1065353216\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "fin_mayor_%d:\n", n->izq->resultado);
         }
 
         borrarReg(n->izq, n->dcha);
@@ -572,15 +580,16 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         }
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
-            fprintf(yyout, "c.lt.s $f%d, $f%d         # Comparar si $f%d < $f%d\n",
-                    n->izq->resultado, n->dcha->resultado,
-                    n->izq->resultado, n->dcha->resultado);
-            fprintf(yyout, "bc1f label_true_%d        # Si el resultado de la comparación es falso (>=), saltar a label_true_%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "li $t%d, 0                # Si no, almacenar 0 (falso) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "j label_end_%d            # Saltar a la etiqueta de finalización\n", n->resultado);
-            fprintf(yyout, "label_true_%d:            # Etiqueta si la comparación es verdadera\n", n->resultado);
-            fprintf(yyout, "li $t%d, 1                # Almacenar 1 (verdadero) en $t%d\n", n->resultado, n->resultado);
-            fprintf(yyout, "label_end_%d:             # Etiqueta de finalización\n", n->resultado);
+            fprintf(yyout, "c.le.s $f%d, $f%d\n", n->dcha->resultado, n->izq->resultado);
+            fprintf(yyout, "bc1t es_mayor_o_igual_%d\n", n->izq->resultado);
+            fprintf(yyout, "nop\n");
+            fprintf(yyout, "li $t0, 0\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "j fin_mayor_o_igual_%d\n", n->izq->resultado);
+            fprintf(yyout, "es_mayor_o_igual_%d:\n", n->izq->resultado);
+            fprintf(yyout, "li $t0, 1065353216\n");
+            fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
+            fprintf(yyout, "fin_mayor_o_igual_%d:\n", n->izq->resultado);
         }
 
         borrarReg(n->izq, n->dcha);
@@ -645,8 +654,10 @@ funcionImprimir(struct ast *n)
     else if (strcmp(n->tipo, "string") == 0)
     {
         // Imprimir carácter
-        fprintf(yyout, "li $v0, 11\n");                   // Código de sistema para imprimir carácter
-        fprintf(yyout, "move $a0, $t%d\n", n->resultado); // Mover el resultado al registro $a0
+        fprintf(yyout, "li $v0, 4\n");                   // Código de sistema para imprimir cadena
+        fprintf(yyout, "move $a0, $t%d\n", n->resultado); // Mover el puntero de la cadena resultante al registro $a0
+        // fprintf(yyout, "li $v0, 11\n");                   // Código de sistema para imprimir carácter
+        // fprintf(yyout, "move $a0, $t%d\n", n->resultado); // Mover el resultado al registro $a0
     }
     else if (strcmp(n->tipo, "bool") == 0)
     {
