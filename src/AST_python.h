@@ -646,25 +646,37 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 25: // For
     {
         printf("25\n");
-        int etiqueta = contadorEtiquetaLocal;
-        contadorEtiquetaLocal++;
+        // Generar etiquetas únicas para las ramas del for
+        int etiquetaInicioFor = contadorEtiquetaLocal++;
+        int etiquetaCondicionFor = contadorEtiquetaLocal++;
+        int etiquetaFinFor = contadorEtiquetaLocal++;
 
-        fprintf(yyout, "l.s $f29, zero\n"); // cargar esto al final de zero nuevamente
+        // Cuerpo del bucle (n->dcha)
         comprobarValorNodo(n->izq, contadorEtiquetaLocal);
-        fprintf(yyout, "etiqueta%d:\n", etiqueta);
-        // Comparo si el valor de f29 es menor que el valor del nodo izq
-        fprintf(yyout, "c.lt.s $f%d, $f%d\n", 29, n->izq->resultado);
-        fprintf(yyout, "  bc1f fin_bucle%d\n", etiqueta); // Si es 0, salimos del bucle
-        fprintf(yyout, "    nop\n");
 
-        comprobarValorNodo(n->dcha, 7); // Comprobamos el valor del nodo derecho
-        // Incremento el valor de f29 en 1
+        // Inicializar i a 0 en un registro temporal
+        fprintf(yyout, "li $t%d, 0                # Inicializar i a 0 en $t%d\n",
+                contadorEtiquetaLocal, contadorEtiquetaLocal);
 
-        fprintf(yyout, "l.s $f30, uno\n");
-        fprintf(yyout, "add.s $f29, $f29, $f30\n");
-        fprintf(yyout, "j etiqueta%d\n", etiqueta); // Volvemos a la etiqueta
-        fprintf(yyout, "fin_bucle%d:\n", etiqueta); // Etiqueta de fin de bucle
-        fprintf(yyout, "l.s $f29, zero\n");         // cargar esto al final de zero nuevamente
+        // Etiqueta de inicio del bucle
+        fprintf(yyout, "etiqueta_%d:\n", etiquetaInicioFor);
+
+        // Comparar i con el límite superior
+        fprintf(yyout, "bge $t%d, $t%d, etiqueta_%d # Si i >= límite, saltar a fin del bucle\n",
+                contadorEtiquetaLocal, n->izq->resultado, etiquetaFinFor);
+
+        // Cuerpo del bucle (n->dcha)
+        comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
+
+        // Incrementar i
+        fprintf(yyout, "addi $t%d, $t%d, 1       # Incrementar i\n",
+                contadorEtiquetaLocal, contadorEtiquetaLocal);
+
+        // Saltar al inicio del bucle
+        fprintf(yyout, "j etiqueta_%d             # Saltar al inicio del bucle\n", etiquetaInicioFor);
+
+        // Etiqueta de fin del bucle
+        fprintf(yyout, "etiqueta_%d:\n", etiquetaFinFor);
 
         borrarReg(n->izq, n->dcha); // borrado de registros (se ponen a true)
     }

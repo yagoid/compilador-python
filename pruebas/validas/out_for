@@ -1,63 +1,38 @@
 Archivo de salida abierto correctamente.
 
-> [TIPO] - Decimal: 4.000
-# [AST] - Registro $f0 ocupado para var_0 = 4.000
+> [TIPO] - Numero Positivo: 40
+
+# [AST] - Registro $f0 ocupado para var_0 = 40
+
 ----- Numero de linea 1 -----
 
-> [SENTENCIA] - Asignacion
-Asignado el valor 0 a la variable
-
-> [TIPO] - Numero Positivo: 2
-# [AST] - Registro $f2 ocupado para var_1 = 2
 ----- Numero de linea 2 -----
 
- VARIABLE suma
-[tSimbolos] Primera posicion libre: 1
-[tSimbolos] Primera posicion libre: 1
+> [SENTENCIA] - Asignacion
+> Asignado el valor 40 a la variable
 
-> [TIPO] - Decimal: 2.000
-# [AST] - Registro $f3 ocupado para var_2 = 2.000
-> [OPERACION] - RESTA {decimal / decimal}
+> [TIPO] - Numero Positivo: 8
+
+# [AST] - Registro $f2 ocupado para var_1 = 8
+
 ----- Numero de linea 3 -----
 
-> [SENTENCIA] - Asignacion
-Asignado el valor 0 a la variable
-> [FOR] - ESTAMOS EN UN BUCLE
------ Numero de linea 4 -----
+VARIABLE a
+[tSimbolos] Primera posicion libre: 1
+[tSimbolos] Primera posicion libre: 1
 
- VARIABLE suma
-[tSimbolos] Primera posicion libre: 2
-[tSimbolos] Primera posicion libre: 2
-
-> [TIPO] - Decimal: 1.000
-# [AST] - Registro $f8 ocupado para var_3 = 1.000
-> [OPERACION] - SUMA {decimal / decimal}
------ Numero de linea 5 -----
-
-> [SENTENCIA] - Asignacion
-Asignado el valor 0 a la variable
- VARIABLE suma
-[tSimbolos] Primera posicion libre: 3
-[tSimbolos] Primera posicion libre: 3
 > [SENTENCIA] - Imprimir
+> ----- Numero de linea 4 -----
+
+> [FOR] - ESTAMOS EN UN BUCLE
 
 Llamando a comprobarAST
 
 Nodos del arbol utilizados:
 7
-7
-7
 15
 1
 25
-1
-15
-3
-6
-1
-15
-2
-6
 1
 16
 6
