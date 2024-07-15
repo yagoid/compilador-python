@@ -2,11 +2,17 @@ Archivo de salida abierto correctamente.
 
 > [TIPO] - Numero Positivo: 6
 # [AST] - Registro $f0 ocupado para var_0 = 6
+----- Numero de linea 1 -----
+
 > [SENTENCIA] - Asignacion
 Asignado el valor 6 a la variable
 
 > [TIPO] - Numero Positivo: 0
 # [AST] - Registro $f2 ocupado para var_1 = 0
+----- Numero de linea 2 -----
+
+----- Numero de linea 3 -----
+
 > [SENTENCIA] - Asignacion
 Asignado el valor 0 a la variable
  VARIABLE a
@@ -15,7 +21,10 @@ Asignado el valor 0 a la variable
  VARIABLE b
 [tSimbolos] Primera posicion libre: 2
 [tSimbolos] Primera posicion libre: 2
-> [ERROR] - DIVISION {numero / 0}
+----- ERROR EN LA LINEA 4: > [ERROR] - DIVISION {numero / 0}
+ -----ERROR EN LA LINEA 4
+----- Numero de linea 4 -----
+
 > [SENTENCIA] - Asignacion
 Asignado el valor 6 a la variable
  VARIABLE c

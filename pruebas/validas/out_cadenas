@@ -1,42 +1,28 @@
 Archivo de salida abierto correctamente.
 
-> [TIPO] - Texto: "Hola"
-# [AST] - Registro $f0 ocupado para var_0 = "Hola"
-> [SENTENCIA] - Asignacion
-Asignado el valor "Hola" a la variable
+> [TIPO] - Texto: "Buenas "
+# [AST] - Registro $f0 ocupado para var_0 = "Buenas "
 
-> [TIPO] - Texto: " me llamo angel"
-# [AST] - Registro $f2 ocupado para var_1 = " me llamo angel"
-> [SENTENCIA] - Asignacion
-Asignado el valor " me llamo angel" a la variable
- VARIABLE a
-[tSimbolos] Primera posicion libre: 2
-[tSimbolos] Primera posicion libre: 2
- VARIABLE b
-[tSimbolos] Primera posicion libre: 2
-[tSimbolos] Primera posicion libre: 2
+> [TIPO] - Texto: "noches"
+# [AST] - Registro $f1 ocupado para var_1 = "noches"
 > [OPERACION] - SUMA {texto / texto}
+----- Numero de linea 1 -----
+
 > [SENTENCIA] - Asignacion
-Asignado el valor "Hola"" me llamo angel" a la variable
- VARIABLE c
-[tSimbolos] Primera posicion libre: 3
-[tSimbolos] Primera posicion libre: 3
+Asignado el valor "Buenas ""noches" a la variable
+ VARIABLE a
+[tSimbolos] Primera posicion libre: 1
+[tSimbolos] Primera posicion libre: 1
 > [SENTENCIA] - Imprimir
 
 Llamando a comprobarAST
 
 Nodos del arbol utilizados:
 7
-7
-7
-15
-1
-15
-1
 15
 2
-6
-6
+1
+1
 16
 6
 

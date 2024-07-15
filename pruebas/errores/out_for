@@ -1,12 +1,11 @@
 Archivo de salida abierto correctamente.
 
-> [TIPO] - Decimal: 7.500
-# [AST] - Registro $f0 ocupado para var_0 = 7.500
+> [TIPO] - Decimal: 4.000
+# [AST] - Registro $f0 ocupado para var_0 = 4.000
+----- Numero de linea 1 -----
+
 > [SENTENCIA] - Asignacion
 Asignado el valor 0 a la variable
-
-> [TIPO] - Decimal: 7.600
-# [AST] - Registro $f2 ocupado para var_1 = 7.600
-> [SENTENCIA] - Asignacion
-Asignado el valor 1610612736 a la variable
-syntax error
+ VARIABLE i
+[tSimbolos] Primera posicion libre: 1
+----- ERROR EN LA LINEA 2: syntax error -----

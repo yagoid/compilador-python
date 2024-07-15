@@ -961,7 +961,6 @@ struct ast *crearNodoTerminalBoolean(int valor)
 // METODO "crearNodoNoTerminal", crea un nuevo nodo, asignamos sus hijos y tipo, y buscamos nuevo registro
 struct ast *crearNodoNoTerminal(struct ast *izq, struct ast *dcha, int tipoNodo)
 {
-    printf("tipo nodo: %d\n", tipoNodo);
     struct ast *n = malloc(sizeof(struct ast)); // Crea un nuevo nodo
     n->izq = izq;
     n->dcha = dcha;

@@ -1,8 +1,6 @@
-a = 7.5
-b = 7.6
-
-while :
-    a = a + 0.1
-    f = 1
-    print(f)
+suma = 4.0
+for i in ra (2):
+    suma = suma - 2.0
 end
+suma = suma + 1.0
+print(suma)
