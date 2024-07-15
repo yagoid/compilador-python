@@ -25,6 +25,8 @@ bool registros[32] = {
     true, true, true, true, true, true, false, false};
 // Los registros 30 y 31 están reservados por defecto para imprimir por pantalla
 
+bool cadenaConcatenada = false;
+
 // typedef struct
 // {
 //     bool reg_v[NUM_REG_V]; // Registros para valores de retorno de funciones
@@ -96,7 +98,7 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         }
         else if (strcmp(n->tipo, "string") == 0)
         {
-            fprintf(yyout, "lb $t%d, var_%d     # Cargar var_%d en $t%d\n", n->resultado, n->nombreVar, n->nombreVar, n->resultado);
+            fprintf(yyout, "la $t%d, var_%d     # Cargar var_%d en $t%d\n", n->resultado, n->nombreVar, n->nombreVar, n->resultado);
         }
         else if (strcmp(n->tipo, "boolean") == 0)
         {
@@ -121,27 +123,32 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         }
         else if (strcmp(n->izq->tipo, "string") == 0)
         {
-            // Concatenar la primera cadena al destino
-            fprintf(yyout, "concat_strings_%d:\n", n->resultado);
-            fprintf(yyout, "lb $t0, 0($t%d)             # Cargar un byte de la primera cadena\n", n->izq->resultado);
-            fprintf(yyout, "beqz $t0, copy_second_%d    # Si es el fin de la cadena (NUL), ir a copiar la segunda cadena\n", n->resultado);
-            fprintf(yyout, "sb $t0, 0($t%d)             # Almacenar el byte en el destino\n", n->resultado);
-            fprintf(yyout, "addi $t%d, $t%d, 1          # Incrementar el puntero de la primera cadena\n", n->izq->resultado, n->izq->resultado);
-            fprintf(yyout, "addi $t%d, $t%d, 1          # Incrementar el puntero del destino\n", n->resultado, n->resultado);
-            fprintf(yyout, "j concat_strings_%d         # Repetir el bucle\n", n->resultado);
+            // registro t6 para el puntero de la cadena
+            fprintf(yyout, "la $s0, resultado\n");
 
-            // Copiar la segunda cadena al destino
-            fprintf(yyout, "copy_second_%d:\n", n->resultado);
-            fprintf(yyout, "lb $t0, 0($t%d)             # Cargar un byte de la segunda cadena\n", n->dcha->resultado);
-            fprintf(yyout, "beqz $t0, end_concat_%d     # Si es el fin de la cadena (NUL), terminar la concatenación\n", n->resultado);
-            fprintf(yyout, "sb $t0, 0($t%d)             # Almacenar el byte en el destino\n", n->resultado);
-            fprintf(yyout, "addi $t%d, $t%d, 1          # Incrementar el puntero de la segunda cadena\n", n->dcha->resultado, n->dcha->resultado);
-            fprintf(yyout, "addi $t%d, $t%d, 1          # Incrementar el puntero del destino\n", n->resultado, n->resultado);
-            fprintf(yyout, "j copy_second_%d            # Repetir el bucle\n", n->resultado);
+            fprintf(yyout, "cadena_%d: \n", n->izq->resultado);
+            fprintf(yyout, "  lb $s1, 0($t%d)\n", n->izq->resultado);
+            fprintf(yyout, "  beqz $s1, finCadena_%d\n", n->izq->resultado);
+            fprintf(yyout, "  sb $s1, 0($s0)\n");
+            fprintf(yyout, "  addi $s0, $s0, 1\n");
+            fprintf(yyout, "  addi $t%d, $t%d, 1\n", n->izq->resultado, n->izq->resultado);
+            fprintf(yyout, "  j cadena_%d\n", n->izq->resultado);
 
-            // Finalizar la concatenación
-            fprintf(yyout, "end_concat_%d:\n", n->resultado);
-            fprintf(yyout, "sb $zero, 0($t%d)           # Almacenar el carácter NUL al final de la cadena concatenada\n", n->resultado);
+            fprintf(yyout, "finCadena_%d: \n", n->izq->resultado);
+            fprintf(yyout, "  la $t%d, var_%d\n", n->dcha->resultado, n->dcha->resultado);
+
+            fprintf(yyout, "cadena_%d: \n", n->dcha->resultado);
+            fprintf(yyout, "  lb $s1, 0($t%d)\n", n->dcha->resultado);
+            fprintf(yyout, "  beqz $s1, fin_%d\n", n->dcha->resultado);
+            fprintf(yyout, "  sb $s1, 0($s0)\n");
+            fprintf(yyout, "  addi $s0, $s0, 1\n");
+            fprintf(yyout, "  addi $t%d, $t%d, 1\n", n->dcha->resultado, n->dcha->resultado);
+            fprintf(yyout, "  j cadena_%d\n", n->dcha->resultado);
+
+            fprintf(yyout, "fin_%d: \n", n->dcha->resultado);
+            fprintf(yyout, "  sb $zero, 0($s0)\n"); // Fin de la cadena n->resultado);
+
+            cadenaConcatenada = true;
         }
         borrarReg(n->izq, n->dcha);
         break;
@@ -612,6 +619,32 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 24: // Comentario (no hace nada)
         break;
 
+    case 25: // Comentario (no hace nada)
+    {
+        int etiqueta = contadorEtiquetaLocal;
+        contadorEtiquetaLocal++;
+
+        fprintf(yyout, "l.s $f29, zero\n"); // cargar esto al final de zero nuevamente
+        comprobarValorNodo(n->izq, contadorEtiquetaLocal).valor;
+        fprintf(yyout, "etiqueta%d:\n", etiqueta);
+        // Comparo si el valor de f29 es menor que el valor del nodo izq
+        fprintf(yyout, "c.lt.s $f%d, $f%d\n", 29, n->izq->resultado);
+        fprintf(yyout, "  bc1f fin_bucle%d\n", etiqueta); // Si es 0, salimos del bucle
+        fprintf(yyout, "    nop\n");
+
+        comprobarValorNodo(n->dcha, 7); // Comprobamos el valor del nodo derecho
+        // Incremento el valor de f29 en 1
+
+        fprintf(yyout, "l.s $f30, uno\n");
+        fprintf(yyout, "add.s $f29, $f29, $f30\n");
+        fprintf(yyout, "j etiqueta%d\n", etiqueta); // Volvemos a la etiqueta
+        fprintf(yyout, "fin_bucle%d:\n", etiqueta); // Etiqueta de fin de bucle
+        fprintf(yyout, "l.s $f29, zero\n");         // cargar esto al final de zero nuevamente
+
+        borrarReg(n->izq, n->dcha); // borrado de registros (se ponen a true)
+    }
+    break;
+
     default: // Nodo no reconocido, manejo de errores
         gestionarError("Error: Tipo de nodo no reconocido.");
         break;
@@ -658,8 +691,18 @@ funcionImprimir(struct ast *n)
     else if (strcmp(n->tipo, "string") == 0)
     {
         // Imprimir carácter
-        fprintf(yyout, "li $v0, 4\n");                    // Código de sistema para imprimir cadena
-        fprintf(yyout, "move $a0, $t%d\n", n->resultado); // Mover el puntero de la cadena resultante al registro $a0
+        fprintf(yyout, "li $v0, 4\n"); // Código de sistema para imprimir cadena
+
+        if (cadenaConcatenada)
+        {
+            fprintf(yyout, "la $a0, resultado\n");
+        }
+        else
+        {
+            fprintf(yyout, "la $a0, var_%d\n", n->resultado); // Mover del registro n al registro 30 (es el que empleamos para imprimir)
+        }
+
+        fprintf(yyout, "addi $v0, $0, 4  #Movemos el registro 12 al 30 iniciado a false\n");
         // fprintf(yyout, "li $v0, 11\n");                   // Código de sistema para imprimir carácter
         // fprintf(yyout, "move $a0, $t%d\n", n->resultado); // Mover el resultado al registro $a0
     }
@@ -681,6 +724,8 @@ void imprimirVariables()
     fprintf(yyout, ".data\n");
     fprintf(yyout, "saltoLinea: .asciiz \"\\n\"\n"); // Variable salto de linea
     fprintf(yyout, "zero: .float 0.0\n");            // Se inserta una variable auxiliar var_0 con valor 0.000
+    fprintf(yyout, "uno: .float 1.0\n");             // Se inserta una variable auxiliar var_0 con valor 1.000
+    fprintf(yyout, "resultado: .space 100\n");
     // Bucle que recorre el array de variables y las imprime en el archivo .asm
     for (int i = 0; i < 64; i++)
     {
