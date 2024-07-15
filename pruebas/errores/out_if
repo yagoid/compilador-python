@@ -2,11 +2,17 @@ Archivo de salida abierto correctamente.
 
 > [TIPO] - Numero Positivo: 7
 # [AST] - Registro $f0 ocupado para var_0 = 7
+----- Numero de linea 1 -----
+
 > [SENTENCIA] - Asignacion
 Asignado el valor 7 a la variable
 
 > [TIPO] - Numero Positivo: 8
 # [AST] - Registro $f2 ocupado para var_1 = 8
+----- Numero de linea 2 -----
+
+----- Numero de linea 3 -----
+
 > [SENTENCIA] - Asignacion
 Asignado el valor 8 a la variable
  VARIABLE a
@@ -17,4 +23,6 @@ Asignado el valor 8 a la variable
 [tSimbolos] Primera posicion libre: 2
 > [COMPARACION] - MAYOR_QUE {numero / numero}
 Falso 7 no es mayor que 0
-syntax error
+----- Numero de linea 4 -----
+
+----- ERROR EN LA LINEA 5: syntax error -----

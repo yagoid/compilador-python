@@ -1,12 +1,16 @@
-Archivo de salida abierto correctamente.
-
 > [TIPO] - Texto: "Hola"
 # [AST] - Registro $f0 ocupado para var_0 = "Hola"
+----- Numero de linea 1 -----
+
 > [SENTENCIA] - Asignacion
 Asignado el valor "Hola" a la variable
 
 > [TIPO] - Numero Positivo: 6
 # [AST] - Registro $f2 ocupado para var_1 = 6
+----- Numero de linea 2 -----
+
+----- Numero de linea 3 -----
+
 > [SENTENCIA] - Asignacion
 Asignado el valor 6 a la variable
  VARIABLE a
@@ -15,7 +19,10 @@ Asignado el valor 6 a la variable
  VARIABLE b
 [tSimbolos] Primera posicion libre: 2
 [tSimbolos] Primera posicion libre: 2
-> [ERROR] - SUMA {string / numero}
+----- ERROR EN LA LINEA 4: > [ERROR] - SUMA {string / numero}
+ -----ERROR EN LA LINEA 4
+----- Numero de linea 4 -----
+
 > [SENTENCIA] - Asignacion
 Asignado el valor "Hola" a la variable
  VARIABLE c
