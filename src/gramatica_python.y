@@ -225,7 +225,7 @@ while:
 //-----------------------------------------------  BUCLE FOR ---------------------------------------------
 //FOR --> for E in range (E): S end
 for:
-    FOR expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END {
+    FOR variable IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END {
         printf("> [FOR] - ESTAMOS EN UN BUCLE\n");
         $$.n = crearNodoNoTerminal($6.n, $9.n, 25);
     }

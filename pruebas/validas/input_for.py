@@ -1,7 +1,6 @@
-a = 7.5
-b = 7.6
-while a < b:
-    a = a + 0.1
-    f = 1
-    print(f)
+a = 3
+for i in range (5):
+    a = a + 2
 end
+a = a - 2
+print(a)

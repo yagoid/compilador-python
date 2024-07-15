@@ -619,13 +619,13 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 24: // Comentario (no hace nada)
         break;
 
-    case 25: // Comentario (no hace nada)
+    case 25: // For
     {
         int etiqueta = contadorEtiquetaLocal;
         contadorEtiquetaLocal++;
 
         fprintf(yyout, "l.s $f29, zero\n"); // cargar esto al final de zero nuevamente
-        comprobarValorNodo(n->izq, contadorEtiquetaLocal).valor;
+        comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         fprintf(yyout, "etiqueta%d:\n", etiqueta);
         // Comparo si el valor de f29 es menor que el valor del nodo izq
         fprintf(yyout, "c.lt.s $f%d, $f%d\n", 29, n->izq->resultado);
@@ -968,7 +968,6 @@ struct ast *crearVariableTerminalDouble(double valor, int registro)
     n->valorDecimal = valor;
 
     n->resultado = registro;
-    printf("[][][][][][][registro %d\n", registro);
     return n;
 }
 
@@ -984,7 +983,6 @@ struct ast *crearVariableTerminalInt(int valor, int registro)
 
     n->resultado = registro;
 
-    printf("[][][][][][][registro %d\n", registro);
     return n;
 }
 
@@ -1000,7 +998,6 @@ struct ast *crearVariableTerminalString(const char *valor, int registro)
 
     n->valorCadena = strdup(valor); // Asigna memoria y copia el texto
     n->resultado = registro;
-    printf("[][][][][][][registro %d\n", registro);
     return n;
 }
 
@@ -1015,7 +1012,6 @@ struct ast *crearVariableTerminalBoolean(int valor, int registro)
     n->valorBoolean = valor;
 
     n->resultado = registro;
-    printf("[][][][][][][registro %d\n", registro);
     return n;
 }
 

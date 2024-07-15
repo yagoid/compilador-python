@@ -1,0 +1,1147 @@
+Terminals unused in grammar
+
+   NONE
+   AND
+   AS
+   ASSERT
+   ASYNC
+   AWAIT
+   BREAK
+   CONTINUE
+   CLASS
+   DEF
+   DEL
+   EXCEPT
+   FINALLY
+   FROM
+   GLOBAL
+   IMPORT
+   IS
+   LAMBDA
+   NONLOCAL
+   NOT
+   OR
+   PASS
+   RAISE
+   RETURN
+   TRY
+   WITH
+   YIELD
+   CADENA
+   VECTOR
+   LISTA
+   TUPLA
+   SET
+   DICT
+   INT
+   FLOAT
+   COMPLEX
+   BOOLEAN
+   MODULO
+   AUMENTAR_VALOR
+
+
+Grammar
+
+    0 $accept: codigo $end
+
+    1 codigo: sentencias
+
+    2 sentencias: sentencia
+    3           | sentencias sentencia
+
+    4 sentencia: asignacion
+    5          | imprimir
+    6          | if
+    7          | while
+    8          | for
+
+    9 asignacion: VARIABLE ASIGNACION expresion
+
+   10 if: IF expresion DOS_PUNTOS sentencias rescursivo_if
+
+   11 rescursivo_if: ELIF expresion DOS_PUNTOS sentencias rescursivo_if
+   12              | ELSE DOS_PUNTOS sentencias rescursivo_if
+   13              | END
+
+   14 while: WHILE expresion DOS_PUNTOS sentencias END
+
+   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+
+   16 expresion: expresion SUMA tipos
+   17          | expresion RESTA tipos
+   18          | expresion MULTIPLICACION tipos
+   19          | expresion DIVISION tipos
+   20          | expresion IGUAL_QUE tipos
+   21          | expresion DISTINTO_QUE tipos
+   22          | expresion MENOR_QUE tipos
+   23          | expresion MENOR_IGUAL_QUE tipos
+   24          | expresion MAYOR_QUE tipos
+   25          | expresion MAYOR_IGUAL_QUE tipos
+   26          | tipos
+
+   27 tipos: VARIABLE
+   28      | NUMERO
+   29      | DECIMAL
+   30      | STRING
+   31      | TRUE
+   32      | FALSE
+
+   33 imprimir: IMPRIMIR PARENTESIS_IZQ expresion PARENTESIS_DER
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+FALSE (258) 32
+NONE (259)
+TRUE (260) 31
+AND (261)
+AS (262)
+ASSERT (263)
+ASYNC (264)
+AWAIT (265)
+BREAK (266)
+CONTINUE (267)
+CLASS (268)
+DEF (269)
+DEL (270)
+ELIF (271) 11
+ELSE (272) 12
+EXCEPT (273)
+FINALLY (274)
+FOR (275) 15
+FROM (276)
+GLOBAL (277)
+IF (278) 10
+IMPORT (279)
+IN (280) 15
+IS (281)
+LAMBDA (282)
+NONLOCAL (283)
+NOT (284)
+OR (285)
+PASS (286)
+RAISE (287)
+RETURN (288)
+TRY (289)
+WHILE (290) 14
+WITH (291)
+YIELD (292)
+END (293) 13 14 15
+IMPRIMIR (294) 33
+CADENA (295)
+VECTOR (296)
+LISTA (297)
+TUPLA (298)
+SET (299)
+DICT (300)
+INT (301)
+FLOAT (302)
+COMPLEX (303)
+BOOLEAN (304)
+RANGE (305) 15
+SUMA (306) 16
+RESTA (307) 17
+MULTIPLICACION (308) 18
+DIVISION (309) 19
+MODULO (310)
+MENOR_QUE (311) 22
+MAYOR_QUE (312) 24
+AUMENTAR_VALOR (313)
+IGUAL_QUE (314) 20
+DISTINTO_QUE (315) 21
+ASIGNACION (316) 9
+PARENTESIS_IZQ (317) 15 33
+PARENTESIS_DER (318) 15 33
+DOS_PUNTOS (319) 10 11 12 14 15
+MENOR_IGUAL_QUE (320) 23
+MAYOR_IGUAL_QUE (321) 25
+NUMERO (322) 28
+DECIMAL (323) 29
+VARIABLE (324) 9 27
+STRING (325) 30
+
+
+Nonterminals, with rules where they appear
+
+$accept (71)
+    on left: 0
+codigo (72)
+    on left: 1, on right: 0
+sentencias (73)
+    on left: 2 3, on right: 1 3 10 11 12 14 15
+sentencia (74)
+    on left: 4 5 6 7 8, on right: 2 3
+asignacion (75)
+    on left: 9, on right: 4
+if (76)
+    on left: 10, on right: 6
+rescursivo_if (77)
+    on left: 11 12 13, on right: 10 11 12
+while (78)
+    on left: 14, on right: 7
+for (79)
+    on left: 15, on right: 8
+expresion (80)
+    on left: 16 17 18 19 20 21 22 23 24 25 26, on right: 9 10 11 14
+    15 16 17 18 19 20 21 22 23 24 25 33
+tipos (81)
+    on left: 27 28 29 30 31 32, on right: 16 17 18 19 20 21 22 23 24
+    25 26
+imprimir (82)
+    on left: 33, on right: 5
+
+
+state 0
+
+    0 $accept: . codigo $end
+
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    codigo      go to state 6
+    sentencias  go to state 7
+    sentencia   go to state 8
+    asignacion  go to state 9
+    if          go to state 10
+    while       go to state 11
+    for         go to state 12
+    imprimir    go to state 13
+
+
+state 1
+
+   15 for: FOR . expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    expresion  go to state 20
+    tipos      go to state 21
+
+
+state 2
+
+   10 if: IF . expresion DOS_PUNTOS sentencias rescursivo_if
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    expresion  go to state 22
+    tipos      go to state 21
+
+
+state 3
+
+   14 while: WHILE . expresion DOS_PUNTOS sentencias END
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    expresion  go to state 23
+    tipos      go to state 21
+
+
+state 4
+
+   33 imprimir: IMPRIMIR . PARENTESIS_IZQ expresion PARENTESIS_DER
+
+    PARENTESIS_IZQ  shift, and go to state 24
+
+
+state 5
+
+    9 asignacion: VARIABLE . ASIGNACION expresion
+
+    ASIGNACION  shift, and go to state 25
+
+
+state 6
+
+    0 $accept: codigo . $end
+
+    $end  shift, and go to state 26
+
+
+state 7
+
+    1 codigo: sentencias .
+    3 sentencias: sentencias . sentencia
+
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    $default  reduce using rule 1 (codigo)
+
+    sentencia   go to state 27
+    asignacion  go to state 9
+    if          go to state 10
+    while       go to state 11
+    for         go to state 12
+    imprimir    go to state 13
+
+
+state 8
+
+    2 sentencias: sentencia .
+
+    $default  reduce using rule 2 (sentencias)
+
+
+state 9
+
+    4 sentencia: asignacion .
+
+    $default  reduce using rule 4 (sentencia)
+
+
+state 10
+
+    6 sentencia: if .
+
+    $default  reduce using rule 6 (sentencia)
+
+
+state 11
+
+    7 sentencia: while .
+
+    $default  reduce using rule 7 (sentencia)
+
+
+state 12
+
+    8 sentencia: for .
+
+    $default  reduce using rule 8 (sentencia)
+
+
+state 13
+
+    5 sentencia: imprimir .
+
+    $default  reduce using rule 5 (sentencia)
+
+
+state 14
+
+   32 tipos: FALSE .
+
+    $default  reduce using rule 32 (tipos)
+
+
+state 15
+
+   31 tipos: TRUE .
+
+    $default  reduce using rule 31 (tipos)
+
+
+state 16
+
+   28 tipos: NUMERO .
+
+    $default  reduce using rule 28 (tipos)
+
+
+state 17
+
+   29 tipos: DECIMAL .
+
+    $default  reduce using rule 29 (tipos)
+
+
+state 18
+
+   27 tipos: VARIABLE .
+
+    $default  reduce using rule 27 (tipos)
+
+
+state 19
+
+   30 tipos: STRING .
+
+    $default  reduce using rule 30 (tipos)
+
+
+state 20
+
+   15 for: FOR expresion . IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+   16 expresion: expresion . SUMA tipos
+   17          | expresion . RESTA tipos
+   18          | expresion . MULTIPLICACION tipos
+   19          | expresion . DIVISION tipos
+   20          | expresion . IGUAL_QUE tipos
+   21          | expresion . DISTINTO_QUE tipos
+   22          | expresion . MENOR_QUE tipos
+   23          | expresion . MENOR_IGUAL_QUE tipos
+   24          | expresion . MAYOR_QUE tipos
+   25          | expresion . MAYOR_IGUAL_QUE tipos
+
+    IN               shift, and go to state 28
+    SUMA             shift, and go to state 29
+    RESTA            shift, and go to state 30
+    MULTIPLICACION   shift, and go to state 31
+    DIVISION         shift, and go to state 32
+    MENOR_QUE        shift, and go to state 33
+    MAYOR_QUE        shift, and go to state 34
+    IGUAL_QUE        shift, and go to state 35
+    DISTINTO_QUE     shift, and go to state 36
+    MENOR_IGUAL_QUE  shift, and go to state 37
+    MAYOR_IGUAL_QUE  shift, and go to state 38
+
+
+state 21
+
+   26 expresion: tipos .
+
+    $default  reduce using rule 26 (expresion)
+
+
+state 22
+
+   10 if: IF expresion . DOS_PUNTOS sentencias rescursivo_if
+   16 expresion: expresion . SUMA tipos
+   17          | expresion . RESTA tipos
+   18          | expresion . MULTIPLICACION tipos
+   19          | expresion . DIVISION tipos
+   20          | expresion . IGUAL_QUE tipos
+   21          | expresion . DISTINTO_QUE tipos
+   22          | expresion . MENOR_QUE tipos
+   23          | expresion . MENOR_IGUAL_QUE tipos
+   24          | expresion . MAYOR_QUE tipos
+   25          | expresion . MAYOR_IGUAL_QUE tipos
+
+    SUMA             shift, and go to state 29
+    RESTA            shift, and go to state 30
+    MULTIPLICACION   shift, and go to state 31
+    DIVISION         shift, and go to state 32
+    MENOR_QUE        shift, and go to state 33
+    MAYOR_QUE        shift, and go to state 34
+    IGUAL_QUE        shift, and go to state 35
+    DISTINTO_QUE     shift, and go to state 36
+    DOS_PUNTOS       shift, and go to state 39
+    MENOR_IGUAL_QUE  shift, and go to state 37
+    MAYOR_IGUAL_QUE  shift, and go to state 38
+
+
+state 23
+
+   14 while: WHILE expresion . DOS_PUNTOS sentencias END
+   16 expresion: expresion . SUMA tipos
+   17          | expresion . RESTA tipos
+   18          | expresion . MULTIPLICACION tipos
+   19          | expresion . DIVISION tipos
+   20          | expresion . IGUAL_QUE tipos
+   21          | expresion . DISTINTO_QUE tipos
+   22          | expresion . MENOR_QUE tipos
+   23          | expresion . MENOR_IGUAL_QUE tipos
+   24          | expresion . MAYOR_QUE tipos
+   25          | expresion . MAYOR_IGUAL_QUE tipos
+
+    SUMA             shift, and go to state 29
+    RESTA            shift, and go to state 30
+    MULTIPLICACION   shift, and go to state 31
+    DIVISION         shift, and go to state 32
+    MENOR_QUE        shift, and go to state 33
+    MAYOR_QUE        shift, and go to state 34
+    IGUAL_QUE        shift, and go to state 35
+    DISTINTO_QUE     shift, and go to state 36
+    DOS_PUNTOS       shift, and go to state 40
+    MENOR_IGUAL_QUE  shift, and go to state 37
+    MAYOR_IGUAL_QUE  shift, and go to state 38
+
+
+state 24
+
+   33 imprimir: IMPRIMIR PARENTESIS_IZQ . expresion PARENTESIS_DER
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    expresion  go to state 41
+    tipos      go to state 21
+
+
+state 25
+
+    9 asignacion: VARIABLE ASIGNACION . expresion
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    expresion  go to state 42
+    tipos      go to state 21
+
+
+state 26
+
+    0 $accept: codigo $end .
+
+    $default  accept
+
+
+state 27
+
+    3 sentencias: sentencias sentencia .
+
+    $default  reduce using rule 3 (sentencias)
+
+
+state 28
+
+   15 for: FOR expresion IN . RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+
+    RANGE  shift, and go to state 43
+
+
+state 29
+
+   16 expresion: expresion SUMA . tipos
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    tipos  go to state 44
+
+
+state 30
+
+   17 expresion: expresion RESTA . tipos
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    tipos  go to state 45
+
+
+state 31
+
+   18 expresion: expresion MULTIPLICACION . tipos
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    tipos  go to state 46
+
+
+state 32
+
+   19 expresion: expresion DIVISION . tipos
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    tipos  go to state 47
+
+
+state 33
+
+   22 expresion: expresion MENOR_QUE . tipos
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    tipos  go to state 48
+
+
+state 34
+
+   24 expresion: expresion MAYOR_QUE . tipos
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    tipos  go to state 49
+
+
+state 35
+
+   20 expresion: expresion IGUAL_QUE . tipos
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    tipos  go to state 50
+
+
+state 36
+
+   21 expresion: expresion DISTINTO_QUE . tipos
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    tipos  go to state 51
+
+
+state 37
+
+   23 expresion: expresion MENOR_IGUAL_QUE . tipos
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    tipos  go to state 52
+
+
+state 38
+
+   25 expresion: expresion MAYOR_IGUAL_QUE . tipos
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    tipos  go to state 53
+
+
+state 39
+
+   10 if: IF expresion DOS_PUNTOS . sentencias rescursivo_if
+
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    sentencias  go to state 54
+    sentencia   go to state 8
+    asignacion  go to state 9
+    if          go to state 10
+    while       go to state 11
+    for         go to state 12
+    imprimir    go to state 13
+
+
+state 40
+
+   14 while: WHILE expresion DOS_PUNTOS . sentencias END
+
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    sentencias  go to state 55
+    sentencia   go to state 8
+    asignacion  go to state 9
+    if          go to state 10
+    while       go to state 11
+    for         go to state 12
+    imprimir    go to state 13
+
+
+state 41
+
+   16 expresion: expresion . SUMA tipos
+   17          | expresion . RESTA tipos
+   18          | expresion . MULTIPLICACION tipos
+   19          | expresion . DIVISION tipos
+   20          | expresion . IGUAL_QUE tipos
+   21          | expresion . DISTINTO_QUE tipos
+   22          | expresion . MENOR_QUE tipos
+   23          | expresion . MENOR_IGUAL_QUE tipos
+   24          | expresion . MAYOR_QUE tipos
+   25          | expresion . MAYOR_IGUAL_QUE tipos
+   33 imprimir: IMPRIMIR PARENTESIS_IZQ expresion . PARENTESIS_DER
+
+    SUMA             shift, and go to state 29
+    RESTA            shift, and go to state 30
+    MULTIPLICACION   shift, and go to state 31
+    DIVISION         shift, and go to state 32
+    MENOR_QUE        shift, and go to state 33
+    MAYOR_QUE        shift, and go to state 34
+    IGUAL_QUE        shift, and go to state 35
+    DISTINTO_QUE     shift, and go to state 36
+    PARENTESIS_DER   shift, and go to state 56
+    MENOR_IGUAL_QUE  shift, and go to state 37
+    MAYOR_IGUAL_QUE  shift, and go to state 38
+
+
+state 42
+
+    9 asignacion: VARIABLE ASIGNACION expresion .
+   16 expresion: expresion . SUMA tipos
+   17          | expresion . RESTA tipos
+   18          | expresion . MULTIPLICACION tipos
+   19          | expresion . DIVISION tipos
+   20          | expresion . IGUAL_QUE tipos
+   21          | expresion . DISTINTO_QUE tipos
+   22          | expresion . MENOR_QUE tipos
+   23          | expresion . MENOR_IGUAL_QUE tipos
+   24          | expresion . MAYOR_QUE tipos
+   25          | expresion . MAYOR_IGUAL_QUE tipos
+
+    SUMA             shift, and go to state 29
+    RESTA            shift, and go to state 30
+    MULTIPLICACION   shift, and go to state 31
+    DIVISION         shift, and go to state 32
+    MENOR_QUE        shift, and go to state 33
+    MAYOR_QUE        shift, and go to state 34
+    IGUAL_QUE        shift, and go to state 35
+    DISTINTO_QUE     shift, and go to state 36
+    MENOR_IGUAL_QUE  shift, and go to state 37
+    MAYOR_IGUAL_QUE  shift, and go to state 38
+
+    $default  reduce using rule 9 (asignacion)
+
+
+state 43
+
+   15 for: FOR expresion IN RANGE . PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+
+    PARENTESIS_IZQ  shift, and go to state 57
+
+
+state 44
+
+   16 expresion: expresion SUMA tipos .
+
+    $default  reduce using rule 16 (expresion)
+
+
+state 45
+
+   17 expresion: expresion RESTA tipos .
+
+    $default  reduce using rule 17 (expresion)
+
+
+state 46
+
+   18 expresion: expresion MULTIPLICACION tipos .
+
+    $default  reduce using rule 18 (expresion)
+
+
+state 47
+
+   19 expresion: expresion DIVISION tipos .
+
+    $default  reduce using rule 19 (expresion)
+
+
+state 48
+
+   22 expresion: expresion MENOR_QUE tipos .
+
+    $default  reduce using rule 22 (expresion)
+
+
+state 49
+
+   24 expresion: expresion MAYOR_QUE tipos .
+
+    $default  reduce using rule 24 (expresion)
+
+
+state 50
+
+   20 expresion: expresion IGUAL_QUE tipos .
+
+    $default  reduce using rule 20 (expresion)
+
+
+state 51
+
+   21 expresion: expresion DISTINTO_QUE tipos .
+
+    $default  reduce using rule 21 (expresion)
+
+
+state 52
+
+   23 expresion: expresion MENOR_IGUAL_QUE tipos .
+
+    $default  reduce using rule 23 (expresion)
+
+
+state 53
+
+   25 expresion: expresion MAYOR_IGUAL_QUE tipos .
+
+    $default  reduce using rule 25 (expresion)
+
+
+state 54
+
+    3 sentencias: sentencias . sentencia
+   10 if: IF expresion DOS_PUNTOS sentencias . rescursivo_if
+
+    ELIF      shift, and go to state 58
+    ELSE      shift, and go to state 59
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    END       shift, and go to state 60
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    sentencia      go to state 27
+    asignacion     go to state 9
+    if             go to state 10
+    rescursivo_if  go to state 61
+    while          go to state 11
+    for            go to state 12
+    imprimir       go to state 13
+
+
+state 55
+
+    3 sentencias: sentencias . sentencia
+   14 while: WHILE expresion DOS_PUNTOS sentencias . END
+
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    END       shift, and go to state 62
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    sentencia   go to state 27
+    asignacion  go to state 9
+    if          go to state 10
+    while       go to state 11
+    for         go to state 12
+    imprimir    go to state 13
+
+
+state 56
+
+   33 imprimir: IMPRIMIR PARENTESIS_IZQ expresion PARENTESIS_DER .
+
+    $default  reduce using rule 33 (imprimir)
+
+
+state 57
+
+   15 for: FOR expresion IN RANGE PARENTESIS_IZQ . expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    expresion  go to state 63
+    tipos      go to state 21
+
+
+state 58
+
+   11 rescursivo_if: ELIF . expresion DOS_PUNTOS sentencias rescursivo_if
+
+    FALSE     shift, and go to state 14
+    TRUE      shift, and go to state 15
+    NUMERO    shift, and go to state 16
+    DECIMAL   shift, and go to state 17
+    VARIABLE  shift, and go to state 18
+    STRING    shift, and go to state 19
+
+    expresion  go to state 64
+    tipos      go to state 21
+
+
+state 59
+
+   12 rescursivo_if: ELSE . DOS_PUNTOS sentencias rescursivo_if
+
+    DOS_PUNTOS  shift, and go to state 65
+
+
+state 60
+
+   13 rescursivo_if: END .
+
+    $default  reduce using rule 13 (rescursivo_if)
+
+
+state 61
+
+   10 if: IF expresion DOS_PUNTOS sentencias rescursivo_if .
+
+    $default  reduce using rule 10 (if)
+
+
+state 62
+
+   14 while: WHILE expresion DOS_PUNTOS sentencias END .
+
+    $default  reduce using rule 14 (while)
+
+
+state 63
+
+   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion . PARENTESIS_DER DOS_PUNTOS sentencias END
+   16 expresion: expresion . SUMA tipos
+   17          | expresion . RESTA tipos
+   18          | expresion . MULTIPLICACION tipos
+   19          | expresion . DIVISION tipos
+   20          | expresion . IGUAL_QUE tipos
+   21          | expresion . DISTINTO_QUE tipos
+   22          | expresion . MENOR_QUE tipos
+   23          | expresion . MENOR_IGUAL_QUE tipos
+   24          | expresion . MAYOR_QUE tipos
+   25          | expresion . MAYOR_IGUAL_QUE tipos
+
+    SUMA             shift, and go to state 29
+    RESTA            shift, and go to state 30
+    MULTIPLICACION   shift, and go to state 31
+    DIVISION         shift, and go to state 32
+    MENOR_QUE        shift, and go to state 33
+    MAYOR_QUE        shift, and go to state 34
+    IGUAL_QUE        shift, and go to state 35
+    DISTINTO_QUE     shift, and go to state 36
+    PARENTESIS_DER   shift, and go to state 66
+    MENOR_IGUAL_QUE  shift, and go to state 37
+    MAYOR_IGUAL_QUE  shift, and go to state 38
+
+
+state 64
+
+   11 rescursivo_if: ELIF expresion . DOS_PUNTOS sentencias rescursivo_if
+   16 expresion: expresion . SUMA tipos
+   17          | expresion . RESTA tipos
+   18          | expresion . MULTIPLICACION tipos
+   19          | expresion . DIVISION tipos
+   20          | expresion . IGUAL_QUE tipos
+   21          | expresion . DISTINTO_QUE tipos
+   22          | expresion . MENOR_QUE tipos
+   23          | expresion . MENOR_IGUAL_QUE tipos
+   24          | expresion . MAYOR_QUE tipos
+   25          | expresion . MAYOR_IGUAL_QUE tipos
+
+    SUMA             shift, and go to state 29
+    RESTA            shift, and go to state 30
+    MULTIPLICACION   shift, and go to state 31
+    DIVISION         shift, and go to state 32
+    MENOR_QUE        shift, and go to state 33
+    MAYOR_QUE        shift, and go to state 34
+    IGUAL_QUE        shift, and go to state 35
+    DISTINTO_QUE     shift, and go to state 36
+    DOS_PUNTOS       shift, and go to state 67
+    MENOR_IGUAL_QUE  shift, and go to state 37
+    MAYOR_IGUAL_QUE  shift, and go to state 38
+
+
+state 65
+
+   12 rescursivo_if: ELSE DOS_PUNTOS . sentencias rescursivo_if
+
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    sentencias  go to state 68
+    sentencia   go to state 8
+    asignacion  go to state 9
+    if          go to state 10
+    while       go to state 11
+    for         go to state 12
+    imprimir    go to state 13
+
+
+state 66
+
+   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER . DOS_PUNTOS sentencias END
+
+    DOS_PUNTOS  shift, and go to state 69
+
+
+state 67
+
+   11 rescursivo_if: ELIF expresion DOS_PUNTOS . sentencias rescursivo_if
+
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    sentencias  go to state 70
+    sentencia   go to state 8
+    asignacion  go to state 9
+    if          go to state 10
+    while       go to state 11
+    for         go to state 12
+    imprimir    go to state 13
+
+
+state 68
+
+    3 sentencias: sentencias . sentencia
+   12 rescursivo_if: ELSE DOS_PUNTOS sentencias . rescursivo_if
+
+    ELIF      shift, and go to state 58
+    ELSE      shift, and go to state 59
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    END       shift, and go to state 60
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    sentencia      go to state 27
+    asignacion     go to state 9
+    if             go to state 10
+    rescursivo_if  go to state 71
+    while          go to state 11
+    for            go to state 12
+    imprimir       go to state 13
+
+
+state 69
+
+   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS . sentencias END
+
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    sentencias  go to state 72
+    sentencia   go to state 8
+    asignacion  go to state 9
+    if          go to state 10
+    while       go to state 11
+    for         go to state 12
+    imprimir    go to state 13
+
+
+state 70
+
+    3 sentencias: sentencias . sentencia
+   11 rescursivo_if: ELIF expresion DOS_PUNTOS sentencias . rescursivo_if
+
+    ELIF      shift, and go to state 58
+    ELSE      shift, and go to state 59
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    END       shift, and go to state 60
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    sentencia      go to state 27
+    asignacion     go to state 9
+    if             go to state 10
+    rescursivo_if  go to state 73
+    while          go to state 11
+    for            go to state 12
+    imprimir       go to state 13
+
+
+state 71
+
+   12 rescursivo_if: ELSE DOS_PUNTOS sentencias rescursivo_if .
+
+    $default  reduce using rule 12 (rescursivo_if)
+
+
+state 72
+
+    3 sentencias: sentencias . sentencia
+   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias . END
+
+    FOR       shift, and go to state 1
+    IF        shift, and go to state 2
+    WHILE     shift, and go to state 3
+    END       shift, and go to state 74
+    IMPRIMIR  shift, and go to state 4
+    VARIABLE  shift, and go to state 5
+
+    sentencia   go to state 27
+    asignacion  go to state 9
+    if          go to state 10
+    while       go to state 11
+    for         go to state 12
+    imprimir    go to state 13
+
+
+state 73
+
+   11 rescursivo_if: ELIF expresion DOS_PUNTOS sentencias rescursivo_if .
+
+    $default  reduce using rule 11 (rescursivo_if)
+
+
+state 74
+
+   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END .
+
+    $default  reduce using rule 15 (for)
