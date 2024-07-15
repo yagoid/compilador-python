@@ -1,0 +1,29 @@
+Archivo de salida abierto correctamente.
+
+> [TIPO] - Numero Positivo: 7
+# [AST] - Registro $f0 ocupado para var_0 = 7
+> [SENTENCIA] - Asignacion
+Asignado el valor 7 a la variable
+
+> [TIPO] - Numero Positivo: 8
+# [AST] - Registro $f2 ocupado para var_1 = 8
+> [SENTENCIA] - Asignacion
+Asignado el valor 8 a la variable
+ VARIABLE a
+[tSimbolos] Primera posicion libre: 2
+[tSimbolos] Primera posicion libre: 2
+ VARIABLE b
+[tSimbolos] Primera posicion libre: 2
+[tSimbolos] Primera posicion libre: 2
+> [COMPARACION] - MAYOR_QUE {numero / numero}
+Falso 7 no es mayor que 0
+
+> [TIPO] - Numero Positivo: 8
+# [AST] - Registro $f6 ocupado para var_2 = 8
+> [SENTENCIA] - Asignacion
+Asignado el valor 8 a la variable
+ VARIABLE j
+[tSimbolos] Primera posicion libre: 3
+[tSimbolos] Primera posicion libre: 3
+> [SENTENCIA] - Imprimir
+syntax error

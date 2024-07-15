@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "gramatica_python.tab.h"
 
-int n_linea = 1; // Variable para contar el número de línea
+int num_linea = 1; // Variable para contar el número de línea
 %}
 
 %option noyywrap
@@ -50,6 +50,7 @@ with 		{return WITH; }
 yield 		{return YIELD; }
 end 		{return END; }
 print 		{return IMPRIMIR; }
+range 		{return RANGE; }
 
 str 		{return CADENA; }
 bytes 		{return VECTOR; }
@@ -90,6 +91,6 @@ bool 		{return BOOLEAN; }
 "/*"([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+"/" 	{ /* ignorar comentario varias lineas */ }
 [ \t]											{ /* ignorar tabulaciones */ }
 
-\n              { n_linea++; }
+\n              {printf("----- Numero de linea %d -----\n\n", num_linea); num_linea++; }
 
 %%
