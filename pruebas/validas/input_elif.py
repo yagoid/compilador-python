@@ -1,9 +1,11 @@
-a = 7
-b = 8
-if a > b:
-    j = 8
-    print(j)
-elif a < b: 
-    j = 9
-    print(j)
+a = 1.5
+b = 2.5
+c = 3.5
+
+if a >= 3.5:
+    print(a)
+elif a >= 1.5:
+    print(b)
+else:
+    print(c)
 end

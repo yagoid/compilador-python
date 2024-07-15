@@ -424,6 +424,10 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 17: // Comprobación igual que ( == )
     {
         printf("17\n");
+
+        int etiquetaIgual = contadorEtiquetaLocal++;
+        int etiquetaFinIgual = contadorEtiquetaLocal++;
+
         reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
@@ -439,15 +443,15 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
             fprintf(yyout, "c.eq.s $f%d, $f%d\n", n->izq->resultado, n->dcha->resultado);
-            fprintf(yyout, "bc1t son_iguales_%d\n", n->izq->resultado);
+            fprintf(yyout, "bc1t son_iguales_%d\n", etiquetaIgual);
             fprintf(yyout, "nop\n");
             fprintf(yyout, "li $t0, 0\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "j fin_igual_%d\n", n->izq->resultado);
-            fprintf(yyout, "son_iguales_%d:\n", n->izq->resultado);
+            fprintf(yyout, "j fin_igual_%d\n", etiquetaFinIgual);
+            fprintf(yyout, "son_iguales_%d:\n", etiquetaIgual);
             fprintf(yyout, "li $t0, 1065353216\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "fin_igual_%d:\n", n->izq->resultado);
+            fprintf(yyout, "fin_igual_%d:\n", etiquetaFinIgual);
         }
 
         borrarReg(n->izq, n->dcha);
@@ -457,6 +461,10 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 18: // Comprobación distinto que ( != )
     {
         printf("18\n");
+
+        int etiquetaDistinto = contadorEtiquetaLocal++;
+        int etiquetaFinDistinto = contadorEtiquetaLocal++;
+
         reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
@@ -469,15 +477,15 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
             fprintf(yyout, "c.eq.s $f%d, $f%d\n", n->izq->resultado, n->dcha->resultado);
-            fprintf(yyout, "bc1t son_distintos_%d\n", n->izq->resultado);
+            fprintf(yyout, "bc1t son_distintos_%d\n", etiquetaDistinto);
             fprintf(yyout, "nop\n");
             fprintf(yyout, "li $t0, 1065353216\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "j fin_son_distintos_%d\n", n->izq->resultado);
-            fprintf(yyout, "son_distintos_%d:\n", n->izq->resultado);
+            fprintf(yyout, "j fin_son_distintos_%d\n", etiquetaFinDistinto);
+            fprintf(yyout, "son_distintos_%d:\n", etiquetaDistinto);
             fprintf(yyout, "li $t0, 0\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "fin_son_distintos_%d:\n", n->izq->resultado);
+            fprintf(yyout, "fin_son_distintos_%d:\n", etiquetaFinDistinto);
         }
 
         borrarReg(n->izq, n->dcha);
@@ -487,6 +495,10 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 19: // Comprobación menor que ( < )
     {
         printf("19\n");
+
+        int etiquetaMenor = contadorEtiquetaLocal++;
+        int etiquetaFinMenor = contadorEtiquetaLocal++;
+
         reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
@@ -497,15 +509,15 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
             fprintf(yyout, "c.lt.s $f%d, $f%d\n", n->izq->resultado, n->dcha->resultado);
-            fprintf(yyout, "bc1t es_menor_%d\n", n->izq->resultado);
+            fprintf(yyout, "bc1t es_menor_%d\n", etiquetaMenor);
             fprintf(yyout, "nop\n");
             fprintf(yyout, "li $t0, 0\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "j fin_menor_%d\n", n->izq->resultado);
-            fprintf(yyout, "es_menor_%d:\n", n->izq->resultado);
+            fprintf(yyout, "j fin_menor_%d\n", etiquetaFinMenor);
+            fprintf(yyout, "es_menor_%d:\n", etiquetaMenor);
             fprintf(yyout, "li $t0, 1065353216\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "fin_menor_%d:\n", n->izq->resultado);
+            fprintf(yyout, "fin_menor_%d:\n", etiquetaFinMenor);
         }
 
         // fprintf(yyout, "c.lt.s $f%d, $f%d, $f%d\n", n->resultado, n->izq->resultado, n->dcha->resultado);
@@ -516,6 +528,10 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 20: // Comprobación menor igual que  ( <= )
     {
         printf("20\n");
+
+        int etiquetaMenorIgual = contadorEtiquetaLocal++;
+        int etiquetaFinMenorIgual = contadorEtiquetaLocal++;
+
         reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
@@ -530,15 +546,15 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
             fprintf(yyout, "c.le.s $f%d, $f%d\n", n->izq->resultado, n->dcha->resultado);
-            fprintf(yyout, "bc1t es_menor_o_igual_%d\n", n->izq->resultado);
+            fprintf(yyout, "bc1t es_menor_o_igual_%d\n", etiquetaMenorIgual);
             fprintf(yyout, "nop\n");
             fprintf(yyout, "li $t0, 0\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "j fin_menor_o_igual_%d\n", n->izq->resultado);
-            fprintf(yyout, "es_menor_o_igual_%d:\n", n->izq->resultado);
+            fprintf(yyout, "j fin_menor_o_igual_%d\n", etiquetaFinMenorIgual);
+            fprintf(yyout, "es_menor_o_igual_%d:\n", etiquetaMenorIgual);
             fprintf(yyout, "li $t0, 1065353216\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "fin_menor_o_igual_%d:\n", n->izq->resultado);
+            fprintf(yyout, "fin_menor_o_igual_%d:\n", etiquetaFinMenorIgual);
         }
 
         borrarReg(n->izq, n->dcha);
@@ -548,6 +564,10 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 21: // Comprobación mayor que  ( > )
     {
         printf("21\n");
+
+        int etiquetaMayor = contadorEtiquetaLocal++;
+        int etiquetaFinMayor = contadorEtiquetaLocal++;
+
         reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
@@ -560,15 +580,15 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
             fprintf(yyout, "c.lt.s $f%d, $f%d\n", n->dcha->resultado, n->izq->resultado);
-            fprintf(yyout, "bc1t es_mayor_%d\n", n->izq->resultado);
+            fprintf(yyout, "bc1t es_mayor_%d\n", etiquetaMayor);
             fprintf(yyout, "nop\n");
             fprintf(yyout, "li $t0, 0\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "j fin_mayor_%d\n", n->izq->resultado);
-            fprintf(yyout, "es_mayor_%d:\n", n->izq->resultado);
+            fprintf(yyout, "j fin_mayor_%d\n", etiquetaFinMayor);
+            fprintf(yyout, "es_mayor_%d:\n", etiquetaMayor);
             fprintf(yyout, "li $t0, 1065353216\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "fin_mayor_%d:\n", n->izq->resultado);
+            fprintf(yyout, "fin_mayor_%d:\n", etiquetaFinMayor);
         }
 
         borrarReg(n->izq, n->dcha);
@@ -578,6 +598,10 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
     case 22: // Comprobación mayor igual que ( >= )
     {
         printf("22\n");
+
+        int etiquetaMayorIgual = contadorEtiquetaLocal++;
+        int etiquetaFinMayorIgual = contadorEtiquetaLocal++;
+
         reg = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
         comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
 
@@ -592,15 +616,15 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         else if (strcmp(n->izq->tipo, "float") == 0)
         {
             fprintf(yyout, "c.le.s $f%d, $f%d\n", n->dcha->resultado, n->izq->resultado);
-            fprintf(yyout, "bc1t es_mayor_o_igual_%d\n", n->izq->resultado);
+            fprintf(yyout, "bc1t es_mayor_o_igual_%d\n", etiquetaMayorIgual);
             fprintf(yyout, "nop\n");
             fprintf(yyout, "li $t0, 0\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "j fin_mayor_o_igual_%d\n", n->izq->resultado);
-            fprintf(yyout, "es_mayor_o_igual_%d:\n", n->izq->resultado);
+            fprintf(yyout, "j fin_mayor_o_igual_%d\n", etiquetaFinMayorIgual);
+            fprintf(yyout, "es_mayor_o_igual_%d:\n", etiquetaMayorIgual);
             fprintf(yyout, "li $t0, 1065353216\n");
             fprintf(yyout, "mtc1 $t0, $f%d\n", n->resultado);
-            fprintf(yyout, "fin_mayor_o_igual_%d:\n", n->izq->resultado);
+            fprintf(yyout, "fin_mayor_o_igual_%d:\n", etiquetaFinMayorIgual);
         }
 
         borrarReg(n->izq, n->dcha);
@@ -621,6 +645,7 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
     case 25: // For
     {
+        printf("25\n");
         int etiqueta = contadorEtiquetaLocal;
         contadorEtiquetaLocal++;
 
@@ -936,6 +961,7 @@ struct ast *crearNodoTerminalBoolean(int valor)
 // METODO "crearNodoNoTerminal", crea un nuevo nodo, asignamos sus hijos y tipo, y buscamos nuevo registro
 struct ast *crearNodoNoTerminal(struct ast *izq, struct ast *dcha, int tipoNodo)
 {
+    printf("tipo nodo: %d\n", tipoNodo);
     struct ast *n = malloc(sizeof(struct ast)); // Crea un nuevo nodo
     n->izq = izq;
     n->dcha = dcha;

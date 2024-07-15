@@ -1,6 +1,6 @@
-a = 3
-for i in range (5):
-    a = a + 2
+suma = 3
+for i in range (2):
+    suma = suma - 1
 end
-a = a - 2
-print(a)
+suma = suma + 1
+print(suma)
