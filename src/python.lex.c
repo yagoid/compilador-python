@@ -1,6 +1,6 @@
-#line 2 "../src/python.lex.c"
+#line 2 "python.lex.c"
 
-#line 4 "../src/python.lex.c"
+#line 4 "python.lex.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -647,13 +647,13 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "../src/lexico_python.flex"
-#line 2 "../src/lexico_python.flex"
+#line 1 "lexico_python.flex"
+#line 2 "lexico_python.flex"
 #include <stdio.h>
 #include "gramatica_python.tab.h"
 
 int num_linea = 1; // Variable para contar el número de línea
-#line 657 "../src/python.lex.c"
+#line 657 "python.lex.c"
 
 #define INITIAL 0
 
@@ -840,10 +840,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 14 "../src/lexico_python.flex"
+#line 14 "lexico_python.flex"
 
 
-#line 847 "../src/python.lex.c"
+#line 847 "python.lex.c"
 
 	if ( !(yy_init) )
 		{
@@ -928,383 +928,383 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 16 "../src/lexico_python.flex"
+#line 16 "lexico_python.flex"
 {return FALSE; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 17 "../src/lexico_python.flex"
+#line 17 "lexico_python.flex"
 {return NONE; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 18 "../src/lexico_python.flex"
+#line 18 "lexico_python.flex"
 {return TRUE; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 19 "../src/lexico_python.flex"
+#line 19 "lexico_python.flex"
 {return AND; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 20 "../src/lexico_python.flex"
+#line 20 "lexico_python.flex"
 {return AS; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 21 "../src/lexico_python.flex"
+#line 21 "lexico_python.flex"
 {return ASSERT; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 22 "../src/lexico_python.flex"
+#line 22 "lexico_python.flex"
 {return ASYNC; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 23 "../src/lexico_python.flex"
+#line 23 "lexico_python.flex"
 {return AWAIT; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 24 "../src/lexico_python.flex"
+#line 24 "lexico_python.flex"
 {return BREAK; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 25 "../src/lexico_python.flex"
+#line 25 "lexico_python.flex"
 {return CLASS; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 26 "../src/lexico_python.flex"
+#line 26 "lexico_python.flex"
 {return CONTINUE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 27 "../src/lexico_python.flex"
+#line 27 "lexico_python.flex"
 {return DEF; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 28 "../src/lexico_python.flex"
+#line 28 "lexico_python.flex"
 {return DEL; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 29 "../src/lexico_python.flex"
+#line 29 "lexico_python.flex"
 {return ELIF; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 30 "../src/lexico_python.flex"
+#line 30 "lexico_python.flex"
 {return ELSE; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 31 "../src/lexico_python.flex"
+#line 31 "lexico_python.flex"
 {return EXCEPT; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 32 "../src/lexico_python.flex"
+#line 32 "lexico_python.flex"
 {return FINALLY; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 33 "../src/lexico_python.flex"
+#line 33 "lexico_python.flex"
 {return FOR; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 34 "../src/lexico_python.flex"
+#line 34 "lexico_python.flex"
 {return FROM; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 35 "../src/lexico_python.flex"
+#line 35 "lexico_python.flex"
 {return GLOBAL; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 36 "../src/lexico_python.flex"
+#line 36 "lexico_python.flex"
 {return IF; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 37 "../src/lexico_python.flex"
+#line 37 "lexico_python.flex"
 {return IMPORT; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 38 "../src/lexico_python.flex"
+#line 38 "lexico_python.flex"
 {return IN; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 39 "../src/lexico_python.flex"
+#line 39 "lexico_python.flex"
 {return IS; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 40 "../src/lexico_python.flex"
+#line 40 "lexico_python.flex"
 {return LAMBDA; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 41 "../src/lexico_python.flex"
+#line 41 "lexico_python.flex"
 {return NONLOCAL; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 42 "../src/lexico_python.flex"
+#line 42 "lexico_python.flex"
 {return NOT; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 43 "../src/lexico_python.flex"
+#line 43 "lexico_python.flex"
 {return OR; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 44 "../src/lexico_python.flex"
+#line 44 "lexico_python.flex"
 {return PASS; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 45 "../src/lexico_python.flex"
+#line 45 "lexico_python.flex"
 {return RAISE; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 46 "../src/lexico_python.flex"
+#line 46 "lexico_python.flex"
 {return RETURN; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 47 "../src/lexico_python.flex"
+#line 47 "lexico_python.flex"
 {return TRY; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 48 "../src/lexico_python.flex"
+#line 48 "lexico_python.flex"
 {return WHILE; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 49 "../src/lexico_python.flex"
+#line 49 "lexico_python.flex"
 {return WITH; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 50 "../src/lexico_python.flex"
+#line 50 "lexico_python.flex"
 {return YIELD; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 51 "../src/lexico_python.flex"
+#line 51 "lexico_python.flex"
 {return END; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 52 "../src/lexico_python.flex"
+#line 52 "lexico_python.flex"
 {return IMPRIMIR; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 53 "../src/lexico_python.flex"
+#line 53 "lexico_python.flex"
 {return RANGE; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 55 "../src/lexico_python.flex"
+#line 55 "lexico_python.flex"
 {return CADENA; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 56 "../src/lexico_python.flex"
+#line 56 "lexico_python.flex"
 {return VECTOR; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 57 "../src/lexico_python.flex"
+#line 57 "lexico_python.flex"
 {return LISTA; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 58 "../src/lexico_python.flex"
+#line 58 "lexico_python.flex"
 {return TUPLA; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 59 "../src/lexico_python.flex"
+#line 59 "lexico_python.flex"
 {return SET; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 60 "../src/lexico_python.flex"
+#line 60 "lexico_python.flex"
 {return DICT; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 61 "../src/lexico_python.flex"
+#line 61 "lexico_python.flex"
 {return INT; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 62 "../src/lexico_python.flex"
+#line 62 "lexico_python.flex"
 {return FLOAT; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 63 "../src/lexico_python.flex"
+#line 63 "lexico_python.flex"
 {return COMPLEX; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 64 "../src/lexico_python.flex"
+#line 64 "lexico_python.flex"
 {return BOOLEAN; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 66 "../src/lexico_python.flex"
+#line 66 "lexico_python.flex"
 {return SUMA; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 67 "../src/lexico_python.flex"
+#line 67 "lexico_python.flex"
 {return RESTA; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 68 "../src/lexico_python.flex"
+#line 68 "lexico_python.flex"
 {return MULTIPLICACION; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 69 "../src/lexico_python.flex"
+#line 69 "lexico_python.flex"
 {return DIVISION; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 70 "../src/lexico_python.flex"
+#line 70 "lexico_python.flex"
 {return MODULO; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 71 "../src/lexico_python.flex"
+#line 71 "lexico_python.flex"
 {return MENOR_QUE; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 72 "../src/lexico_python.flex"
+#line 72 "lexico_python.flex"
 {return MENOR_IGUAL_QUE; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 73 "../src/lexico_python.flex"
+#line 73 "lexico_python.flex"
 {return MAYOR_QUE; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 74 "../src/lexico_python.flex"
+#line 74 "lexico_python.flex"
 {return MAYOR_IGUAL_QUE; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 75 "../src/lexico_python.flex"
+#line 75 "lexico_python.flex"
 {return AUMENTAR_VALOR; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 76 "../src/lexico_python.flex"
+#line 76 "lexico_python.flex"
 {return IGUAL_QUE; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 77 "../src/lexico_python.flex"
+#line 77 "lexico_python.flex"
 {return DISTINTO_QUE; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 78 "../src/lexico_python.flex"
+#line 78 "lexico_python.flex"
 {return ASIGNACION; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 79 "../src/lexico_python.flex"
+#line 79 "lexico_python.flex"
 {return PARENTESIS_IZQ; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 80 "../src/lexico_python.flex"
+#line 80 "lexico_python.flex"
 {return PARENTESIS_DER; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 81 "../src/lexico_python.flex"
+#line 81 "lexico_python.flex"
 {return DOS_PUNTOS; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 83 "../src/lexico_python.flex"
+#line 83 "lexico_python.flex"
 { yylval.intVal = atoi(yytext); return NUMERO; }  
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 84 "../src/lexico_python.flex"
+#line 84 "lexico_python.flex"
 { yylval.realVal = atof(yytext); return DECIMAL; } 
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 85 "../src/lexico_python.flex"
+#line 85 "lexico_python.flex"
 { yylval.strVal = strdup(yytext); return VARIABLE; }
 	YY_BREAK
 case 68:
 /* rule 68 can match eol */
 YY_RULE_SETUP
-#line 86 "../src/lexico_python.flex"
+#line 86 "lexico_python.flex"
 { yylval.strVal = strdup(yytext); return STRING; } 
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 88 "../src/lexico_python.flex"
+#line 88 "lexico_python.flex"
 { /* return ARRAY_SIMPLE; */ }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 89 "../src/lexico_python.flex"
+#line 89 "lexico_python.flex"
 { /* return ARRAY_2D; */}
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 90 "../src/lexico_python.flex"
+#line 90 "lexico_python.flex"
 { /* ignorar comentario una linea */ }
 	YY_BREAK
 case 72:
 /* rule 72 can match eol */
 YY_RULE_SETUP
-#line 91 "../src/lexico_python.flex"
+#line 91 "lexico_python.flex"
 { /* ignorar comentario varias lineas */ }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 92 "../src/lexico_python.flex"
+#line 92 "lexico_python.flex"
 { /* ignorar tabulaciones */ }
 	YY_BREAK
 case 74:
 /* rule 74 can match eol */
 YY_RULE_SETUP
-#line 94 "../src/lexico_python.flex"
+#line 94 "lexico_python.flex"
 {printf("----- Numero de linea %d -----\n\n", num_linea); num_linea++; }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 96 "../src/lexico_python.flex"
+#line 96 "lexico_python.flex"
 ECHO;
 	YY_BREAK
-#line 1308 "../src/python.lex.c"
+#line 1308 "python.lex.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2302,7 +2302,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 96 "../src/lexico_python.flex"
+#line 96 "lexico_python.flex"
 
 
 

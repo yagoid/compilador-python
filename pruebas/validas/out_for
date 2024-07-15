@@ -6,8 +6,6 @@ Archivo de salida abierto correctamente.
 
 > [SENTENCIA] - Asignacion
 Asignado el valor 0 a la variable
- VARIABLE i
-[tSimbolos] Primera posicion libre: 1
 
 > [TIPO] - Numero Positivo: 2
 # [AST] - Registro $f2 ocupado para var_1 = 2

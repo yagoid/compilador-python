@@ -66,7 +66,7 @@ Grammar
 
    14 while: WHILE expresion DOS_PUNTOS sentencias END
 
-   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+   15 for: FOR VARIABLE IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
 
    16 expresion: expresion SUMA tipos
    17          | expresion RESTA tipos
@@ -160,7 +160,7 @@ MENOR_IGUAL_QUE (320) 23
 MAYOR_IGUAL_QUE (321) 25
 NUMERO (322) 28
 DECIMAL (323) 29
-VARIABLE (324) 9 27
+VARIABLE (324) 9 15 27
 STRING (325) 30
 
 
@@ -216,47 +216,39 @@ state 0
 
 state 1
 
-   15 for: FOR . expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+   15 for: FOR . VARIABLE IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
-
-    expresion  go to state 20
-    tipos      go to state 21
+    VARIABLE  shift, and go to state 14
 
 
 state 2
 
    10 if: IF . expresion DOS_PUNTOS sentencias rescursivo_if
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
-    expresion  go to state 22
-    tipos      go to state 21
+    expresion  go to state 21
+    tipos      go to state 22
 
 
 state 3
 
    14 while: WHILE . expresion DOS_PUNTOS sentencias END
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     expresion  go to state 23
-    tipos      go to state 21
+    tipos      go to state 22
 
 
 state 4
@@ -345,81 +337,54 @@ state 13
 
 state 14
 
+   15 for: FOR VARIABLE . IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+
+    IN  shift, and go to state 28
+
+
+state 15
+
    32 tipos: FALSE .
 
     $default  reduce using rule 32 (tipos)
 
 
-state 15
+state 16
 
    31 tipos: TRUE .
 
     $default  reduce using rule 31 (tipos)
 
 
-state 16
+state 17
 
    28 tipos: NUMERO .
 
     $default  reduce using rule 28 (tipos)
 
 
-state 17
+state 18
 
    29 tipos: DECIMAL .
 
     $default  reduce using rule 29 (tipos)
 
 
-state 18
+state 19
 
    27 tipos: VARIABLE .
 
     $default  reduce using rule 27 (tipos)
 
 
-state 19
+state 20
 
    30 tipos: STRING .
 
     $default  reduce using rule 30 (tipos)
 
 
-state 20
-
-   15 for: FOR expresion . IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
-   16 expresion: expresion . SUMA tipos
-   17          | expresion . RESTA tipos
-   18          | expresion . MULTIPLICACION tipos
-   19          | expresion . DIVISION tipos
-   20          | expresion . IGUAL_QUE tipos
-   21          | expresion . DISTINTO_QUE tipos
-   22          | expresion . MENOR_QUE tipos
-   23          | expresion . MENOR_IGUAL_QUE tipos
-   24          | expresion . MAYOR_QUE tipos
-   25          | expresion . MAYOR_IGUAL_QUE tipos
-
-    IN               shift, and go to state 28
-    SUMA             shift, and go to state 29
-    RESTA            shift, and go to state 30
-    MULTIPLICACION   shift, and go to state 31
-    DIVISION         shift, and go to state 32
-    MENOR_QUE        shift, and go to state 33
-    MAYOR_QUE        shift, and go to state 34
-    IGUAL_QUE        shift, and go to state 35
-    DISTINTO_QUE     shift, and go to state 36
-    MENOR_IGUAL_QUE  shift, and go to state 37
-    MAYOR_IGUAL_QUE  shift, and go to state 38
-
-
 state 21
-
-   26 expresion: tipos .
-
-    $default  reduce using rule 26 (expresion)
-
-
-state 22
 
    10 if: IF expresion . DOS_PUNTOS sentencias rescursivo_if
    16 expresion: expresion . SUMA tipos
@@ -441,9 +406,16 @@ state 22
     MAYOR_QUE        shift, and go to state 34
     IGUAL_QUE        shift, and go to state 35
     DISTINTO_QUE     shift, and go to state 36
-    DOS_PUNTOS       shift, and go to state 39
-    MENOR_IGUAL_QUE  shift, and go to state 37
-    MAYOR_IGUAL_QUE  shift, and go to state 38
+    DOS_PUNTOS       shift, and go to state 37
+    MENOR_IGUAL_QUE  shift, and go to state 38
+    MAYOR_IGUAL_QUE  shift, and go to state 39
+
+
+state 22
+
+   26 expresion: tipos .
+
+    $default  reduce using rule 26 (expresion)
 
 
 state 23
@@ -469,38 +441,38 @@ state 23
     IGUAL_QUE        shift, and go to state 35
     DISTINTO_QUE     shift, and go to state 36
     DOS_PUNTOS       shift, and go to state 40
-    MENOR_IGUAL_QUE  shift, and go to state 37
-    MAYOR_IGUAL_QUE  shift, and go to state 38
+    MENOR_IGUAL_QUE  shift, and go to state 38
+    MAYOR_IGUAL_QUE  shift, and go to state 39
 
 
 state 24
 
    33 imprimir: IMPRIMIR PARENTESIS_IZQ . expresion PARENTESIS_DER
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     expresion  go to state 41
-    tipos      go to state 21
+    tipos      go to state 22
 
 
 state 25
 
     9 asignacion: VARIABLE ASIGNACION . expresion
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     expresion  go to state 42
-    tipos      go to state 21
+    tipos      go to state 22
 
 
 state 26
@@ -519,7 +491,7 @@ state 27
 
 state 28
 
-   15 for: FOR expresion IN . RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+   15 for: FOR VARIABLE IN . RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
 
     RANGE  shift, and go to state 43
 
@@ -528,12 +500,12 @@ state 29
 
    16 expresion: expresion SUMA . tipos
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     tipos  go to state 44
 
@@ -542,12 +514,12 @@ state 30
 
    17 expresion: expresion RESTA . tipos
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     tipos  go to state 45
 
@@ -556,12 +528,12 @@ state 31
 
    18 expresion: expresion MULTIPLICACION . tipos
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     tipos  go to state 46
 
@@ -570,12 +542,12 @@ state 32
 
    19 expresion: expresion DIVISION . tipos
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     tipos  go to state 47
 
@@ -584,12 +556,12 @@ state 33
 
    22 expresion: expresion MENOR_QUE . tipos
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     tipos  go to state 48
 
@@ -598,12 +570,12 @@ state 34
 
    24 expresion: expresion MAYOR_QUE . tipos
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     tipos  go to state 49
 
@@ -612,12 +584,12 @@ state 35
 
    20 expresion: expresion IGUAL_QUE . tipos
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     tipos  go to state 50
 
@@ -626,45 +598,17 @@ state 36
 
    21 expresion: expresion DISTINTO_QUE . tipos
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     tipos  go to state 51
 
 
 state 37
-
-   23 expresion: expresion MENOR_IGUAL_QUE . tipos
-
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
-
-    tipos  go to state 52
-
-
-state 38
-
-   25 expresion: expresion MAYOR_IGUAL_QUE . tipos
-
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
-
-    tipos  go to state 53
-
-
-state 39
 
    10 if: IF expresion DOS_PUNTOS . sentencias rescursivo_if
 
@@ -674,13 +618,41 @@ state 39
     IMPRIMIR  shift, and go to state 4
     VARIABLE  shift, and go to state 5
 
-    sentencias  go to state 54
+    sentencias  go to state 52
     sentencia   go to state 8
     asignacion  go to state 9
     if          go to state 10
     while       go to state 11
     for         go to state 12
     imprimir    go to state 13
+
+
+state 38
+
+   23 expresion: expresion MENOR_IGUAL_QUE . tipos
+
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
+
+    tipos  go to state 53
+
+
+state 39
+
+   25 expresion: expresion MAYOR_IGUAL_QUE . tipos
+
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
+
+    tipos  go to state 54
 
 
 state 40
@@ -725,8 +697,8 @@ state 41
     IGUAL_QUE        shift, and go to state 35
     DISTINTO_QUE     shift, and go to state 36
     PARENTESIS_DER   shift, and go to state 56
-    MENOR_IGUAL_QUE  shift, and go to state 37
-    MAYOR_IGUAL_QUE  shift, and go to state 38
+    MENOR_IGUAL_QUE  shift, and go to state 38
+    MAYOR_IGUAL_QUE  shift, and go to state 39
 
 
 state 42
@@ -751,15 +723,15 @@ state 42
     MAYOR_QUE        shift, and go to state 34
     IGUAL_QUE        shift, and go to state 35
     DISTINTO_QUE     shift, and go to state 36
-    MENOR_IGUAL_QUE  shift, and go to state 37
-    MAYOR_IGUAL_QUE  shift, and go to state 38
+    MENOR_IGUAL_QUE  shift, and go to state 38
+    MAYOR_IGUAL_QUE  shift, and go to state 39
 
     $default  reduce using rule 9 (asignacion)
 
 
 state 43
 
-   15 for: FOR expresion IN RANGE . PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+   15 for: FOR VARIABLE IN RANGE . PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END
 
     PARENTESIS_IZQ  shift, and go to state 57
 
@@ -822,20 +794,6 @@ state 51
 
 state 52
 
-   23 expresion: expresion MENOR_IGUAL_QUE tipos .
-
-    $default  reduce using rule 23 (expresion)
-
-
-state 53
-
-   25 expresion: expresion MAYOR_IGUAL_QUE tipos .
-
-    $default  reduce using rule 25 (expresion)
-
-
-state 54
-
     3 sentencias: sentencias . sentencia
    10 if: IF expresion DOS_PUNTOS sentencias . rescursivo_if
 
@@ -855,6 +813,20 @@ state 54
     while          go to state 11
     for            go to state 12
     imprimir       go to state 13
+
+
+state 53
+
+   23 expresion: expresion MENOR_IGUAL_QUE tipos .
+
+    $default  reduce using rule 23 (expresion)
+
+
+state 54
+
+   25 expresion: expresion MAYOR_IGUAL_QUE tipos .
+
+    $default  reduce using rule 25 (expresion)
 
 
 state 55
@@ -886,32 +858,32 @@ state 56
 
 state 57
 
-   15 for: FOR expresion IN RANGE PARENTESIS_IZQ . expresion PARENTESIS_DER DOS_PUNTOS sentencias END
+   15 for: FOR VARIABLE IN RANGE PARENTESIS_IZQ . expresion PARENTESIS_DER DOS_PUNTOS sentencias END
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     expresion  go to state 63
-    tipos      go to state 21
+    tipos      go to state 22
 
 
 state 58
 
    11 rescursivo_if: ELIF . expresion DOS_PUNTOS sentencias rescursivo_if
 
-    FALSE     shift, and go to state 14
-    TRUE      shift, and go to state 15
-    NUMERO    shift, and go to state 16
-    DECIMAL   shift, and go to state 17
-    VARIABLE  shift, and go to state 18
-    STRING    shift, and go to state 19
+    FALSE     shift, and go to state 15
+    TRUE      shift, and go to state 16
+    NUMERO    shift, and go to state 17
+    DECIMAL   shift, and go to state 18
+    VARIABLE  shift, and go to state 19
+    STRING    shift, and go to state 20
 
     expresion  go to state 64
-    tipos      go to state 21
+    tipos      go to state 22
 
 
 state 59
@@ -944,7 +916,7 @@ state 62
 
 state 63
 
-   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion . PARENTESIS_DER DOS_PUNTOS sentencias END
+   15 for: FOR VARIABLE IN RANGE PARENTESIS_IZQ expresion . PARENTESIS_DER DOS_PUNTOS sentencias END
    16 expresion: expresion . SUMA tipos
    17          | expresion . RESTA tipos
    18          | expresion . MULTIPLICACION tipos
@@ -965,8 +937,8 @@ state 63
     IGUAL_QUE        shift, and go to state 35
     DISTINTO_QUE     shift, and go to state 36
     PARENTESIS_DER   shift, and go to state 66
-    MENOR_IGUAL_QUE  shift, and go to state 37
-    MAYOR_IGUAL_QUE  shift, and go to state 38
+    MENOR_IGUAL_QUE  shift, and go to state 38
+    MAYOR_IGUAL_QUE  shift, and go to state 39
 
 
 state 64
@@ -992,8 +964,8 @@ state 64
     IGUAL_QUE        shift, and go to state 35
     DISTINTO_QUE     shift, and go to state 36
     DOS_PUNTOS       shift, and go to state 67
-    MENOR_IGUAL_QUE  shift, and go to state 37
-    MAYOR_IGUAL_QUE  shift, and go to state 38
+    MENOR_IGUAL_QUE  shift, and go to state 38
+    MAYOR_IGUAL_QUE  shift, and go to state 39
 
 
 state 65
@@ -1017,7 +989,7 @@ state 65
 
 state 66
 
-   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER . DOS_PUNTOS sentencias END
+   15 for: FOR VARIABLE IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER . DOS_PUNTOS sentencias END
 
     DOS_PUNTOS  shift, and go to state 69
 
@@ -1066,7 +1038,7 @@ state 68
 
 state 69
 
-   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS . sentencias END
+   15 for: FOR VARIABLE IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS . sentencias END
 
     FOR       shift, and go to state 1
     IF        shift, and go to state 2
@@ -1116,7 +1088,7 @@ state 71
 state 72
 
     3 sentencias: sentencias . sentencia
-   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias . END
+   15 for: FOR VARIABLE IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias . END
 
     FOR       shift, and go to state 1
     IF        shift, and go to state 2
@@ -1142,6 +1114,6 @@ state 73
 
 state 74
 
-   15 for: FOR expresion IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END .
+   15 for: FOR VARIABLE IN RANGE PARENTESIS_IZQ expresion PARENTESIS_DER DOS_PUNTOS sentencias END .
 
     $default  reduce using rule 15 (for)
