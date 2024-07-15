@@ -4,4 +4,4 @@ flex -o ../src/python.lex.c ../src/lexico_python.flex
 
 gcc -o COMPILADO ../src/gramatica_python.tab.c ../src/python.lex.c
 
-./COMPILADO ../pruebas/errores/input_elif.py
+./COMPILADO ../pruebas/validas/input_for.py
