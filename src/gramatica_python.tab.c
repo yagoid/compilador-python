@@ -169,26 +169,27 @@ char* tipos[] = {"numero", "decimal", "texto", "boolean"}; //Para parsear el tip
      FLOAT = 302,
      COMPLEX = 303,
      BOOLEAN = 304,
-     SUMA = 305,
-     RESTA = 306,
-     MULTIPLICACION = 307,
-     DIVISION = 308,
-     MODULO = 309,
-     MENOR_QUE = 310,
-     MAYOR_QUE = 311,
-     AUMENTAR_VALOR = 312,
-     IGUAL_QUE = 313,
-     DISTINTO_QUE = 314,
-     ASIGNACION = 315,
-     PARENTESIS_IZQ = 316,
-     PARENTESIS_DER = 317,
-     DOS_PUNTOS = 318,
-     MENOR_IGUAL_QUE = 319,
-     MAYOR_IGUAL_QUE = 320,
-     NUMERO = 321,
-     DECIMAL = 322,
-     VARIABLE = 323,
-     STRING = 324
+     RANGE = 305,
+     SUMA = 306,
+     RESTA = 307,
+     MULTIPLICACION = 308,
+     DIVISION = 309,
+     MODULO = 310,
+     MENOR_QUE = 311,
+     MAYOR_QUE = 312,
+     AUMENTAR_VALOR = 313,
+     IGUAL_QUE = 314,
+     DISTINTO_QUE = 315,
+     ASIGNACION = 316,
+     PARENTESIS_IZQ = 317,
+     PARENTESIS_DER = 318,
+     DOS_PUNTOS = 319,
+     MENOR_IGUAL_QUE = 320,
+     MAYOR_IGUAL_QUE = 321,
+     NUMERO = 322,
+     DECIMAL = 323,
+     VARIABLE = 324,
+     STRING = 325
    };
 #endif
 
@@ -216,7 +217,7 @@ typedef union YYSTYPE
 
 
 /* Line 214 of yacc.c  */
-#line 220 "gramatica_python.tab.c"
+#line 221 "gramatica_python.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -228,7 +229,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 232 "gramatica_python.tab.c"
+#line 233 "gramatica_python.tab.c"
 
 #ifdef short
 # undef short
@@ -441,22 +442,22 @@ union yyalloc
 #endif
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  23
+#define YYFINAL  26
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   146
+#define YYLAST   196
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  70
+#define YYNTOKENS  71
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  11
+#define YYNNTS  12
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  32
+#define YYNRULES  34
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  64
+#define YYNSTATES  75
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   324
+#define YYMAXUTOK   325
 
 #define YYTRANSLATE(YYX)						\
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -496,7 +497,7 @@ static const yytype_uint8 yytranslate[] =
       35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
       45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
       55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
-      65,    66,    67,    68,    69
+      65,    66,    67,    68,    69,    70
 };
 
 #if YYDEBUG
@@ -505,34 +506,35 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyprhs[] =
 {
        0,     0,     3,     5,     7,    10,    12,    14,    16,    18,
-      22,    28,    34,    39,    41,    47,    51,    55,    59,    63,
-      67,    71,    75,    79,    83,    87,    89,    91,    93,    95,
-      97,    99,   101
+      20,    24,    30,    36,    41,    43,    49,    60,    64,    68,
+      72,    76,    80,    84,    88,    92,    96,   100,   102,   104,
+     106,   108,   110,   112,   114
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      71,     0,    -1,    72,    -1,    73,    -1,    72,    73,    -1,
-      74,    -1,    80,    -1,    75,    -1,    77,    -1,    68,    60,
-      78,    -1,    23,    78,    63,    72,    76,    -1,    16,    78,
-      63,    72,    76,    -1,    17,    63,    72,    76,    -1,    38,
-      -1,    35,    78,    63,    72,    38,    -1,    78,    50,    79,
-      -1,    78,    51,    79,    -1,    78,    52,    79,    -1,    78,
-      53,    79,    -1,    78,    58,    79,    -1,    78,    59,    79,
-      -1,    78,    55,    79,    -1,    78,    64,    79,    -1,    78,
-      56,    79,    -1,    78,    65,    79,    -1,    79,    -1,    68,
-      -1,    66,    -1,    67,    -1,    69,    -1,     5,    -1,     3,
-      -1,    39,    61,    78,    62,    -1
+      72,     0,    -1,    73,    -1,    74,    -1,    73,    74,    -1,
+      75,    -1,    82,    -1,    76,    -1,    78,    -1,    79,    -1,
+      69,    61,    80,    -1,    23,    80,    64,    73,    77,    -1,
+      16,    80,    64,    73,    77,    -1,    17,    64,    73,    77,
+      -1,    38,    -1,    35,    80,    64,    73,    38,    -1,    20,
+      80,    25,    50,    62,    80,    63,    64,    73,    38,    -1,
+      80,    51,    81,    -1,    80,    52,    81,    -1,    80,    53,
+      81,    -1,    80,    54,    81,    -1,    80,    59,    81,    -1,
+      80,    60,    81,    -1,    80,    56,    81,    -1,    80,    65,
+      81,    -1,    80,    57,    81,    -1,    80,    66,    81,    -1,
+      81,    -1,    69,    -1,    67,    -1,    68,    -1,    70,    -1,
+       5,    -1,     3,    -1,    39,    62,    80,    63,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    83,    83,    93,    94,   102,   103,   104,   105,   112,
-     146,   160,   169,   173,   181,   198,   257,   299,   341,   393,
-     449,   505,   561,   617,   673,   729,   740,   773,   781,   789,
-     797,   804,   816
+       0,    84,    84,    94,    95,   103,   104,   105,   106,   107,
+     114,   176,   191,   201,   205,   213,   228,   241,   314,   370,
+     426,   493,   560,   627,   694,   761,   829,   896,   907,   940,
+     948,   956,   964,   971,   983
 };
 #endif
 
@@ -547,12 +549,13 @@ static const char *const yytname[] =
   "IMPORT", "IN", "IS", "LAMBDA", "NONLOCAL", "NOT", "OR", "PASS", "RAISE",
   "RETURN", "TRY", "WHILE", "WITH", "YIELD", "END", "IMPRIMIR", "CADENA",
   "VECTOR", "LISTA", "TUPLA", "SET", "DICT", "INT", "FLOAT", "COMPLEX",
-  "BOOLEAN", "SUMA", "RESTA", "MULTIPLICACION", "DIVISION", "MODULO",
-  "MENOR_QUE", "MAYOR_QUE", "AUMENTAR_VALOR", "IGUAL_QUE", "DISTINTO_QUE",
-  "ASIGNACION", "PARENTESIS_IZQ", "PARENTESIS_DER", "DOS_PUNTOS",
-  "MENOR_IGUAL_QUE", "MAYOR_IGUAL_QUE", "NUMERO", "DECIMAL", "VARIABLE",
-  "STRING", "$accept", "codigo", "sentencias", "sentencia", "asignacion",
-  "if", "rescursivo_if", "while", "expresion", "tipos", "imprimir", 0
+  "BOOLEAN", "RANGE", "SUMA", "RESTA", "MULTIPLICACION", "DIVISION",
+  "MODULO", "MENOR_QUE", "MAYOR_QUE", "AUMENTAR_VALOR", "IGUAL_QUE",
+  "DISTINTO_QUE", "ASIGNACION", "PARENTESIS_IZQ", "PARENTESIS_DER",
+  "DOS_PUNTOS", "MENOR_IGUAL_QUE", "MAYOR_IGUAL_QUE", "NUMERO", "DECIMAL",
+  "VARIABLE", "STRING", "$accept", "codigo", "sentencias", "sentencia",
+  "asignacion", "if", "rescursivo_if", "while", "for", "expresion",
+  "tipos", "imprimir", 0
 };
 #endif
 
@@ -567,26 +570,27 @@ static const yytype_uint16 yytoknum[] =
      285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
      295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
      305,   306,   307,   308,   309,   310,   311,   312,   313,   314,
-     315,   316,   317,   318,   319,   320,   321,   322,   323,   324
+     315,   316,   317,   318,   319,   320,   321,   322,   323,   324,
+     325
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    70,    71,    72,    72,    73,    73,    73,    73,    74,
-      75,    76,    76,    76,    77,    78,    78,    78,    78,    78,
-      78,    78,    78,    78,    78,    78,    79,    79,    79,    79,
-      79,    79,    80
+       0,    71,    72,    73,    73,    74,    74,    74,    74,    74,
+      75,    76,    77,    77,    77,    78,    79,    80,    80,    80,
+      80,    80,    80,    80,    80,    80,    80,    80,    81,    81,
+      81,    81,    81,    81,    82
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     1,     2,     1,     1,     1,     1,     3,
-       5,     5,     4,     1,     5,     3,     3,     3,     3,     3,
-       3,     3,     3,     3,     3,     1,     1,     1,     1,     1,
-       1,     1,     4
+       0,     2,     1,     1,     2,     1,     1,     1,     1,     1,
+       3,     5,     5,     4,     1,     5,    10,     3,     3,     3,
+       3,     3,     3,     3,     3,     3,     3,     1,     1,     1,
+       1,     1,     1,     1,     4
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -594,41 +598,43 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     0,     0,     0,     0,     0,     2,     3,     5,     7,
-       8,     6,    31,    30,    27,    28,    26,    29,     0,    25,
-       0,     0,     0,     1,     4,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     9,    15,
-      16,    17,    18,    21,    23,    19,    20,     0,    22,    24,
-       0,    32,     0,     0,    13,    10,    14,     0,     0,     0,
-       0,     0,    12,    11
+       0,     0,     0,     0,     0,     0,     0,     2,     3,     5,
+       7,     8,     9,     6,    33,    32,    29,    30,    28,    31,
+       0,    27,     0,     0,     0,     0,     1,     4,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,    10,     0,    17,    18,    19,    20,    23,    25,
+      21,    22,    24,    26,     0,     0,    34,     0,     0,     0,
+      14,    11,    15,     0,     0,     0,     0,     0,     0,     0,
+       0,    13,     0,    12,    16
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     5,     6,     7,     8,     9,    55,    10,    18,    19,
-      11
+      -1,     6,     7,     8,     9,    10,    61,    11,    12,    20,
+      21,    13
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -54
+#define YYPACT_NINF -62
 static const yytype_int8 yypact[] =
 {
-     -14,    -3,    -3,   -53,   -49,    15,   -14,   -54,   -54,   -54,
-     -54,   -54,   -54,   -54,   -54,   -54,   -54,   -54,    17,   -54,
-      33,    -3,    -3,   -54,   -54,    -3,    -3,    -3,    -3,    -3,
-      -3,    -3,    -3,   -14,    -3,    -3,   -14,    49,    81,   -54,
-     -54,   -54,   -54,   -54,   -54,   -54,   -54,   -11,   -54,   -54,
-     -19,   -54,    -3,   -46,   -54,   -54,   -54,    65,   -14,   -14,
-     -11,   -11,   -54,   -54
+      21,    -3,    -3,    -3,   -61,   -56,     6,    21,   -62,   -62,
+     -62,   -62,   -62,   -62,   -62,   -62,   -62,   -62,   -62,   -62,
+      22,   -62,    40,    56,    -3,    -3,   -62,   -62,   -37,    -3,
+      -3,    -3,    -3,    -3,    -3,    -3,    -3,    -3,    -3,    21,
+      21,    72,   120,   -43,   -62,   -62,   -62,   -62,   -62,   -62,
+     -62,   -62,   -62,   -62,    -8,    -6,   -62,    -3,    -3,   -44,
+     -62,   -62,   -62,    88,   104,    21,   -42,    21,    -8,    21,
+      -8,   -62,    14,   -62,   -62
 };
 
 /* YYPGOTO[NTERM-NUM].  */
-static const yytype_int8 yypgoto[] =
+static const yytype_int16 yypgoto[] =
 {
-     -54,   -54,   -26,    -5,   -54,   -54,   -47,   -54,     1,     9,
-     -54
+     -62,   -62,   -29,     0,   -62,   -62,   -52,   -62,   -62,     1,
+     158,   -62
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -638,53 +644,64 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-      12,    24,    13,    20,     1,    52,    53,    47,    21,     1,
-      50,    22,     1,    62,    63,    23,     2,    58,     0,    56,
-       3,     2,    37,    38,     2,     3,     0,    54,     3,     0,
-       0,     0,    60,    61,    39,    40,    41,    42,    43,    44,
-      45,    46,    24,    48,    49,    24,     0,     0,     0,     4,
-       0,     0,     0,    57,     4,    24,    24,     4,     0,     0,
-       0,     0,     0,    14,    15,    16,    17,    25,    26,    27,
-      28,     0,    29,    30,     0,    31,    32,     0,     0,     0,
-      33,    34,    35,    25,    26,    27,    28,     0,    29,    30,
-       0,    31,    32,     0,     0,     0,    36,    34,    35,    25,
-      26,    27,    28,     0,    29,    30,     0,    31,    32,     0,
-       0,    51,     0,    34,    35,    25,    26,    27,    28,     0,
-      29,    30,     0,    31,    32,     0,     0,     0,    59,    34,
-      35,    25,    26,    27,    28,     0,    29,    30,     0,    31,
-      32,     0,     0,     0,     0,    34,    35
+      14,    24,    15,    22,    23,    25,    26,    27,    58,    59,
+      54,    55,     1,    43,     1,     2,    71,     2,    73,    57,
+      65,     0,    69,     0,     0,    41,    42,     3,     0,     3,
+      60,     4,    62,     4,     1,     0,    68,     2,    70,     0,
+      72,     1,     0,     0,     2,     0,     0,    28,     0,     3,
+       0,     0,    74,     4,    27,    27,     3,     0,    63,    64,
+       4,     5,     0,     5,    16,    17,    18,    19,    27,     0,
+      27,     0,    27,    29,    30,    31,    32,     0,    33,    34,
+       0,    35,    36,     5,     0,     0,     0,    37,    38,     0,
+       5,    29,    30,    31,    32,     0,    33,    34,     0,    35,
+      36,     0,     0,     0,    39,    37,    38,    29,    30,    31,
+      32,     0,    33,    34,     0,    35,    36,     0,     0,     0,
+      40,    37,    38,    29,    30,    31,    32,     0,    33,    34,
+       0,    35,    36,     0,     0,    56,     0,    37,    38,    29,
+      30,    31,    32,     0,    33,    34,     0,    35,    36,     0,
+       0,    66,     0,    37,    38,    29,    30,    31,    32,     0,
+      33,    34,     0,    35,    36,     0,     0,     0,    67,    37,
+      38,    29,    30,    31,    32,     0,    33,    34,     0,    35,
+      36,     0,     0,     0,     0,    37,    38,    44,    45,    46,
+      47,    48,    49,    50,    51,    52,    53
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     6,     5,     2,    23,    16,    17,    33,    61,    23,
-      36,    60,    23,    60,    61,     0,    35,    63,    -1,    38,
-      39,    35,    21,    22,    35,    39,    -1,    38,    39,    -1,
-      -1,    -1,    58,    59,    25,    26,    27,    28,    29,    30,
-      31,    32,    47,    34,    35,    50,    -1,    -1,    -1,    68,
-      -1,    -1,    -1,    52,    68,    60,    61,    68,    -1,    -1,
-      -1,    -1,    -1,    66,    67,    68,    69,    50,    51,    52,
-      53,    -1,    55,    56,    -1,    58,    59,    -1,    -1,    -1,
-      63,    64,    65,    50,    51,    52,    53,    -1,    55,    56,
-      -1,    58,    59,    -1,    -1,    -1,    63,    64,    65,    50,
-      51,    52,    53,    -1,    55,    56,    -1,    58,    59,    -1,
-      -1,    62,    -1,    64,    65,    50,    51,    52,    53,    -1,
-      55,    56,    -1,    58,    59,    -1,    -1,    -1,    63,    64,
-      65,    50,    51,    52,    53,    -1,    55,    56,    -1,    58,
-      59,    -1,    -1,    -1,    -1,    64,    65
+       3,    62,     5,     2,     3,    61,     0,     7,    16,    17,
+      39,    40,    20,    50,    20,    23,    68,    23,    70,    62,
+      64,    -1,    64,    -1,    -1,    24,    25,    35,    -1,    35,
+      38,    39,    38,    39,    20,    -1,    65,    23,    67,    -1,
+      69,    20,    -1,    -1,    23,    -1,    -1,    25,    -1,    35,
+      -1,    -1,    38,    39,    54,    55,    35,    -1,    57,    58,
+      39,    69,    -1,    69,    67,    68,    69,    70,    68,    -1,
+      70,    -1,    72,    51,    52,    53,    54,    -1,    56,    57,
+      -1,    59,    60,    69,    -1,    -1,    -1,    65,    66,    -1,
+      69,    51,    52,    53,    54,    -1,    56,    57,    -1,    59,
+      60,    -1,    -1,    -1,    64,    65,    66,    51,    52,    53,
+      54,    -1,    56,    57,    -1,    59,    60,    -1,    -1,    -1,
+      64,    65,    66,    51,    52,    53,    54,    -1,    56,    57,
+      -1,    59,    60,    -1,    -1,    63,    -1,    65,    66,    51,
+      52,    53,    54,    -1,    56,    57,    -1,    59,    60,    -1,
+      -1,    63,    -1,    65,    66,    51,    52,    53,    54,    -1,
+      56,    57,    -1,    59,    60,    -1,    -1,    -1,    64,    65,
+      66,    51,    52,    53,    54,    -1,    56,    57,    -1,    59,
+      60,    -1,    -1,    -1,    -1,    65,    66,    29,    30,    31,
+      32,    33,    34,    35,    36,    37,    38
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    23,    35,    39,    68,    71,    72,    73,    74,    75,
-      77,    80,     3,     5,    66,    67,    68,    69,    78,    79,
-      78,    61,    60,     0,    73,    50,    51,    52,    53,    55,
-      56,    58,    59,    63,    64,    65,    63,    78,    78,    79,
-      79,    79,    79,    79,    79,    79,    79,    72,    79,    79,
-      72,    62,    16,    17,    38,    76,    38,    78,    63,    63,
-      72,    72,    76,    76
+       0,    20,    23,    35,    39,    69,    72,    73,    74,    75,
+      76,    78,    79,    82,     3,     5,    67,    68,    69,    70,
+      80,    81,    80,    80,    62,    61,     0,    74,    25,    51,
+      52,    53,    54,    56,    57,    59,    60,    65,    66,    64,
+      64,    80,    80,    50,    81,    81,    81,    81,    81,    81,
+      81,    81,    81,    81,    73,    73,    63,    62,    16,    17,
+      38,    77,    38,    80,    80,    64,    63,    64,    73,    64,
+      73,    77,    73,    77,    38
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1507,7 +1524,7 @@ yyreduce:
         case 2:
 
 /* Line 1464 of yacc.c  */
-#line 83 "gramatica_python.y"
+#line 84 "gramatica_python.y"
     {
         printf("\nLlamando a comprobarAST\n");
         comprobarAST((yyvsp[(1) - (1)].tr).n); 
@@ -1515,76 +1532,97 @@ yyreduce:
     ;}
     break;
 
-  case 4:
+  case 3:
 
 /* Line 1464 of yacc.c  */
 #line 94 "gramatica_python.y"
-    { //para hacerlo recursivo
-        (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (2)].tr).n, (yyvsp[(2) - (2)].tr).n, 7);
-    ;}
+    { (yyval.tr) = (yyvsp[(1) - (1)].tr); ;}
     break;
 
-  case 9:
+  case 4:
 
 /* Line 1464 of yacc.c  */
-#line 112 "gramatica_python.y"
-    {
-        printf("> [SENTENCIA] - Asignacion\n");
-
-        //Para crear un nuevo simbolo de tipo numero
-        if(strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){ //comprobacion si es numero
-            printf("Asignado el valor %d a la variable\n",(yyvsp[(3) - (3)].tr).numero);
-            tabla[indice].nombre = (yyvsp[(1) - (3)].strVal); tabla[indice].tipo = tipos[0]; tabla[indice].numero = (yyvsp[(3) - (3)].tr).numero; tabla[indice].registro = (yyvsp[(3) - (3)].tr).n->resultado;
-            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
-        }
-        //Para crear un nuevo simbolo de tipo decimal
-        else if(strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){ //comprobacion si es decimal
-            printf("Asignado el valor %d a la variable\n",(yyvsp[(3) - (3)].tr).decimal);
-            tabla[indice].nombre = (yyvsp[(1) - (3)].strVal); tabla[indice].tipo = tipos[1]; tabla[indice].decimal = (yyvsp[(3) - (3)].tr).decimal; tabla[indice].registro = (yyvsp[(3) - (3)].tr).n->resultado;
-            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
-        }
-        //Para crear un nuevo simbolo de tipo string
-        else if(strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){ //comprobacion si es string
-            printf("Asignado el valor %s a la variable\n",(yyvsp[(3) - (3)].tr).texto);
-            tabla[indice].nombre = (yyvsp[(1) - (3)].strVal); tabla[indice].tipo = tipos[2]; tabla[indice].texto = (yyvsp[(3) - (3)].tr).texto; tabla[indice].registro = (yyvsp[(3) - (3)].tr).n->resultado;
-            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
-        }
-        //Para crear un nuevo simbolo de tipo boolean
-        else if(strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[3]) == 0){ //comprobacion si es boolean
-            printf("Asignado el valor %d a la variable\n",(yyvsp[(3) - (3)].tr).boolean);
-            tabla[indice].nombre = (yyvsp[(1) - (3)].strVal); tabla[indice].tipo = tipos[2]; tabla[indice].boolean = (yyvsp[(3) - (3)].tr).boolean; tabla[indice].registro = (yyvsp[(3) - (3)].tr).n->resultado;
-            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
-        }
-        (yyval.tr).n=crearNodoNoTerminal((yyvsp[(3) - (3)].tr).n, crearNodoVacio(), 15);
+#line 95 "gramatica_python.y"
+    { //para hacerlo recursivo
+        (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (2)].tr).n, (yyvsp[(2) - (2)].tr).n, 7);
     ;}
     break;
 
   case 10:
 
 /* Line 1464 of yacc.c  */
-#line 146 "gramatica_python.y"
+#line 114 "gramatica_python.y"
     {
-        if(strcmp((yyvsp[(2) - (5)].tr).tipo, tipos[3]) == 0){ //comprobacion si es boolean
-            printf("> [IF] - ESTAMOS COMPARANDO\n");
-            (yyval.tr).n=crearNodoNoTerminalIf((yyvsp[(2) - (5)].tr).n, (yyvsp[(4) - (5)].tr).n, (yyvsp[(5) - (5)].tr).n, 12);
+        printf("> [SENTENCIA] - Asignacion\n");
+
+        //Para crear un nuevo simbolo de tipo numero
+        if(strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){ //comprobacion si es numero
+            printf("Asignado el valor %d a la variable\n",(yyvsp[(3) - (3)].tr).numero);
+
+            tabla[indice].nombre = (yyvsp[(1) - (3)].strVal); 
+            tabla[indice].tipo = tipos[0]; 
+            tabla[indice].numero = (yyvsp[(3) - (3)].tr).numero; 
+            tabla[indice].registro = (yyvsp[(3) - (3)].tr).n->resultado;
+
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
         }
+        //Para crear un nuevo simbolo de tipo decimal
+        else if(strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){ //comprobacion si es decimal
+            printf("Asignado el valor %d a la variable\n",(yyvsp[(3) - (3)].tr).decimal);
+
+            tabla[indice].nombre = (yyvsp[(1) - (3)].strVal); 
+            tabla[indice].tipo = tipos[1]; 
+            tabla[indice].decimal = (yyvsp[(3) - (3)].tr).decimal; 
+            tabla[indice].registro = (yyvsp[(3) - (3)].tr).n->resultado;
+
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
+        }
+        //Para crear un nuevo simbolo de tipo string
+        else if(strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){ //comprobacion si es string
+            printf("Asignado el valor %s a la variable\n",(yyvsp[(3) - (3)].tr).texto);
+
+            tabla[indice].nombre = (yyvsp[(1) - (3)].strVal); 
+            tabla[indice].tipo = tipos[2]; 
+            tabla[indice].texto = (yyvsp[(3) - (3)].tr).texto; 
+            tabla[indice].registro = (yyvsp[(3) - (3)].tr).n->resultado;
+
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
+        }
+        //Para crear un nuevo simbolo de tipo boolean
+        else if(strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[3]) == 0){ //comprobacion si es boolean
+            printf("Asignado el valor %d a la variable\n",(yyvsp[(3) - (3)].tr).boolean);
+
+            tabla[indice].nombre = (yyvsp[(1) - (3)].strVal); 
+            tabla[indice].tipo = tipos[2]; 
+            tabla[indice].boolean = (yyvsp[(3) - (3)].tr).boolean; 
+            tabla[indice].registro = (yyvsp[(3) - (3)].tr).n->resultado;
+
+            indice++; //incrementamos el valor del indice para pasar a la siguiente posicion y dejar la anterior guardada
+        }
+
+        // Control de errores
         else{
-            printf("> [ERROR] - SE ESPERABA UN BOOLEAN TRUE\n");
+            yyerror("> [ERROR] - NO ES NINGUNO DE LOS TIPOS DEFINIDOS\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+            
         }
+
+        (yyval.tr).n=crearNodoNoTerminal((yyvsp[(3) - (3)].tr).n, crearNodoVacio(), 15);
     ;}
     break;
 
   case 11:
 
 /* Line 1464 of yacc.c  */
-#line 160 "gramatica_python.y"
+#line 176 "gramatica_python.y"
     {
         if(strcmp((yyvsp[(2) - (5)].tr).tipo, tipos[3]) == 0){ //comprobacion si es boolean
-            printf("> [ELIF] - ESTAMOS COMPARANDO\n");
-            (yyval.tr).n=crearNodoNoTerminalIf((yyvsp[(2) - (5)].tr).n, (yyvsp[(4) - (5)].tr).n, (yyvsp[(5) - (5)].tr).n, 13);
+            printf("> [IF] - ESTAMOS COMPARANDO\n");
+            (yyval.tr).n=crearNodoNoTerminalIf((yyvsp[(2) - (5)].tr).n, (yyvsp[(4) - (5)].tr).n, (yyvsp[(5) - (5)].tr).n, 12);
         }
         else{
-            printf("> [ERROR] - SE ESPERABA UN BOOLEAN TRUE\n");
+            yyerror("> [ERROR] - SE ESPERABA UN BOOLEAN\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
     ;}
     break;
@@ -1592,46 +1630,74 @@ yyreduce:
   case 12:
 
 /* Line 1464 of yacc.c  */
-#line 169 "gramatica_python.y"
+#line 191 "gramatica_python.y"
     {
-        printf("> [ELSE] - SI NO\n");
-        (yyval.tr).n=crearNodoNoTerminal((yyvsp[(3) - (4)].tr).n, (yyvsp[(4) - (4)].tr).n, 14);
+        if(strcmp((yyvsp[(2) - (5)].tr).tipo, tipos[3]) == 0){ //comprobacion si es boolean
+            printf("> [ELIF] - ESTAMOS COMPARANDO\n");
+            (yyval.tr).n=crearNodoNoTerminalIf((yyvsp[(2) - (5)].tr).n, (yyvsp[(4) - (5)].tr).n, (yyvsp[(5) - (5)].tr).n, 13);
+        }
+        else{
+            yyerror("> [ERROR] - SE ESPERABA UN BOOLEAN\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
     ;}
     break;
 
   case 13:
 
 /* Line 1464 of yacc.c  */
-#line 173 "gramatica_python.y"
+#line 201 "gramatica_python.y"
     {
-        (yyval.tr).n = crearNodoEnd(23);
+        printf("> [ELSE] - SI NO\n");
+        (yyval.tr).n=crearNodoNoTerminal((yyvsp[(3) - (4)].tr).n, (yyvsp[(4) - (4)].tr).n, 14);
     ;}
     break;
 
   case 14:
 
 /* Line 1464 of yacc.c  */
-#line 181 "gramatica_python.y"
+#line 205 "gramatica_python.y"
     {
-        if(strcmp((yyvsp[(2) - (5)].tr).tipo, tipos[3]) == 0){ //comprobacion si es boolean
-            printf("> [WHILE] - ESTAMOS EN UN BUCLE\n");
-            (yyval.tr).n=crearNodoNoTerminal((yyvsp[(2) - (5)].tr).n, (yyvsp[(4) - (5)].tr).n, 11);
-        }
-        else{
-            printf("> [ERROR] - SE ESPERABA UN BOOLEAN TRUE\n");
-        }
+        (yyval.tr).n = crearNodoEnd(23);
     ;}
     break;
 
   case 15:
 
 /* Line 1464 of yacc.c  */
-#line 198 "gramatica_python.y"
+#line 213 "gramatica_python.y"
+    {
+        if(strcmp((yyvsp[(2) - (5)].tr).tipo, tipos[3]) == 0){ //comprobacion si es boolean
+            printf("> [WHILE] - ESTAMOS EN UN BUCLE\n");
+            (yyval.tr).n=crearNodoNoTerminal((yyvsp[(2) - (5)].tr).n, (yyvsp[(4) - (5)].tr).n, 11);
+        }
+        else{
+            yyerror("> [ERROR] - SE ESPERABA UN BOOLEAN\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+    ;}
+    break;
+
+  case 16:
+
+/* Line 1464 of yacc.c  */
+#line 228 "gramatica_python.y"
+    {
+        printf("> [FOR] - ESTAMOS EN UN BUCLE\n");
+        (yyval.tr).n = crearNodoNoTerminal((yyvsp[(6) - (10)].tr).n, (yyvsp[(9) - (10)].tr).n, 25);
+    ;}
+    break;
+
+  case 17:
+
+/* Line 1464 of yacc.c  */
+#line 241 "gramatica_python.y"
     {
 
         //SUMA de numero + numero
         if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0) { //comprobacion del tipo
             printf("> [OPERACION] - SUMA {numero / numero}\n");
+
             (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 2);
             (yyval.tr).tipo = tipos[0]; 
             (yyval.tr).numero = (yyvsp[(1) - (3)].tr).numero + (yyvsp[(3) - (3)].tr).numero;
@@ -1640,6 +1706,7 @@ yyreduce:
         //SUMA de decimal + decimal
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - SUMA {decimal / decimal}\n");
+
             (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 2);
             (yyval.tr).tipo = tipos[1]; 
             (yyval.tr).decimal = (yyvsp[(1) - (3)].tr).decimal + (yyvsp[(3) - (3)].tr).decimal;
@@ -1648,6 +1715,7 @@ yyreduce:
         //SUMA de str + str
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
             printf("> [OPERACION] - SUMA {texto / texto}\n");
+
             (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 2);
             (yyval.tr).tipo = tipos[2];
             (yyval.tr).texto = (char*)malloc(strlen((yyvsp[(1) - (3)].tr).texto) + strlen((yyvsp[(3) - (3)].tr).texto) + 1);
@@ -1657,126 +1725,43 @@ yyreduce:
                 strcat((yyval.tr).texto, (yyvsp[(3) - (3)].tr).texto);
             }
             else {
-                printf("Error al asignar memoria para la concatenacion de cadenas.\n");
+                yyerror("Error al asignar memoria para la concatenacion de cadenas.\n");
             }
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - SUMA {numero / decimal}\n");
+            yyerror("> [ERROR] - SUMA {numero / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - SUMA {numero / string}\n");
+            yyerror("> [ERROR] - SUMA {numero / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - SUMA {decimal / numero}\n");
+            yyerror("> [ERROR] - SUMA {decimal / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - SUMA {decimal / string}\n");
+            yyerror("> [ERROR] - SUMA {decimal / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - SUMA {string / numero}\n");
+            yyerror("> [ERROR] - SUMA {string / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - SUMA {string / decimal}\n");
-        }
-    ;}
-    break;
-
-  case 16:
-
-/* Line 1464 of yacc.c  */
-#line 257 "gramatica_python.y"
-    {
-        
-        //RESTA de numero - numero
-        if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0) {  //comprobacion del tipo
-            printf("> [OPERACION] - RESTA {numero / numero}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 3);
-            (yyval.tr).tipo = tipos[0]; 
-            (yyval.tr).numero = (yyvsp[(1) - (3)].tr).numero + (yyvsp[(3) - (3)].tr).numero;
-        }
-        //RESTA de decimal - decimal
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [OPERACION] - RESTA {decimal / decimal}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 3);
-            (yyval.tr).tipo = tipos[1]; 
-            (yyval.tr).decimal = (yyvsp[(1) - (3)].tr).decimal + (yyvsp[(3) - (3)].tr).decimal;
+            yyerror("> [ERROR] - SUMA {string / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - RESTA {numero / decimal}\n");
-        }
-
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - RESTA {numero / string}\n");
-        }
-
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - RESTA {decimal / numero}\n");
-        }
-
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - RESTA {decimal / string}\n");
-        }
-
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - RESTA {string / numero}\n");
-        }
-
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - RESTA {string / decimal}\n");
-        }
-    ;}
-    break;
-
-  case 17:
-
-/* Line 1464 of yacc.c  */
-#line 299 "gramatica_python.y"
-    {
-        
-        //MULTIPLICACION de numero * numero
-        if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0) {  //comprobacion del tipo
-            printf("> [OPERACION] - MULTIPLICACION {numero / numero}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 4);
-            (yyval.tr).tipo = tipos[0]; 
-            (yyval.tr).numero = (yyvsp[(1) - (3)].tr).numero * (yyvsp[(3) - (3)].tr).numero;
-        }
-        //MULTIPLICACION de decimal * decimal
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [OPERACION] - MULTIPLICACION {decimal / decimal}\n");
-            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 4);
-            (yyval.tr).tipo = tipos[1]; 
-            (yyval.tr).decimal = (yyvsp[(1) - (3)].tr).decimal * (yyvsp[(3) - (3)].tr).decimal;
-        }
-
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MULTIPLICACION {numero / decimal}\n");
-        }
-
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MULTIPLICACION {numero / string}\n");
-        }
-
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MULTIPLICACION {decimal / numero}\n");
-        }
-
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MULTIPLICACION {decimal / string}\n");
-        }
-
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MULTIPLICACION {string / numero}\n");
-        }
-
-        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MULTIPLICACION {string / decimal}\n");
+        else{
+            yyerror("> [ERROR] - SUMA\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
     ;}
     break;
@@ -1784,25 +1769,151 @@ yyreduce:
   case 18:
 
 /* Line 1464 of yacc.c  */
-#line 341 "gramatica_python.y"
+#line 314 "gramatica_python.y"
+    {
+        
+        //RESTA de numero - numero
+        if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0) {  //comprobacion del tipo
+            printf("> [OPERACION] - RESTA {numero / numero}\n");
+
+            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 3);
+            (yyval.tr).tipo = tipos[0]; 
+            (yyval.tr).numero = (yyvsp[(1) - (3)].tr).numero + (yyvsp[(3) - (3)].tr).numero;
+        }
+
+        //RESTA de decimal - decimal
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [OPERACION] - RESTA {decimal / decimal}\n");
+
+            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 3);
+            (yyval.tr).tipo = tipos[1]; 
+            (yyval.tr).decimal = (yyvsp[(1) - (3)].tr).decimal + (yyvsp[(3) - (3)].tr).decimal;
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - RESTA {numero / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - RESTA {numero / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - RESTA {decimal / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - RESTA {decimal / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - RESTA {string / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - RESTA {string / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else{
+            yyerror("> [ERROR] - RESTA\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+    ;}
+    break;
+
+  case 19:
+
+/* Line 1464 of yacc.c  */
+#line 370 "gramatica_python.y"
+    {
+        
+        //MULTIPLICACION de numero * numero
+        if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0) {  //comprobacion del tipo
+            printf("> [OPERACION] - MULTIPLICACION {numero / numero}\n");
+
+            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 4);
+            (yyval.tr).tipo = tipos[0]; 
+            (yyval.tr).numero = (yyvsp[(1) - (3)].tr).numero * (yyvsp[(3) - (3)].tr).numero;
+        }
+
+        //MULTIPLICACION de decimal * decimal
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
+            printf("> [OPERACION] - MULTIPLICACION {decimal / decimal}\n");
+
+            (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 4);
+            (yyval.tr).tipo = tipos[1]; 
+            (yyval.tr).decimal = (yyvsp[(1) - (3)].tr).decimal * (yyvsp[(3) - (3)].tr).decimal;
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - MULTIPLICACION {numero / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - MULTIPLICACION {numero / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - MULTIPLICACION {decimal / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - MULTIPLICACION {decimal / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - MULTIPLICACION {string / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
+            yyerror("> [ERROR] - MULTIPLICACION {string / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else{
+            yyerror("> [ERROR] - MULTIPLICACION\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+    ;}
+    break;
+
+  case 20:
+
+/* Line 1464 of yacc.c  */
+#line 426 "gramatica_python.y"
     {
         
         //DIVISION de numero / numero
         if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0) {  //comprobacion del tipo
             if ((yyvsp[(3) - (3)].tr).numero == 0.0) {
-                printf("> [ERROR] - DIVISION {numero / 0}\n");
+                yyerror("> [ERROR] - DIVISION {numero / 0}\n");
+                printf("ERROR EN LA LINEA %d\n", num_linea);
             }
             else {
                 printf("> [OPERACION] - DIVISION {numero / numero}\n");
+
                 (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 5);
                 (yyval.tr).tipo = tipos[0]; 
                 (yyval.tr).numero = (yyvsp[(1) - (3)].tr).numero / (yyvsp[(3) - (3)].tr).numero;
             }  
         }
+
         //DIVISION de decimal / decimal
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
             if ((yyvsp[(3) - (3)].tr).numero == 0.0) {
-                printf("> [ERROR] - DIVISION {decimal / 0}\n");
+                yyerror("> [ERROR] - DIVISION {numero / 0}\n");
+                printf("ERROR EN LA LINEA %d\n", num_linea);
             }
             else {
                 printf("> [OPERACION] - DIVISION {decimal / decimal}\n");
@@ -1813,35 +1924,46 @@ yyreduce:
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DIVISION {numero / decimal}\n");
+            yyerror("> [ERROR] - DIVISION {numero / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DIVISION {numero / string}\n");
+            yyerror("> [ERROR] - DIVISION {numero / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DIVISION {decimal / numero}\n");
+            yyerror("> [ERROR] - DIVISION {decimal / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DIVISION {decimal / string}\n");
+            yyerror("> [ERROR] - DIVISION {decimal / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DIVISION {string / numero}\n");
+            yyerror("> [ERROR] - DIVISION {string / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DIVISION {string / decimal}\n");
+            yyerror("> [ERROR] - DIVISION {string / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else{
+            yyerror("> [ERROR] - DIVISION\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
     ;}
     break;
 
-  case 19:
+  case 21:
 
 /* Line 1464 of yacc.c  */
-#line 393 "gramatica_python.y"
+#line 493 "gramatica_python.y"
     {
         
         //IGUAL_QUE de numero / numero
@@ -1874,35 +1996,46 @@ yyreduce:
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - IGUAL_QUE {numero / decimal}\n");
+            yyerror("> [ERROR] - IGUAL_QUE {numero / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - IGUAL_QUE {numero / string}\n");
+            yyerror("> [ERROR] - IGUAL_QUE {numero / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - IGUAL_QUE {decimal / numero}\n");
+            yyerror("> [ERROR] - IGUAL_QUE {decimal / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - IGUAL_QUE {decimal / string}\n");
+            yyerror("> [ERROR] - IGUAL_QUE {decimal / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - IGUAL_QUE {string / numero}\n");
+            yyerror("> [ERROR] - IGUAL_QUE {string / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - IGUAL_QUE {string / decimal}\n");
+            yyerror("> [ERROR] - IGUAL_QUE {string / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else{
+            yyerror("> [ERROR] - IGUAL_QUE\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
     ;}
     break;
 
-  case 20:
+  case 22:
 
 /* Line 1464 of yacc.c  */
-#line 449 "gramatica_python.y"
+#line 560 "gramatica_python.y"
     {
         
         //DISTINTO_QUE de numero / numero
@@ -1935,35 +2068,46 @@ yyreduce:
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DISTINTO_QUE {numero / decimal}\n");
+            yyerror("> [ERROR] - DISTINTO_QUE {numero / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DISTINTO_QUE {numero / string}\n");
+            yyerror("> [ERROR] - DISTINTO_QUE {numero / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DISTINTO_QUE {decimal / numero}\n");
+            yyerror("> [ERROR] - DISTINTO_QUE {decimal / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DISTINTO_QUE {decimal / string}\n");
+            yyerror("> [ERROR] - DISTINTO_QUE {decimal / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DISTINTO_QUE {string / numero}\n");
+            yyerror("> [ERROR] - DISTINTO_QUE {string / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - DISTINTO_QUE {string / decimal}\n");
+            yyerror("> [ERROR] - DISTINTO_QUE {string / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else{
+            yyerror("> [ERROR] - DISTINTO_QUE\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
     ;}
     break;
 
-  case 21:
+  case 23:
 
 /* Line 1464 of yacc.c  */
-#line 505 "gramatica_python.y"
+#line 627 "gramatica_python.y"
     {
         
         //MENOR_QUE de numero / numero
@@ -1996,35 +2140,46 @@ yyreduce:
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_QUE {numero / decimal}\n");
+            yyerror("> [ERROR] - MENOR_QUE {numero / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_QUE {numero / string}\n");
+            yyerror("> [ERROR] - MENOR_QUE {numero / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_QUE {decimal / numero}\n");
+            yyerror("> [ERROR] - MENOR_QUE {decimal / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_QUE {decimal / string}\n");
+            yyerror("> [ERROR] - MENOR_QUE {decimal / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_QUE {string / numero}\n");
+            yyerror("> [ERROR] - MENOR_QUE {string / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_QUE {string / decimal}\n");
+            yyerror("> [ERROR] - MENOR_QUE {string / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else{
+            yyerror("> [ERROR] - MENOR_QUE\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
     ;}
     break;
 
-  case 22:
+  case 24:
 
 /* Line 1464 of yacc.c  */
-#line 561 "gramatica_python.y"
+#line 694 "gramatica_python.y"
     {
         
         //MENOR_IGUAL_QUE de numero / numero
@@ -2057,40 +2212,52 @@ yyreduce:
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_IGUAL_QUE {numero / decimal}\n");
+            yyerror("> [ERROR] - MENOR_IGUAL_QUE {numero / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_IGUAL_QUE {numero / string}\n");
+            yyerror("> [ERROR] - MENOR_IGUAL_QUE {numero / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_IGUAL_QUE {decimal / numero}\n");
+            yyerror("> [ERROR] - MENOR_IGUAL_QUE {decimal / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_IGUAL_QUE {decimal / string}\n");
+            yyerror("> [ERROR] - MENOR_IGUAL_QUE {decimal / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_IGUAL_QUE {string / numero}\n");
+            yyerror("> [ERROR] - MENOR_IGUAL_QUE {string / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MENOR_IGUAL_QUE {string / decimal}\n");
+            yyerror("> [ERROR] - MENOR_IGUAL_QUE {string / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else{
+            yyerror("> [ERROR] - MENOR_IGUAL_QUE\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
     ;}
     break;
 
-  case 23:
+  case 25:
 
 /* Line 1464 of yacc.c  */
-#line 617 "gramatica_python.y"
+#line 761 "gramatica_python.y"
     {
         
         //MAYOR_QUE de numero / numero
         if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0) {  //comprobacion del tipo
             printf("> [COMPARACION] - MAYOR_QUE {numero / numero}\n");
+
             (yyval.tr).n = crearNodoNoTerminal((yyvsp[(1) - (3)].tr).n, (yyvsp[(3) - (3)].tr).n, 21);
             (yyval.tr).tipo = tipos[3]; 
             if ((yyvsp[(1) - (3)].tr).numero > (yyvsp[(3) - (3)].tr).numero) {
@@ -2118,35 +2285,46 @@ yyreduce:
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_QUE {numero / decimal}\n");
+            yyerror("> [ERROR] - MAYOR_QUE {numero / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_QUE {numero / string}\n");
+            yyerror("> [ERROR] - MAYOR_QUE {numero / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_QUE {decimal / numero}\n");
+            yyerror("> [ERROR] - MAYOR_QUE {decimal / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_QUE {decimal / string}\n");
+            yyerror("> [ERROR] - MAYOR_QUE {decimal / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_QUE {string / numero}\n");
+            yyerror("> [ERROR] - MAYOR_QUE {string / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_QUE {string / decimal}\n");
+            yyerror("> [ERROR] - MAYOR_QUE {string / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else{
+            yyerror("> [ERROR] - MAYOR_QUE\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
     ;}
     break;
 
-  case 24:
+  case 26:
 
 /* Line 1464 of yacc.c  */
-#line 673 "gramatica_python.y"
+#line 829 "gramatica_python.y"
     {
         
         //MAYOR_IGUAL_QUE de numero / numero
@@ -2180,42 +2358,53 @@ yyreduce:
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_IGUAL_QUE {numero / decimal}\n");
+            yyerror("> [ERROR] - MAYOR_IGUAL_QUE {numero / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[0]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_IGUAL_QUE {numero / string}\n");
+            yyerror("> [ERROR] - MAYOR_IGUAL_QUE {numero / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_IGUAL_QUE {decimal / numero}\n");
+            yyerror("> [ERROR] - MAYOR_IGUAL_QUE {decimal / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[1]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[2]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_IGUAL_QUE {decimal / string}\n");
+            yyerror("> [ERROR] - MAYOR_IGUAL_QUE {decimal / string}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[0]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_IGUAL_QUE {string / numero}\n");
+            yyerror("> [ERROR] - MAYOR_IGUAL_QUE {string / numero}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
 
         else if (strcmp((yyvsp[(1) - (3)].tr).tipo, tipos[2]) == 0 && strcmp((yyvsp[(3) - (3)].tr).tipo, tipos[1]) == 0){  //comprobacion del tipo
-            printf("> [ERROR] - MAYOR_IGUAL_QUE {string / decimal}\n");
+            yyerror("> [ERROR] - MAYOR_IGUAL_QUE {string / decimal}\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
+        }
+
+        else{
+            yyerror("> [ERROR] - MAYOR_IGUAL_QUE\n");
+            printf("ERROR EN LA LINEA %d\n", num_linea);
         }
     ;}
     break;
 
-  case 25:
+  case 27:
 
 /* Line 1464 of yacc.c  */
-#line 729 "gramatica_python.y"
+#line 896 "gramatica_python.y"
     {(yyval.tr) = (yyvsp[(1) - (1)].tr);;}
     break;
 
-  case 26:
+  case 28:
 
 /* Line 1464 of yacc.c  */
-#line 740 "gramatica_python.y"
+#line 907 "gramatica_python.y"
     {
         printf(" VARIABLE %s\n",(yyvsp[(1) - (1)].strVal));
         //Buscamos en la tabla el VARIABLE
@@ -2249,80 +2438,80 @@ yyreduce:
     ;}
     break;
 
-  case 27:
-
-/* Line 1464 of yacc.c  */
-#line 773 "gramatica_python.y"
-    {
-        (yyval.tr).numero = (yyvsp[(1) - (1)].intVal);
-        printf("\n> [TIPO] - Numero Positivo: %ld\n", (yyval.tr).numero);
-        (yyval.tr).n = crearNodoTerminalInt((yyvsp[(1) - (1)].intVal)); 
-        (yyval.tr).tipo = tipos[0]; 
-    ;}
-    break;
-
-  case 28:
-
-/* Line 1464 of yacc.c  */
-#line 781 "gramatica_python.y"
-    {
-        (yyval.tr).decimal = (yyvsp[(1) - (1)].realVal);
-        printf("\n> [TIPO] - Decimal: %.3f\n", (yyval.tr).decimal); 
-        (yyval.tr).n = crearNodoTerminalDouble((yyvsp[(1) - (1)].realVal));
-        (yyval.tr).tipo = tipos[1];  
-    ;}
-    break;
-
   case 29:
 
 /* Line 1464 of yacc.c  */
-#line 789 "gramatica_python.y"
+#line 940 "gramatica_python.y"
     {
-        (yyval.tr).texto = (yyvsp[(1) - (1)].strVal);
-        printf("\n> [TIPO] - Texto: %s\n", (yyval.tr).texto);
-        (yyval.tr).n = crearNodoTerminalString((yyvsp[(1) - (1)].strVal)); 
-        (yyval.tr).tipo = tipos[2]; 
+        (yyval.tr).numero = (yyvsp[(1) - (1)].intVal);
+        printf("\n> [TIPO] - Numero Positivo: %ld\n", (yyval.tr).numero);
+        (yyval.tr).tipo = tipos[0]; 
+        (yyval.tr).n = crearNodoTerminalInt((yyvsp[(1) - (1)].intVal)); 
     ;}
     break;
 
   case 30:
 
 /* Line 1464 of yacc.c  */
-#line 797 "gramatica_python.y"
+#line 948 "gramatica_python.y"
     {
-        (yyval.tr).boolean = 1;
-        printf("\n> [TIPO] - Boleano True: %d\n", (yyval.tr).boolean); 
-        (yyval.tr).n = crearNodoTerminalBoolean((yyval.tr).boolean);
-        (yyval.tr).tipo = tipos[3];
+        (yyval.tr).decimal = (yyvsp[(1) - (1)].realVal);
+        printf("\n> [TIPO] - Decimal: %.3f\n", (yyval.tr).decimal); 
+        (yyval.tr).tipo = tipos[1];  
+        (yyval.tr).n = crearNodoTerminalDouble((yyvsp[(1) - (1)].realVal));
     ;}
     break;
 
   case 31:
 
 /* Line 1464 of yacc.c  */
-#line 804 "gramatica_python.y"
+#line 956 "gramatica_python.y"
     {
-        (yyval.tr).boolean = 0;
-        printf("\n> [TIPO] - Boleano False: %d\n", (yyval.tr).boolean); 
-        (yyval.tr).n = crearNodoTerminalBoolean((yyval.tr).boolean);
-        (yyval.tr).tipo = tipos[3]; 
+        (yyval.tr).texto = (yyvsp[(1) - (1)].strVal);
+        printf("\n> [TIPO] - Texto: %s\n", (yyval.tr).texto);
+        (yyval.tr).tipo = tipos[2];
+        (yyval.tr).n = crearNodoTerminalString((yyvsp[(1) - (1)].strVal)); 
     ;}
     break;
 
   case 32:
 
 /* Line 1464 of yacc.c  */
-#line 816 "gramatica_python.y"
+#line 964 "gramatica_python.y"
+    {
+        (yyval.tr).boolean = 1;
+        printf("\n> [TIPO] - Boleano True: %d\n", (yyval.tr).boolean); 
+        (yyval.tr).tipo = tipos[3];
+        (yyval.tr).n = crearNodoTerminalBoolean((yyval.tr).boolean);
+    ;}
+    break;
+
+  case 33:
+
+/* Line 1464 of yacc.c  */
+#line 971 "gramatica_python.y"
+    {
+        (yyval.tr).boolean = 0;
+        printf("\n> [TIPO] - Boleano False: %d\n", (yyval.tr).boolean); 
+        (yyval.tr).tipo = tipos[3];
+        (yyval.tr).n = crearNodoTerminalBoolean((yyval.tr).boolean);
+    ;}
+    break;
+
+  case 34:
+
+/* Line 1464 of yacc.c  */
+#line 983 "gramatica_python.y"
     { 
         printf("> [SENTENCIA] - Imprimir\n");
-        (yyval.tr).n = crearNodoNoTerminal((yyvsp[(3) - (4)].tr).n, crearNodoVacio(), 16);        
+        (yyval.tr).n = crearNodoNoTerminal((yyvsp[(3) - (4)].tr).n, crearNodoVacio(), 16); 
     ;}
     break;
 
 
 
 /* Line 1464 of yacc.c  */
-#line 2326 "gramatica_python.tab.c"
+#line 2515 "gramatica_python.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2534,14 +2723,13 @@ yyreturn:
 
 
 /* Line 1684 of yacc.c  */
-#line 822 "gramatica_python.y"
+#line 989 "gramatica_python.y"
  
 
 //--------------------------------------------------- METODO MAIN -----------------------------------------------
 int main(int argc, char** argv) {
     yyin = fopen(argv[1], "rt");            //Apertura del archivo test.py
     yyout = fopen( "./python.asm", "wt" );
-    yyout = fopen("./python.asm", "wt");
     if (yyout == NULL) {
         perror("Error abriendo el archivo de salida");
         return 1;
@@ -2554,5 +2742,5 @@ int main(int argc, char** argv) {
 
 //Metodo yyerror, generado por defecto
 void yyerror(const char* s) {
-    fprintf(stderr, "%s\n", s);
+    fprintf(stderr, "----- ERROR EN LA LINEA %d: %s -----", num_linea, s);
 }

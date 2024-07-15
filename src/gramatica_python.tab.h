@@ -85,26 +85,27 @@
      FLOAT = 302,
      COMPLEX = 303,
      BOOLEAN = 304,
-     SUMA = 305,
-     RESTA = 306,
-     MULTIPLICACION = 307,
-     DIVISION = 308,
-     MODULO = 309,
-     MENOR_QUE = 310,
-     MAYOR_QUE = 311,
-     AUMENTAR_VALOR = 312,
-     IGUAL_QUE = 313,
-     DISTINTO_QUE = 314,
-     ASIGNACION = 315,
-     PARENTESIS_IZQ = 316,
-     PARENTESIS_DER = 317,
-     DOS_PUNTOS = 318,
-     MENOR_IGUAL_QUE = 319,
-     MAYOR_IGUAL_QUE = 320,
-     NUMERO = 321,
-     DECIMAL = 322,
-     VARIABLE = 323,
-     STRING = 324
+     RANGE = 305,
+     SUMA = 306,
+     RESTA = 307,
+     MULTIPLICACION = 308,
+     DIVISION = 309,
+     MODULO = 310,
+     MENOR_QUE = 311,
+     MAYOR_QUE = 312,
+     AUMENTAR_VALOR = 313,
+     IGUAL_QUE = 314,
+     DISTINTO_QUE = 315,
+     ASIGNACION = 316,
+     PARENTESIS_IZQ = 317,
+     PARENTESIS_DER = 318,
+     DOS_PUNTOS = 319,
+     MENOR_IGUAL_QUE = 320,
+     MAYOR_IGUAL_QUE = 321,
+     NUMERO = 322,
+     DECIMAL = 323,
+     VARIABLE = 324,
+     STRING = 325
    };
 #endif
 
@@ -132,7 +133,7 @@ typedef union YYSTYPE
 
 
 /* Line 1685 of yacc.c  */
-#line 136 "gramatica_python.tab.h"
+#line 137 "gramatica_python.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
