@@ -3,25 +3,27 @@
 .data
 saltoLinea: .asciiz "\n"
 zero: .float 0.0
-var_0: .word 8
-var_1: .word 2
-var_2: .word 1
+var_0: .asciiz "asdf"
+var_1: .asciiz "pepe"
 
 #--------------------- Ejecuciones ---------------------
 .text
 lwc1 $f31, zero
-lw $t0, var_0     # Cargar var_0 en $t0
-lw $t2, var_1     # Cargar var_1 en $t2
-etiqueta_0:
-slt $t5, $t2, $t0      # Comparar si $t2 < $t0, almacenar resultado en $t5
-beqz $t5, etiqueta_1    # Si $t5 es 0, saltar a etiqueta de fin
-li $v0, 1
-move $a0, $t2
-syscall     # Llamada al sistema
-li $v0, 4
-la $a0, saltoLinea
-syscall #Llamada al sistema
-lw $t7, var_2     # Cargar var_2 en $t7
-add $t8, $t2, $t7    # Sumar $t2 y $t7, guardar en $t8
-j etiqueta_0
-etiqueta_1:
+lb $t0, var_0     # Cargar var_0 en $t0
+lb $t1, var_1     # Cargar var_1 en $t1
+concat_strings_2:
+  lb $t0, 0($t0)             # Cargar un byte de la primera cadena
+  beqz $t0, copy_second_2    # Si es el fin de la cadena (NUL), ir a copiar la segunda cadena
+  sb $t0, 0($t2)             # Almacenar el byte en el destino
+  addi $t0, $t0, 1          # Incrementar el puntero de la primera cadena
+  addi $t2, $t2, 1          # Incrementar el puntero del destino
+  j concat_strings_2         # Repetir el bucle
+copy_second_2:
+  lb $t0, 0($t1)             # Cargar un byte de la segunda cadena
+  beqz $t0, end_concat_2     # Si es el fin de la cadena (NUL), terminar la concatenación
+  sb $t0, 0($t2)             # Almacenar el byte en el destino
+  addi $t1, $t1, 1          # Incrementar el puntero de la segunda cadena
+  addi $t2, $t2, 1          # Incrementar el puntero del destino
+  j copy_second_2            # Repetir el bucle
+end_concat_2:
+  sb $zero, 0($t2)           # Almacenar el carácter NUL al final de la cadena concatenada

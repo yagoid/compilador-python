@@ -1,8 +1,7 @@
-a = 8
-b = 9
+a = "asdf" + "pepe"
 
-while a > b:
-    print(b)
-    b = b + 1
-end
+# while a < 5:
+#     a = a + 1
+#     print(a)
+# end
 

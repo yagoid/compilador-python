@@ -240,6 +240,7 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         int etiquetaInicio = contadorEtiquetaLocal++;
         int etiquetaFin = contadorEtiquetaLocal++;
 
+        fprintf(yyout, "l.s $f29, zero\n");
         fprintf(yyout, "etiqueta_%d:\n", etiquetaInicio);
 
         // n->izq es la condición del while
@@ -254,9 +255,10 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         else if (strcmp(reg_cond->tipo, "float") == 0)
         {
             // Evaluar condición para flotantes
-            fprintf(yyout, "c.eq.s $f%d, $f31          # Comparar si $f%d es igual a 0.0\n",
+            fprintf(yyout, "c.eq.s $f%d, $f29          # Comparar si $f%d es igual a 0.0\n",
                     n->izq->resultado, n->izq->resultado);
             fprintf(yyout, "bc1t etiqueta_%d          # Si es verdadero (igual a 0.0), saltar a etiqueta de fin\n", etiquetaFin);
+            fprintf(yyout, "nop\n");
         }
 
         // n->dcha es el cuerpo del while
@@ -273,6 +275,7 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         int etiquetaFinIf = contadorEtiquetaLocal++;
         int etiquetaFinCondicion = contadorEtiquetaLocal++;
 
+        fprintf(yyout, "l.s $f29, zero\n");
         // n->izq es la condición del if
         struct ast *reg_cond = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
 
@@ -294,7 +297,7 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         }
         else if (strcmp(reg_cond->tipo, "float") == 0)
         {
-            fprintf(yyout, "c.eq.s $f%d, $f31          # Comparar si $f%d es igual a 0.0\n",
+            fprintf(yyout, "c.eq.s $f%d, $f29          # Comparar si $f%d es igual a 0.0\n",
                     n->izq->resultado, n->izq->resultado);
             fprintf(yyout, "bc1t etiqueta_%d          # Si es verdadero (igual a 0.0), saltar a etiqueta fin if\n", etiquetaFinIf);
 
@@ -329,6 +332,7 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         int etiquetaFinElif = contadorEtiquetaLocal++;
         int etiquetaFinCondicion = contadorEtiquetaLocal++;
 
+        fprintf(yyout, "l.s $f29, zero\n");
         // n->izq es la condición del if
         struct ast *reg_cond = comprobarValorNodo(n->izq, contadorEtiquetaLocal);
 
@@ -352,7 +356,7 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         else if (strcmp(reg_cond->tipo, "float") == 0)
         {
             // Evaluar condición para flotantes
-            fprintf(yyout, "c.eq.s $f%d, $f31          # Comparar si $f%d es igual a 0.0\n",
+            fprintf(yyout, "c.eq.s $f%d, $f29          # Comparar si $f%d es igual a 0.0\n",
                     n->izq->resultado, n->izq->resultado);
             fprintf(yyout, "bc1t etiqueta_%d          # Si es verdadero (igual a 0.0), saltar a etiqueta else\n", etiquetaFinElif);
 
@@ -388,7 +392,7 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
 
         // n->izq: Cuerpo de else
         comprobarValorNodo(n->izq, contadorEtiquetaLocal);
-        
+
         // n->dcha: END
         comprobarValorNodo(n->dcha, contadorEtiquetaLocal);
     }
@@ -654,7 +658,7 @@ funcionImprimir(struct ast *n)
     else if (strcmp(n->tipo, "string") == 0)
     {
         // Imprimir carácter
-        fprintf(yyout, "li $v0, 4\n");                   // Código de sistema para imprimir cadena
+        fprintf(yyout, "li $v0, 4\n");                    // Código de sistema para imprimir cadena
         fprintf(yyout, "move $a0, $t%d\n", n->resultado); // Mover el puntero de la cadena resultante al registro $a0
         // fprintf(yyout, "li $v0, 11\n");                   // Código de sistema para imprimir carácter
         // fprintf(yyout, "move $a0, $t%d\n", n->resultado); // Mover el resultado al registro $a0
@@ -901,7 +905,7 @@ struct ast *crearNodoNoTerminalIf(struct ast *izq, struct ast *center, struct as
     n->izq = izq;
     n->center = center;
     n->dcha = dcha;
-    n->tipoNodo = tipoNodo;        // Asignamos al nodo genérico sus hijos y tipo
+    n->tipoNodo = tipoNodo; // Asignamos al nodo genérico sus hijos y tipo
     // n->resultado = encontrarReg(); // Hacemos llamada al método para buscar un nuevo registro
 
     // printf("tipoNodo: %d\n", tipoNodo);
@@ -919,6 +923,7 @@ struct ast *crearVariableTerminalDouble(double valor, int registro)
     n->valorDecimal = valor;
 
     n->resultado = registro;
+    printf("[][][][][][][registro %d\n", registro);
     return n;
 }
 
@@ -933,6 +938,8 @@ struct ast *crearVariableTerminalInt(int valor, int registro)
     n->valorEntero = valor;
 
     n->resultado = registro;
+
+    printf("[][][][][][][registro %d\n", registro);
     return n;
 }
 
@@ -948,6 +955,7 @@ struct ast *crearVariableTerminalString(const char *valor, int registro)
 
     n->valorCadena = strdup(valor); // Asigna memoria y copia el texto
     n->resultado = registro;
+    printf("[][][][][][][registro %d\n", registro);
     return n;
 }
 
@@ -962,6 +970,7 @@ struct ast *crearVariableTerminalBoolean(int valor, int registro)
     n->valorBoolean = valor;
 
     n->resultado = registro;
+    printf("[][][][][][][registro %d\n", registro);
     return n;
 }
 
