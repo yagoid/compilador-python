@@ -123,30 +123,31 @@ struct ast *comprobarValorNodo(struct ast *n, int contadorEtiquetaLocal)
         }
         else if (strcmp(n->izq->tipo, "string") == 0)
         {
-            // registro t6 para el puntero de la cadena
+            // Inicializar el puntero para el resultado
             fprintf(yyout, "la $s0, resultado\n");
 
-            fprintf(yyout, "cadena_%d: \n", n->izq->resultado);
+            // Procesar la primera cadena (n->izq)
+            fprintf(yyout, "cadena_izq_%d: \n", n->izq->resultado);
             fprintf(yyout, "  lb $s1, 0($t%d)\n", n->izq->resultado);
-            fprintf(yyout, "  beqz $s1, finCadena_%d\n", n->izq->resultado);
+            fprintf(yyout, "  beqz $s1, finCadena_izq_%d\n", n->izq->resultado);
             fprintf(yyout, "  sb $s1, 0($s0)\n");
             fprintf(yyout, "  addi $s0, $s0, 1\n");
             fprintf(yyout, "  addi $t%d, $t%d, 1\n", n->izq->resultado, n->izq->resultado);
-            fprintf(yyout, "  j cadena_%d\n", n->izq->resultado);
+            fprintf(yyout, "  j cadena_izq_%d\n", n->izq->resultado);
 
-            fprintf(yyout, "finCadena_%d: \n", n->izq->resultado);
-            fprintf(yyout, "  la $t%d, var_%d\n", n->dcha->resultado, n->dcha->resultado);
+            fprintf(yyout, "finCadena_izq_%d: \n", n->izq->resultado);
 
-            fprintf(yyout, "cadena_%d: \n", n->dcha->resultado);
+            // Procesar la segunda cadena (n->dcha)
+            fprintf(yyout, "cadena_dcha_%d: \n", n->dcha->resultado);
             fprintf(yyout, "  lb $s1, 0($t%d)\n", n->dcha->resultado);
-            fprintf(yyout, "  beqz $s1, fin_%d\n", n->dcha->resultado);
+            fprintf(yyout, "  beqz $s1, finCadena_dcha_%d\n", n->dcha->resultado);
             fprintf(yyout, "  sb $s1, 0($s0)\n");
             fprintf(yyout, "  addi $s0, $s0, 1\n");
             fprintf(yyout, "  addi $t%d, $t%d, 1\n", n->dcha->resultado, n->dcha->resultado);
-            fprintf(yyout, "  j cadena_%d\n", n->dcha->resultado);
+            fprintf(yyout, "  j cadena_dcha_%d\n", n->dcha->resultado);
 
-            fprintf(yyout, "fin_%d: \n", n->dcha->resultado);
-            fprintf(yyout, "  sb $zero, 0($s0)\n"); // Fin de la cadena n->resultado);
+            fprintf(yyout, "finCadena_dcha_%d: \n", n->dcha->resultado);
+            fprintf(yyout, "  sb $zero, 0($s0)\n"); // Fin de la cadena
 
             cadenaConcatenada = true;
         }
