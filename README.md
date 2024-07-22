@@ -1,6 +1,5 @@
 Aquí tienes un archivo `README.md` generado a partir del documento que me proporcionaste:
 
-````markdown
 # Proyecto de Compilador de Python
 
 ## Introducción al Problema
@@ -49,7 +48,6 @@ flex -o ../src/python.lex.c ../src/lexico_python.flex
 gcc -o COMPILADO ../src/gramatica_python.tab.c ../src/python.lex.c
 ./COMPILADO ../pruebas/validas/input_aritmetico.py
 ```
-````
 
 O ejecuta el archivo `compilar.sh` para ahorrar tiempo:
 
