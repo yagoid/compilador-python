@@ -1,5 +1,3 @@
-Aquí tienes un archivo `README.md` generado a partir del documento que me proporcionaste:
-
 # Proyecto de Compilador de Python
 
 ## Introducción al Problema
@@ -247,5 +245,3 @@ print(suma)
 ```
 
 Este programa tiene un error sintáctico porque `for` no posee los `range`.
-
-Este archivo `README.md` proporciona una descripción completa del proyecto, incluyendo la introducción al problema, la solución propuesta, directivas de compilación, manual de usuario y una batería de pruebas con ejemplos de programas correctos y con errores.
